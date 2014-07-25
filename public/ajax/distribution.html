@@ -1,0 +1,404 @@
+<div class="row">
+	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+		<h1 class="page-title txt-color-blueDark"><i class="fa-fw fa fa-map-marker"></i> 考生分布</h1>
+	</div>
+</div>
+<!-- widget grid -->
+<section id="widget-grid" class="">
+
+	
+
+	<!-- row -->
+
+	<div class="row">
+
+		<article class="col-sm-12 col-md-12 col-lg-12">
+			
+			<!-- Widget ID (each widget will need unique ID)-->
+			<div class="jarviswidget" id="wid-id-0"
+				data-widget-deletebutton="false" data-widget-editbutton="false">
+				<!-- widget options:
+					usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+					
+					data-widget-colorbutton="false"	
+					data-widget-editbutton="false"
+					data-widget-togglebutton="false"
+					data-widget-deletebutton="false"
+					data-widget-fullscreenbutton="false"
+					data-widget-custombutton="false"
+					data-widget-collapsed="true" 
+					data-widget-sortable="false"
+					
+				-->
+				<header>
+					<span class="widget-icon"> <i class="fa fa-edit"></i>
+					</span>
+					<h2>查询</h2>
+
+				</header>
+
+				<!-- widget div-->
+				<div>
+
+					<!-- widget content -->
+					<div class="widget-body">
+						<form action="" class="smart-form">
+							<fieldset>
+								<div class="row">
+									<section class="col col-4  col-sm-6">
+										<label class="select">
+												<select name="year">
+											 		<option value="2013">2013</option>
+												</select>
+												<i></i>
+										</label>
+									</section>
+									
+									<section class="col col-4 col-sm-6">
+										<label class="select"> <select name="batch_name">
+												<option value="">招生批次</option>
+											  	<option value="本科第一批">本科第一批</option>
+											  	<option value="本科第二批">本科第二批</option>
+											  	<option value="本科二批B">本科二批B</option>
+											  	<option value="高职高专批">高职高专批</option>
+											  	<option value="高职高专3F批">高职高专3F批</option>
+										    </select> <i></i>
+										</label>
+									</section>
+									
+									<section class="col col-4 col-sm-6">
+										<label class="select"> <select name="student_class">
+												<option value="">考生类别</option>
+											  	<option value="普通文科">普通文科</option>
+											  	<option value="普通理科">普通理科</option>
+											  	<option value="蒙授文科">蒙授文科</option>
+											  	<option value="蒙授理科">蒙授理科</option>
+										    </select> <i></i>
+										</label>
+									</section>
+
+								</div>
+								
+								<div class="row">
+									<section  class="col col-12 col-sm-12">
+										<button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>
+											查询
+										</button>
+									</section>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+					<!-- end widget content -->
+
+				</div>
+				<!-- end widget div -->
+
+			</div>
+			<!-- end widget -->
+			
+			<!-- new widget -->
+			<div class="jarviswidget" id="wid-id-2"  data-widget-deletebutton="false" data-widget-editbutton="false">
+
+				<!-- widget options:
+				usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+				data-widget-colorbutton="false"
+				data-widget-editbutton="false"
+				data-widget-togglebutton="false"
+				data-widget-deletebutton="false"
+				data-widget-fullscreenbutton="false"
+				data-widget-custombutton="false"
+				data-widget-collapsed="true"
+				data-widget-sortable="false"
+
+				-->
+
+				<header>
+					<span class="widget-icon"> <i class="fa fa-map-marker"></i> </span>
+					<h2>地图</h2>
+					<div class="widget-toolbar hidden-mobile">
+						<span class="onoffswitch-title"><i class="fa fa-location-arrow"></i> 实时数据</span>
+						<span class="onoffswitch">
+							<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" checked="checked" id="myonoffswitch">
+							<label class="onoffswitch-label" for="myonoffswitch"> <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span> <span class="onoffswitch-switch"></span> </label> </span>
+					</div>
+				</header>
+
+				<!-- widget div-->
+				<div>
+					<!-- widget edit box -->
+					<div class="jarviswidget-editbox">
+						<div>
+							<label>Title:</label>
+							<input type="text" />
+						</div>
+					</div>
+					<!-- end widget edit box -->
+
+					<div class="widget-body no-padding">
+						<!-- content goes here -->
+
+						<div id="vector-map" class="vector-map"></div>
+						<div id="heat-fill">
+							<span class="fill-a">0</span>
+
+							<span class="fill-b">5,000</span>
+						</div>
+						
+						<!-- table responsive -->
+						<div class="table-responsive no-margin">
+							
+							<table class="table table-striped table-hover table-condensed">
+								<thead>
+									<tr>
+										<th>地区</th>
+										<th>报考人数</th>
+										<th class="text-align-center">实际录取</th>
+										<th class="text-align-center">热度</th>
+										<th class="text-align-center">比例</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><a href="javascript:void(0);">山西</a></td>
+										<td>4,977</td>
+										<td class="text-align-center">4,977</td>
+										<td class="text-align-center">
+											<label><i class="fa fa-star rating-checked"></i></label>
+											<label><i class="fa fa-star rating-checked"></i></label>
+											<label><i class="fa fa-star rating-checked"></i></label>
+											<label><i class="fa fa-star rating-checked"></i></label>
+											<label><i class="fa fa-star rating-unchecked"></i></label>
+										</td>
+										<td class="text-align-center">
+											<div class="sparkline display-inline" data-sparkline-type='pie' data-sparkline-piecolor='["#E979BB", "#57889C"]' data-sparkline-offset="90" data-sparkline-piesize="23px">
+												17,83
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td><a href="javascript:void(0);">北京</a></td>
+										<td>3,671</td>
+										<td class="text-align-center">3,671</td>
+										<td class="text-align-center"><label><i class="fa fa-star rating-checked"></i></label>
+											<label><i class="fa fa-star rating-checked"></i></label>
+											<label><i class="fa fa-star rating-checked"></i></label>
+											<label><i class="fa fa-star rating-checked"></i></label>
+											<label><i class="fa fa-star rating-unchecked"></i></label></td>
+										<td class="text-align-center">
+											<div class="sparkline display-inline" data-sparkline-type='pie' data-sparkline-piecolor='["#E979BB", "#57889C"]' data-sparkline-offset="90" data-sparkline-piesize="23px">
+												17,83
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td><a href="javascript:void(0);">江苏</a></td>
+										<td>2,476</td>
+										<td class="text-align-center">2,476</td>
+										<td class="text-align-center"><label><i class="fa fa-star rating-checked"></i></label>
+											<label><i class="fa fa-star rating-checked"></i></label>
+											<label><i class="fa fa-star rating-checked"></i></label>
+											<label><i class="fa fa-star rating-unchecked"></i></label>
+											<label><i class="fa fa-star rating-unchecked"></i></label></td>
+										<td class="text-align-center">
+											<div class="sparkline display-inline" data-sparkline-type='pie' data-sparkline-piecolor='["#E979BB", "#57889C"]' data-sparkline-offset="90" data-sparkline-piesize="23px">
+												17,83
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td><a href="javascript:void(0);">上海</a></td>
+										<td>1,476</td>
+										<td class="text-align-center">1,476</td>
+										<td class="text-align-center"><label><i class="fa fa-star rating-checked"></i></label>
+											<label><i class="fa fa-star rating-checked"></i></label>
+											<label><i class="fa fa-star rating-unchecked"></i></label>
+											<label><i class="fa fa-star rating-unchecked"></i></label>
+											<label><i class="fa fa-star rating-unchecked"></i></label></td>
+										<td class="text-align-center">
+											<div class="sparkline display-inline" data-sparkline-type='pie' data-sparkline-piecolor='["#E979BB", "#57889C"]' data-sparkline-offset="90" data-sparkline-piesize="23px">
+												17,83
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td><a href="javascript:void(0);">内蒙古</a></td>
+										<td>146</td>
+										<td class="text-align-center">146</td>
+										<td class="text-align-center" title="5星热度"><label><i class="fa fa-star rating-checked"></i></label>
+											<label><i class="fa fa-star rating-checked"></i></label>
+											<label><i class="fa fa-star rating-checked"></i></label>
+											<label><i class="fa fa-star rating-checked"></i></label>
+											<label><i class="fa fa-star rating-checked"></i></label></td>
+										<td class="text-align-center">
+											<div class="sparkline display-inline" data-sparkline-type='pie' data-sparkline-piecolor='["#E979BB", "#57889C"]' data-sparkline-offset="90" data-sparkline-piesize="23px">
+												17,83
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td><a href="javascript:void(0);">宁夏</a></td>
+										<td>4,873</td>
+										<td class="text-align-center">4,873</td>
+										<td class="text-align-center"><label><i class="fa fa-star rating-checked"></i></label>
+											<label><i class="fa fa-star rating-checked"></i></label>
+											<label><i class="fa fa-star rating-checked"></i></label>
+											<label><i class="fa fa-star rating-checked"></i></label>
+											<label><i class="fa fa-star rating-unchecked"></i></label></td>
+										<td class="text-align-center">
+											<div class="sparkline display-inline" data-sparkline-type='pie' data-sparkline-piecolor='["#E979BB", "#57889C"]' data-sparkline-offset="90" data-sparkline-piesize="23px">
+												17,83
+											</div>
+										</td>
+									</tr>
+								</tbody>
+								<tfoot>
+									<tr>
+										<td colspan=5>
+										<ul class="pagination pagination-xs no-margin">
+											<li class="prev disabled">
+												<a href="javascript:void(0);">Previous</a>
+											</li>
+											<li class="active">
+												<a href="javascript:void(0);">1</a>
+											</li>
+											<li>
+												<a href="javascript:void(0);">2</a>
+											</li>
+											<li>
+												<a href="javascript:void(0);">3</a>
+											</li>
+											<li class="next">
+												<a href="javascript:void(0);">Next</a>
+											</li>
+										</ul></td>
+									</tr>
+								</tfoot>
+							</table>
+							
+						</div>
+						<!-- end table responsive-->
+						
+						<!-- end content -->
+
+					</div>
+
+				</div>
+				<!-- end widget div -->
+			</div>
+			<!-- end widget -->
+
+			
+
+		</article>
+
+	</div>
+
+	<!-- end row -->
+
+</section>
+<!-- end widget grid -->
+
+<script type="text/javascript">
+	/* DO NOT REMOVE : GLOBAL FUNCTIONS!
+	 *
+	 * pageSetUp(); WILL CALL THE FOLLOWING FUNCTIONS
+	 *
+	 * // activate tooltips
+	 * $("[rel=tooltip]").tooltip();
+	 *
+	 * // activate popovers
+	 * $("[rel=popover]").popover();
+	 *
+	 * // activate popovers with hover states
+	 * $("[rel=popover-hover]").popover({ trigger: "hover" });
+	 *
+	 * // activate inline charts
+	 * runAllCharts();
+	 *
+	 * // setup widgets
+	 * setup_widgets_desktop();
+	 *
+	 * // run form elements
+	 * runAllForms();
+	 *
+	 ********************************
+	 *
+	 * pageSetUp() is needed whenever you load a page.
+	 * It initializes and checks for all basic elements of the page
+	 * and makes rendering easier.
+	 *
+	 */
+
+	pageSetUp();
+	
+	/*
+	 * PAGE RELATED SCRIPTS
+	 */
+
+	// pagefunction
+	
+	var pagefunction = function() {
+			
+		/*
+		 * VECTOR MAP
+		 */
+		
+		var data_array = {
+		    "CN-SHANXI": 4977,
+		    "CN-NINGXIA": 4100,
+		    "CN-BEIJING": 3671,
+		    "CN-JIANGSU": 2476,
+		    "CN-SHANGHAI": 1476,
+		    "CN-NEIMENGGU": 678,
+		    "CN-SHANDONG": 288,
+		    "CN-GUANGDONG": 41
+		};
+		
+		// Load Map dependency 1 then call for dependency 2
+		loadScript("js/plugin/vectormap/jquery-jvectormap-1.2.2.min.js", loadMapFile);
+		
+		// Load Map dependency 2 then rendeder Map
+		function loadMapFile() {
+		    loadScript("js/plugin/vectormap/jquery-jvectormap-cn-mill-en.js", renderVectorMap);
+		}
+		function renderVectorMap() {
+		    $('#vector-map').vectorMap({
+		        map: 'cn_mill_en',
+		        backgroundColor: '#fff',
+		        regionStyle: {
+		            initial: {
+		                fill: '#c4c4c4'
+		            },
+		            hover: {
+		                "fill-opacity": 1
+		            }
+		        },
+		        series: {
+		            regions: [{
+		                values: data_array,
+		                scale: ['#85a8b6', '#4d7686'],
+		                normalizeFunction: 'polynomial'
+		            }]
+		        },
+		        onRegionLabelShow: function (e, el, code) {
+		            if (typeof data_array[code] == 'undefined') {
+		                e.preventDefault();
+		            } else {
+		                var countrylbl = data_array[code];
+		                el.html(el.html() + ': ' + countrylbl + ' visits');
+		            }
+		        }
+		    });
+		}
+		
+	};
+	
+	// end pagefunction
+	
+	// run pagefunction on load
+	pagefunction();
+	
+	
+</script>

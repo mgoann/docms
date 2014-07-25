@@ -1,0 +1,305 @@
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<h1 class="page-title txt-color-blueDark">
+			<i class="fa fa-graduation-cap fa-fw "></i> 用户修改
+		</h1>
+	</div>
+</div>
+
+<!-- widget grid -->
+<section id="widget-grid" class="">
+
+	<!-- row -->
+	<div class="row">
+
+		<!-- NEW WIDGET START -->
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+			<!-- Widget ID (each widget will need unique ID)-->
+			<div class="jarviswidget" id="wid-id-0"
+				data-widget-deletebutton="false" data-widget-editbutton="false">
+				<!-- widget options:
+					usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+					
+					data-widget-colorbutton="false"	
+					data-widget-editbutton="false"
+					data-widget-togglebutton="false"
+					data-widget-deletebutton="false"
+					data-widget-fullscreenbutton="false"
+					data-widget-custombutton="false"
+					data-widget-collapsed="true" 
+					data-widget-sortable="false"
+					
+				-->
+				<header>
+					<span class="widget-icon"> <i class="fa fa-edit"></i>
+					</span>
+					<h2>编辑</h2>
+
+				</header>
+
+				<!-- widget div-->
+				<div>
+
+					<!-- widget content -->
+					<div class="widget-body">
+						<form action="" class="smart-form">
+							<fieldset>
+								<div class="row">
+									<!--<section class="col col-4  col-sm-6">
+										<label class="select">
+												<select name="year">
+											 		<option value="2013">2013</option>
+													<option value="2012">2012</option>
+													<option value="2011">2011</option>
+												</select>
+												<i></i>
+										</label>
+									</section>-->
+									<section class="col col-4  col-sm-6">
+										<label class="input"> 
+											<i class="icon-prepend fa fa-database"></i>
+											<input type="text"
+												name="lastname" placeholder="用户编号">
+										</label>
+									</section>
+									<section class="col col-4  col-sm-6">
+										<label class="input"> 
+											<i class="icon-prepend fa fa-graduation-cap"></i>
+											<input type="text"
+												name="lastname" placeholder="用户名称">
+										</label>
+									</section>
+									<section class="col col-4  col-sm-6">
+										<label class="select"> <select name="region_name">
+												<option value="">是否过期</option>
+											  	<option value="有效">有效</option>
+											  	<option value="过期">过期</option>  
+										    </select> <i></i>
+										</label>
+									</section>
+								</div>
+								
+								<div class="row">
+									
+									<section class="col col-4 col-sm-6">
+										<label class="input"> <i class="icon-prepend fa fa-calendar"></i>
+											<input type="text" name="startdate" id="startdate" placeholder="录入时间" class="hasDatepicker">
+										</label>
+									</section>
+									
+									<section class="col col-4 col-sm-6">
+										<label class="input"> 
+											<i class="icon-prepend fa fa-database"></i>
+											<input type="text"
+												name="lastname" placeholder="操作员">
+										</label>
+									</section>
+									<section class="col col-4 col-sm-6">
+										<label class="select"> <select name="region_name">
+												<option value="">角色</option>
+											  	<option value="管理员">管理员</option>
+											  	<option value="普通用户">普通用户</option>  
+										    </select> <i></i>
+										</label>
+									</section>  			
+								</div>
+								
+								<div class="row">
+									<section  class="col col-12 col-sm-12"> 
+										<button class="btn btn-primary btn-sm" type="submit">
+											<i class="fa fa-save"></i>
+											提交
+										</button>
+									</section>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+					<!-- end widget content -->
+
+				</div>
+				<!-- end widget div -->
+
+			</div>
+			<!-- end widget -->
+			
+			<!-- Widget ID (each widget will need unique ID)-->
+			<div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-deletebutton="false" >
+				<!-- widget options:
+				usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+				data-widget-colorbutton="false"
+				data-widget-editbutton="false"
+				data-widget-togglebutton="false"
+				data-widget-deletebutton="false"
+				data-widget-fullscreenbutton="false"
+				data-widget-custombutton="false"
+				data-widget-collapsed="true"
+				data-widget-sortable="false"
+
+				-->
+		 
+			</div>
+			<!-- end widget -->
+
+		</article>
+		<!-- WIDGET END -->
+
+	</div>
+	<!-- end row -->
+</section>
+<!-- end widget grid -->
+
+<script type="text/javascript">
+    /* DO NOT REMOVE : GLOBAL FUNCTIONS!
+     *
+     * pageSetUp(); WILL CALL THE FOLLOWING FUNCTIONS
+     *
+     * // activate tooltips
+     * $("[rel=tooltip]").tooltip();
+     *
+     * // activate popovers
+     * $("[rel=popover]").popover();
+     *
+     * // activate popovers with hover states
+     * $("[rel=popover-hover]").popover({ trigger: "hover" });
+     *
+     * // activate inline charts
+     * runAllCharts();
+     *
+     * // setup widgets
+     * setup_widgets_desktop();
+     *
+     * // run form elements
+     * runAllForms();
+     *
+     ********************************
+     *
+     * pageSetUp() is needed whenever you load a page.
+     * It initializes and checks for all basic elements of the page
+     * and makes rendering easier.
+     *
+     */
+
+    pageSetUp();
+
+    // PAGE RELATED SCRIPTS
+
+    // pagefunction
+
+    var pagefunction = function() {
+        var dt = $('#datatable_col_reorder').DataTable({
+            "iDisplayLength":30,
+            "bProcessing":true,
+            "bPaginate": true,
+            "bFilter": true,
+            "bSort": true, //排序功能
+            "bLengthChange":false,
+            "bInfo": false,
+            //"scrollX": true,
+            //"scrollCollapse": true,
+	        "aaSorting": [
+				[ 2, "asc" ]
+			],
+			"oLanguage": {
+			    "sZeroRecords": "没有检索到数据",
+			    "oPaginate": {
+			    "sPrevious": "前一页",
+			    "sNext": "后一页",
+			    },
+			  "sZeroRecords": "没有检索到数据",
+			},
+			"processing": '<h1 class="ajax-loading-animation"><i class="fa fa-cog fa-spin"></i> Loading...</h1>',
+		  	//"ajax": '../ajax/data/arrays.txt',
+		  	"serverSide": false,
+		  	"columnDefs": [ {
+		  	    "targets": 3,
+		  	    "render": function ( data, type, full, meta ) {
+		  	        return '<span class="sparkline display-inline" data-sparkline-type="box" data-sparkline-width="150">0,'+data+',720</span><br />'
+		  	        +'<small class="text-muted  font-sm font-xs ">最低分:'+data.split(',')[0]
+		  	        +'平均分:'+data.split(',')[1]
+		  	        +'最高分:'+data.split(',')[2]+'</small>';
+		  	    }
+		  	  }, {
+		  	    "targets": 1,
+		  	    "render": function ( data, type, full, meta ) {
+					return '<strong>'+data+'</strong><br /><img src="img/school/211.jpg" title="211工程院校" height="30px"></img><img src="img/school/985.png" height="30px"></img></h4>';
+		  	        //return '<a href="javascript:void(0);">'+data+'</a><small>211</small><small>985</small>';
+		  	    }
+		  	  }, {
+	                "targets": [ 0 ],
+	                "visible": false,
+	                "searchable": false
+		  	  }],
+		  	"fnDrawCallback": function (oSettings) {
+		  	  runAllCharts();
+             }
+		  	
+        });
+        
+        
+        function format ( d ) {
+            return '<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">					<div class="well well-sm well-light">						<h4 class="txt-color-blue">Pie <span class="semi-bold">Chart</span> </h4>						<br>						<div class="text-center">							<div class="sparkline txt-color-blue display-inline" 							data-sparkline-type="pie" 							data-sparkline-offset="90" 							data-sparkline-piesize="75px">3,5,2</div>							<div class="sparkline txt-color-blue display-inline" 							data-sparkline-type="pie" 							data-sparkline-offset="90" 							data-sparkline-piesize="75px">30,20,15,35</div>						</div>					</div>				</div>				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">					<div class="well well-sm well-light padding-10">						<h4 class="txt-color-green">Composite <span class="semi-bold">Chart</span> </h4>						<br>						<div class="sparkline" 						data-sparkline-type="compositeline" 						data-sparkline-spotradius-top="5" 						data-sparkline-color-top="#3a6965" 						data-sparkline-line-width-top="3" 						data-sparkline-color-bottom="#2b5c59" 						data-sparkline-spot-color="#2b5c59" 						data-sparkline-minspot-color-top="#97bfbf" 						data-sparkline-maxspot-color-top="#c2cccc" 						data-sparkline-highlightline-color-top="#cce8e4" 						data-sparkline-highlightspot-color-top="#9dbdb9" 						data-sparkline-width="96%" 						data-sparkline-height="78px" 						data-sparkline-line-val="[6,4,7,8,4,3,2,2,5,6,7,4,1,5,7,9,9,8,7,6]" 						data-sparkline-bar-val="[4,1,5,7,9,9,8,7,6,6,4,7,8,4,3,2,2,5,6,7]">						</div> 						</div>				</div>				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">					<div class="well well-sm well-light">						<h4 class="txt-color-blueLight">Bar <span class="semi-bold">Chart</span> </h4>						<br>						<div class="sparkline txt-color-blueLight text-center" 						data-sparkline-type="bar" 						data-sparkline-width="96%" 						data-sparkline-barwidth="11" 						data-sparkline-barspacing = "5" 						data-sparkline-height="80px">							4,3,5,7,9,9,8,7,6,6,4,7,8,4						</div>					</div>				</div>				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">					<div class="well well-sm well-light">						<h4 class="txt-color-blueLight">Bar <span class="semi-bold">Stacked Chart</span> </h4>						<br>						<div class="sparkline txt-color-blue text-center" 						data-sparkline-type="bar" 						data-sparkline-width="96%" 						data-sparkline-barwidth="11" 						data-sparkline-barspacing = "5" 						data-sparkline-barstacked-color=\'["#92A2A8", "#4493B1"]\' 						data-sparkline-height="80px">4:5,3:4,5:7,6:3,4:6,6:5,8:2,4:3,6:4,6:2,4:4,7:2,8:5,4:2</div>					</div>				</div></div>';
+        }
+        $('#datatable_col_reorder tbody').on( 'click', "tr[role='row']", function () {
+            var tr = $(this);
+            var row = dt.row(tr);
+            dt.rows().eq(0).each(function(idx){
+                if (row.index() != idx && dt.row(idx).child.isShown()) {
+                    dt.row(idx).child.hide();
+                }
+            });
+            if ( row.child.isShown() ) {
+                row.child.hide();
+            }
+            else {
+                row.child( format( row.data() ) ).show();
+                runAllCharts();
+            }
+        } );
+        
+        
+     
+        // On each draw, loop over the `detailRows` array and show any child rows
+       /*  dt.on( 'draw', function () {
+            $.each( detailRows, function ( i, id ) {
+                $('#'+id+' td:first-child').trigger( 'click' );
+            } );
+        } ); */
+        
+        /* COLUMN FILTER  
+	    var otable = $('#datatable_col_reorder').DataTable({
+	        "bPaginate": true, //翻页功能
+	        "bLengthChange": false, //改变每页显示数据数量
+	        "bFilter": false, //过滤功能
+	        "bSort": true, //排序功能
+	        "bInfo": true,//页脚信息
+	        "bAutoWidth": true,//自动宽度
+	        "aaSorting": [
+				[ 1, "asc" ]
+			],
+			"bProcessing":true,
+			"iDeferLoading":true,
+			"iDisplayLength":30,
+			"sAjaxSource":"datasource.txt"
+	    });
+        
+	    $("div.toolbar").html('<div class="text-right"><img src="img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
+        */
+        
+        $("#datatable_col_reorder_wrapper").addClass("table-responsive");
+    };
+    
+    
+    
+    loadScript("js/plugin/sparkline/jquery.sparkline.min.js", function(){
+    	loadScript("js/plugin/datatables/jquery.dataTables.min.js", function(){
+			loadScript("js/plugin/datatables/dataTables.colVis.min.js", function(){
+				loadScript("js/plugin/datatables/dataTables.tableTools.min.js", function(){
+					loadScript("js/plugin/datatables/dataTables.bootstrap.min.js", pagefunction);
+				});
+			});
+		});
+    });
+</script>
