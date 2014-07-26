@@ -4,9 +4,65 @@ var PollSchema = require('../models/Poll.js').PollSchema;
 var Poll = db.model('polls', PollSchema);
 exports.index = function(req, res) {
     res.render('index', {
-        title : 'Polls'
+        title : '档案管理系统'
     });
 };
+
+
+//查询用户
+exports.getUserInfo = function(req, res) {
+    console.log('getUserInfo started');
+    //获取查询参数
+    var user_name = req.body.user_name;
+    var isvalid = req.body.isvalid;
+    var user_role = req.body.user_role;
+    var user_class = req.body.user_class;
+    var user_id = req.body.user_id;
+    var create_user = req.body.create_user;
+    
+    console.log("user_name="+user_name);
+    var paramsstr = "{";
+    if (user_name !== undefined && user_name !== "") {
+        paramsstr += '"user_name":/'+user_name+'/,';
+    }
+    if (isvalid !== undefined && isvalid !== "") {
+        paramsstr += '"isvalid":"'+isvalid+'",';
+    }
+    if (user_role !== undefined && user_role !== "") {
+        paramsstr += '"user_role":"'+user_role+'",';
+    }
+    if (user_class !== undefined && user_class !== "") {
+        paramsstr += '"user_class":"'+user_class+'",';
+    }
+    if (user_id === 'on') {
+        console.log(user_id);
+        paramsstr += '"user_id":true,';
+    }
+    if (create_user === 'on') {
+        console.log(create_user);
+        paramsstr += '"create_user":true,';
+    }
+    if (paramsstr.indexOf(",") > -1){
+    	paramsstr = paramsstr.substring(0, paramsstr.length-1);
+    }
+    paramsstr += '}';
+    console.log("paramsstr=" + paramsstr);
+    var params = eval("("+paramsstr+")");
+    //调用mongodb查询用户信息
+    SchoolInfo.find(params, {_id:1,user_name:1,ranking:1,isvalid:1,user_role:1,user_class:1, user_id:1, create_user:1}).sort({average_score:-1, ranking:1}).skip(req.body.start).limit(req.body.length).exec(function(error, schoolInfos) {
+        SchoolInfo.count(params).exec(function (err, count) {
+            res.json({
+                draw: req.body.draw,
+                recordsTotal: count,
+                recordsFiltered: count,
+                data: schoolInfos, 
+            })
+          });
+    });
+};
+
+
+
 // JSON API for list of polls
 exports.list = function(req, res) {
     Poll.find({}, 'question', function(error, polls) {
