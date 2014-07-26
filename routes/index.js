@@ -1,9 +1,11 @@
 var mongoose = require('mongoose');
 var db = mongoose.createConnection('127.0.0.1', 'docmc');
 var DocSchema = require('../models/doc.js').DocSchema;
+var UserSchema = require('../models/user.js').UserSchema;
 var SeqSchema = require('../models/seq.js').SequenceSchema;
 var Seq = db.model('sequence', SeqSchema);
 var Doc = db.model('doc', DocSchema);
+var User = db.model('user', UserSchema);
 
 DocSchema.pre('save', function(next) {
     var doc = this;
@@ -12,6 +14,17 @@ DocSchema.pre('save', function(next) {
       console.log(settings);
       doc.doc_id = settings.seq - 1;
       console.log(doc.doc_id);
+      next();
+    });
+ });
+UserSchema.pre('save', function(next) {
+    var user = this;
+    console.log("user.save  pre to set user_id");
+    Seq.findOneAndUpdate( {"seq_name":'user_id'}, { $inc: { seq: 1 } }, function (err, settings) {
+      if (err) next(err);
+      console.log(settings);
+      user.user_id = settings.seq - 1;
+      console.log(user.user_id);
       next();
     });
  });
@@ -44,6 +57,30 @@ exports.saveDoc = function(req, res) {
     });
 };
 
+
+
+//保存用户信息
+
+exports.saveUser = function(req, res) {
+  console.log('saveUser started');
+  var now = new Date().getTime();
+  var reqBody = req.body, userObj = {
+		  user_name : reqBody.user_name,
+      manager : reqBody.manager,
+      isvalid : reqBody.isvalid,
+      regular : reqBody.regular,
+      create_user : reqBody.create_user
+  };
+  var user = new User(userObj);
+  console.log(user);
+  user.save(function(err, user) {
+      if (err || !user) {
+          throw err;
+      } else {
+          res.json(user);
+      }
+  });
+};
 
 //查询用户
 exports.getUserInfo = function(req, res) {
@@ -85,8 +122,8 @@ exports.getUserInfo = function(req, res) {
   console.log("paramsstr=" + paramsstr);
   var params = eval("("+paramsstr+")");
   //调用mongodb查询用户信息
-  SchoolInfo.find(params, {_id:1,user_name:1,ranking:1,isvalid:1,user_role:1,user_class:1, user_id:1, create_user:1}).sort({average_score:-1, ranking:1}).skip(req.body.start).limit(req.body.length).exec(function(error, schoolInfos) {
-      SchoolInfo.count(params).exec(function (err, count) {
+  User.find(params, {_id:1,user_name:1,ranking:1,isvalid:1,user_role:1,user_class:1, user_id:1, create_user:1}).sort({average_score:-1, ranking:1}).skip(req.body.start).limit(req.body.length).exec(function(error, schoolInfos) {
+	  User.count(params).exec(function (err, count) {
           res.json({
               draw: req.body.draw,
               recordsTotal: count,

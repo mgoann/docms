@@ -34,6 +34,7 @@ app.get('/schoolInfo/scores', routes.getSchoolInfoScores);
 app.get('/schoolInfo/plans', routes.getSchoolInfoPlans);
 app.post('/distribution/all', routes.getDistributionInfo);
 app.post('/distribution/top10', routes.getDistributionInfoTop10);
+app.post('/user/save', routes.saveUser);
 app.post('/user/all', routes.getUserInfo);
 
 //创建http server
