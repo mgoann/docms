@@ -46,61 +46,42 @@
 						<form action="" class="smart-form">
 							<fieldset>
 								<div class="row">
-									<!--<section class="col col-4  col-sm-6">
-										<label class="select">
-												<select name="year">
-											 		<option value="2013">2013</option>
-													<option value="2012">2012</option>
-													<option value="2011">2011</option>
-												</select>
-												<i></i>
-										</label>
-									</section>-->
 									<section class="col col-4  col-sm-6">
 										<label class="input"> 
-											<i class="icon-prepend fa fa-barcode"></i>
+											<i class="icon-prepend fa fa-folder"></i>
 											<input type="text"
-												name="lastname" placeholder="档案编号">
+												name="doc_name" placeholder="档案名称">
 										</label>
 									</section>
 									<section class="col col-4  col-sm-6">
 										<label class="input"> 
 											<i class="icon-prepend fa fa-folder"></i>
 											<input type="text"
-												name="lastname" placeholder="项目名称">
+												name="project_name" placeholder="项目名称">
 										</label>
 									</section>
 									<section class="col col-4  col-sm-6">
-										<label class="select"> <select name="region_name">
+										<label class="select"> <select name="doc_type">
 												<option value="">档案类型</option>
-											  	<option value="XX项目">XX项目</option>
-											  	<option value="棚户区改造项目">棚户区改造项目</option> 
-										       	<option value="">全部</option>
+											  	<option value="控规">控规</option>
+											  	<option value="详规">详规</option> 
 										    </select> <i></i>
 										</label>
 									</section>
-								</div>
-								
-								<div class="row">
 									
 									<section class="col col-4 col-sm-6">
-										<label class="input"> <i class="icon-prepend fa fa-calendar"></i>
-											<input type="text" name="startdate" id="startdate" placeholder="录入时间" class="hasDatepicker">
-										</label>
-									</section>
-									
-									<section class="col col-4 col-sm-6">
-										<label class="input"> 
-											<i class="icon-prepend fa fa-user"></i>
-											<input type="text"
-												name="lastname" placeholder="档案员">
+										<label class="select"> <select name=doc_mgr>
+												<option value="">档案管理员</option>
+											  	<option value="管理员1">管理员1</option>
+											  	<option value="管理员2">管理员2</option> 
+										    </select> <i></i>
 										</label>
 									</section>
 									<section class="col col-4 col-sm-6">
-										<label class="select"> <select name="region_name">
-												<option value="">东1柜</option>
-											  	<option value="XX项目">西1柜</option>
-											  	<option value="棚户区改造项目">北1柜</option> 
+										<label class="select"> <select name="doc_location">
+												<option value="">档案位置</option>
+											  	<option value="西1柜">西1柜</option>
+											  	<option value="北1柜">北1柜</option> 
 										    </select> <i></i>
 										</label>
 									</section>
@@ -118,40 +99,27 @@
 										<label class="input"> 
 											<i class="icon-prepend fa fa-database"></i>
 											<input type="text"
-												name="lastname" placeholder="库存数量">
-										</label>
-									</section>
-									</div>
-									<div class="row">
-									<section class="col col-4 col-sm-6">
-										<label class="input"> 
-											<img class="media-object" alt="64x64" src="img/demo/sample.jpg">
+												name="doc_num" placeholder="库存数量">
 										</label>
 									</section>
 									
-<!--
-									<section  class="col col-2 col-sm-1">
-										<label class="checkbox"> <input type="checkbox"
-											name="mark_211" id="mark_211"> <i></i>211院校
-										</label> 
-									</section>
-									<section  class="col col-2 col-sm-1">
-										<label class="checkbox"> <input type="checkbox"
-											name="mark_985" id="mark_985"> <i></i>985院校</label>
-									</section>
-		-->							
 								</div>
 								
 								<div class="row">
 									<section  class="col col-12 col-sm-12"> 
-										<button class="btn btn-primary btn-sm" type="submit">
+									<a id="submit" class="btn btn-primary btn-sm" >
 											<i class="fa fa-save"></i>
 											提交
-										</button>
+											</a>
 									</section>
 								</div>
 							</fieldset>
 						</form>
+						<section class="col col-4 col-sm-6">
+										<label class="input"> 
+											<img class="media-object" alt="64x64" src="img/demo/sample.jpg">
+										</label>
+									</section>
 					</div>
 					<!-- end widget content -->
 
@@ -296,6 +264,41 @@
             }
         } );
         
+        $("#submit").on('click', function(){
+            $.ajax({
+		        url:'/doc/save',
+		        type:'POST',
+		        data : function ( d ) {
+                    return $.extend( {}, d, {
+                        "doc_name": $('#doc_name').val(),
+                        "project_name": $('#project_name').val(),
+                        "doc_type": $('#doc_type').val(),
+                        "doc_mgr": $('#doc_mgr').val(),
+                        "doc_location": $('#doc_location').val(),
+                        "doc_num": $('#doc_num').val()
+                      } );
+                 },
+				success : function(data) {
+				    $.bigBox({
+						title : "提示信息",
+						content : "保存档案信息成功！档案Id为xxxx",
+						color : "#739E73",
+						timeout : 6000,
+						icon : "fa fa-check"
+					});
+				    
+				},
+				error: function(data) {
+				    $.bigBox({
+             			title : "错误信息",
+             			content : "保存档案信息成功！",
+             			color : "#C46A69",
+             			icon : "fa fa-warning shake animated",
+             			timeout : 6000
+             		});
+				}
+		    });
+        });
         
      
         // On each draw, loop over the `detailRows` array and show any child rows
