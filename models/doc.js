@@ -1,9 +1,5 @@
 var mongoose = require('mongoose');
 
-exports.SequenceSchema = new mongoose.Schema({
-    nextSeqNumber: { type: Number, default: 10000 }
-});
-
 exports.DocSchema = new mongoose.Schema({
     doc_id : Number,
     doc_name : String,
