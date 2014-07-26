@@ -7,7 +7,7 @@ exports.SequenceSchema = new mongoose.Schema({
 exports.DocSchema = new mongoose.Schema({
     doc_id : Number,
     doc_name : String,
-    doc_type : Number,
+    doc_type : String,
     doc_tag : String,
     project_name : String,
     total_num : Number,
