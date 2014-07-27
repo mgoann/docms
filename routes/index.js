@@ -66,10 +66,9 @@ exports.saveUser = function(req, res) {
   var now = new Date().getTime();
   var reqBody = req.body, userObj = {
 		  user_name : reqBody.user_name,
-      manager : reqBody.manager,
+		  user_role : reqBody.user_role,
       isvalid : reqBody.isvalid,
-      regular : reqBody.regular,
-      create_user : reqBody.create_user
+      create_user : reqBody.create_user 
   };
   var user = new User(userObj);
   console.log(user);
@@ -80,6 +79,57 @@ exports.saveUser = function(req, res) {
           res.json(user);
       }
   });
+};
+exports.deleteUser = function(req, res) {
+	  console.log('deleteUser started');
+	  var reqBody = req.body, userObj = {
+			  user_id : reqBody.user_id
+	  };
+	  var user = new User(userObj);
+	  console.log(user);
+	  var data ;
+	  User.remove( {user_id:user.user_id},function(err, user) {
+	      if (err || !user) {
+	          throw err;
+	      } else {
+	    	  console.log("#################### deleted");
+	    	  data = "true";
+	          res.json(data);
+	      }
+	  });
+	};
+exports.updateUser = function(req, res) {
+  console.log('updateUser started');
+  var now = new Date().getTime();
+  var reqBody = req.body, userObj = {
+		  user_name : reqBody.user_name,
+		  user_role : reqBody.user_role,
+      isvalid : reqBody.isvalid,
+      create_user : reqBody.create_user
+  };
+  var user = new User(userObj);
+  console.log(user);
+  user.save(function(err, user) {
+      if (err || !user) {
+          throw err;
+      } else {
+          res.json(user);
+      }
+  	});
+};
+//查询对应修改记录，并跳转到修改页面
+exports.toUserModify = function(req, res) {
+	var id = req.params.user_id;
+	console.log('id = ' + id);
+	
+	if(id && '' != id) {
+		console.log('----delete id = ' + id);
+		User.findById({user_id:id}, function(err, users){
+			console.log('-------findById()------' + users);
+			
+			res.render('/ajax/userupdate.html',{title:'修改ToDos',user:users});
+		});
+	};
 };
 
 //查询用户
@@ -93,7 +143,6 @@ exports.getUserInfo = function(req, res) {
   var user_id = req.body.user_id;
   var create_user = req.body.create_user;
   
-  console.log("user_name="+user_name);
   var paramsstr = "{";
   if (user_name !== undefined && user_name !== "") {
       paramsstr += '"user_name":/'+user_name+'/,';
@@ -107,13 +156,11 @@ exports.getUserInfo = function(req, res) {
   if (user_class !== undefined && user_class !== "") {
       paramsstr += '"user_class":"'+user_class+'",';
   }
-  if (user_id === 'on') {
-      console.log(user_id);
-      paramsstr += '"user_id":true,';
+  if (user_id !== undefined && user_id !== "") {
+      paramsstr += '"user_id":"'+user_id+'",';
   }
-  if (create_user === 'on') {
-      console.log(create_user);
-      paramsstr += '"create_user":true,';
+  if (create_user !== undefined && create_user !== "") {
+      paramsstr += '"create_user":"'+create_user+'",';
   }
   if (paramsstr.indexOf(",") > -1){
   	paramsstr = paramsstr.substring(0, paramsstr.length-1);
@@ -122,13 +169,13 @@ exports.getUserInfo = function(req, res) {
   console.log("paramsstr=" + paramsstr);
   var params = eval("("+paramsstr+")");
   //调用mongodb查询用户信息
-  User.find(params, {_id:1,user_name:1,ranking:1,isvalid:1,user_role:1,user_class:1, user_id:1, create_user:1}).sort({average_score:-1, ranking:1}).skip(req.body.start).limit(req.body.length).exec(function(error, schoolInfos) {
+  User.find(params, {_id:1,user_name:1,ranking:1,isvalid:1,user_role:1,user_class:1, user_id:1, create_user:1}).limit(req.body.length).exec(function(error, users) {
 	  User.count(params).exec(function (err, count) {
           res.json({
               draw: req.body.draw,
               recordsTotal: count,
               recordsFiltered: count,
-              data: schoolInfos, 
+              data: users, 
           })
         });
   });

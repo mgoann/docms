@@ -60,7 +60,7 @@
 										<label class="input"> 
 											<i class="icon-prepend fa fa-database"></i>
 											<input type="text"
-												name="lastname" placeholder="用户编号">
+												name="lastname" readonly="readonly" placeholder="用户编号 后台自动生成">
 										</label>
 									</section>
 									<section class="col col-4  col-sm-6">
@@ -73,8 +73,8 @@
 									<section class="col col-4  col-sm-6">
 										<label class="select"> <select name="isvalid">
 												<option value="">是否过期</option>
-											  	<option value="1">有效</option>
-											  	<option value="0">过期</option>  
+											  	<option value="有效">有效</option>
+											  	<option value="过期">过期</option>  
 										    </select> <i></i>
 										</label>
 									</section>
@@ -95,13 +95,14 @@
 												name="create_user" placeholder="操作员">
 										</label>
 									</section>
-									<section class="col col-2 col-sm-1">
-										<label class="checkbox"> <input type="checkbox" name="manager" id="manager"> <i></i>管理员</label> 
+									<section class="col col-4  col-sm-6">
+										<label class="select"> <select name="user_role">
+												<option value="">角色</option>
+											  	<option value="管理员">管理员</option>
+											  	<option value="普通用户">普通用户</option>  
+										    </select> <i></i>
+										</label>
 									</section>
-									<section class="col col-2 col-sm-1">
-										<label class="checkbox"> <input type="checkbox" name="regular" id="regular"> <i></i>普通用户</label>
-									</section>
-									  	
 								</div>
 								
 								<div class="row">

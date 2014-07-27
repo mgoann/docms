@@ -4,7 +4,7 @@ exports.UserSchema = new mongoose.Schema({
     user_id : Number,
     user_name : String,
     user_type : String,
-    isvalid : Number,
+    isvalid : String,
     create_date : Date,
     create_user : String,
     user_role : String

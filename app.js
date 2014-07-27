@@ -34,8 +34,11 @@ app.get('/schoolInfo/scores', routes.getSchoolInfoScores);
 app.get('/schoolInfo/plans', routes.getSchoolInfoPlans);
 app.post('/distribution/all', routes.getDistributionInfo);
 app.post('/distribution/top10', routes.getDistributionInfoTop10);
-app.post('/user/save', routes.saveUser);
-app.post('/user/all', routes.getUserInfo);
+app.post('/user/save', routes.saveUser); // 用户新增
+app.post('/user/delete', routes.deleteUser); // 用户删除
+app.post('/user/all', routes.getUserInfo); // 用户查询
+app.get('/user/toupdate/:user_id', routes.toUserModify); //跳转到修改页面
+app.post('/user/update', routes.updateUser); // 用户修改
 
 //创建http server
 var server = http.createServer(app);
