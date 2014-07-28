@@ -6,6 +6,7 @@ exports.DocSchema = new mongoose.Schema({
     doc_type : String,
     doc_tag : String,
     doc_img : String,
+    doc_file : String,
     project_name : String,
     total_num : Number,
     store_num : Number,

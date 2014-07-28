@@ -43,12 +43,12 @@
 
 					<!-- widget content -->
 					<div class="widget-body">
-						<form action="" class="smart-form">
+						<form id="school-query-form" class="smart-form">
 							<fieldset>
 								<div class="row">
 									<section class="col col-4  col-sm-6">
 										<label class="select">
-												<select name="year">
+												<select id="year">
 											 		<option value="2013">2013</option>
 													<option value="2012">2012</option>
 													<option value="2011">2011</option>
@@ -58,13 +58,13 @@
 									</section>
 									<section class="col col-4  col-sm-6">
 										<label class="input"> 
-											<i class="icon-prepend fa fa-graduation-cap"></i>
+<!-- 											<i class="icon-prepend fa fa-graduation-cap"></i> -->
 											<input type="text"
-												name="lastname" placeholder="院校名称">
+												id="school_name" placeholder="院校名称" >
 										</label>
 									</section>
 									<section class="col col-4  col-sm-6">
-										<label class="select"> <select name="region_name">
+										<label class="select"> <select id="region_name">
 												<option value="">所在地</option>
 											  	<option value="北京">北京</option>
 											  	<option value="甘肃">甘肃</option>
@@ -89,7 +89,7 @@
 								<div class="row">
 									
 									<section class="col col-4 col-sm-6">
-										<label class="select"> <select name="batch_name">
+										<label class="select"> <select id="batch_name">
 												<option value="">招生批次</option>
 											  	<option value="本科第一批">本科第一批</option>
 											  	<option value="本科第二批">本科第二批</option>
@@ -101,7 +101,7 @@
 									</section>
 									
 									<section class="col col-4 col-sm-6">
-										<label class="select"> <select name="student_class">
+										<label class="select"> <select id="student_class">
 												<option value="">考生类别</option>
 											  	<option value="普通文科">普通文科</option>
 											  	<option value="普通理科">普通理科</option>
@@ -125,9 +125,9 @@
 								
 								<div class="row">
 									<section  class="col col-12 col-sm-12">
-										<button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>
+										<a id="submit" class="btn btn-primary btn-sm" ><i class="fa fa-search"></i>
 											查询
-										</button>
+										</a>
 									</section>
 								</div>
 							</fieldset>
@@ -167,123 +167,23 @@
 
 					<!-- widget content -->
 					<div class="widget-body no-padding">
-					
+						<h1 id="loading" class="ajax-loading-animation text-center"><i class="fa fa-cog fa-spin"></i> Loading...</h1>
 						<table id="datatable_col_reorder" class="table table-striped table-condensed table-hover" cellspacing="0" width="100%">
 							<thead>
 								<tr>
 									<th class="hidden">id</th>
 									<th>院校名称</th>
 									<th>排名</th>
-									<th>分数信息</th>
 									<th>地区</th>
 									<th>批次</th>
 									<th>学生类别</th>
 								</tr>
 							</thead>
-							<tbody>
-								<tr>
-									<td>1</td>
-									<td>
-										新余学院
-										
-									</td>
-									<td>654
-									<td>
-											231,245,321
-									</td>
-									<td> 江西
-									
-									</td>
-									<td> 本科第二批
-									
-									</td>
-									<td> 普通文科
-									
-									</td>
-								</tr>
-								<tr>
-									<td>2</td>
-									<td>
-										龙岩学院
-									</td>
-									<td>654
-									<td>
-											653,678,709
-									</td>
-									<td> 江西
-									
-									</td>
-									<td> 本科第二批
-									
-									</td>
-									<td> 普通文科
-									
-									</td>
-								</tr>
-								<tr>
-									<td>3</td>
-									<td>
-										龙岩学院
-									</td>
-									<td>654
-									<td>
-											653,678,709
-									</td>
-									<td> 江西
-									
-									</td>
-									<td> 本科第二批
-									
-									</td>
-									<td> 普通文科
-									
-									</td>
-								</tr>
-								<tr>
-									<td>4</td>
-									<td>
-										龙岩学院
-									</td>
-									<td>654
-									<td>
-											653,678,709
-									</td>
-									<td> 江西
-									
-									</td>
-									<td> 本科第二批
-									
-									</td>
-									<td> 普通文科
-									
-									</td>
-								</tr>
-								<tr>
-									<td>5</td>
-									<td>
-										龙岩学院
-									</td>
-									<td>654
-									<td>
-											653,678,709
-									</td>
-									<td> 江西
-									
-									</td>
-									<td> 本科第二批
-									
-									</td>
-									<td> 普通文科
-									
-									</td>
-								</tr>
-								
-							</tbody>
 						</table>
 
 					</div>
 					<!-- end widget content -->
-
+							 
 				</div>
 				<!-- end widget div -->
 
@@ -328,7 +228,7 @@
      * and makes rendering easier.
      *
      */
-
+	
     pageSetUp();
 
     // PAGE RELATED SCRIPTS
@@ -337,58 +237,124 @@
 
     var pagefunction = function() {
         var dt = $('#datatable_col_reorder').DataTable({
-            "iDisplayLength":30,
-            "bProcessing":true,
+            "iDisplayLength":20,
             "bPaginate": true,
-            "bFilter": true,
+            "bFilter": false,
             "bSort": true, //排序功能
             "bLengthChange":false,
             "bInfo": false,
-            //"scrollX": true,
-            //"scrollCollapse": true,
-	        "aaSorting": [
-				[ 2, "asc" ]
-			],
+            "deferRender": true,
+            "renderer": "bootstrap",
+            "processing": false,
+            "serverSide": true,
+            "bDestroy": true,
+            "ajax": {
+                "url": "/schoolInfo/all",
+                "type": "POST",
+                "data": function ( d ) {
+                    return $.extend( {}, d, {
+                        "year": $('#year').val(),
+                        "school_name": $('#school_name').val(),
+                        "region_name": $('#region_name').val(),
+                        "batch_name": $('#batch_name').val(),
+                        "student_class": $('#student_class').val(),
+                        "mark_211": $("#mark_211").attr("checked") ? 'on' : 'off',
+                                "mark_985": $("#mark_985").attr("checked") ? 'on' : 'off'
+                      } );
+                 },
+                 "error": function(request) {
+                     $.bigBox({
+             			title : "Error",
+             			content : "查询院校信息出错，请联系系统管理员！",
+             			color : "#C46A69",
+             			icon : "fa fa-warning shake animated",
+             			timeout : 6000
+             		});
+                 },
+                 "complete": function() {
+                     $("#loading").hide();
+                     $("#datatable_col_reorder_wrapper").fadeIn(500);
+                 },
+                 "beforeSend": function() {
+                     $("#loading").show();
+                     $("#datatable_col_reorder_wrapper").hide();
+                 }
+            },
 			"oLanguage": {
 			    "sZeroRecords": "没有检索到数据",
 			    "oPaginate": {
-			    "sPrevious": "前一页",
-			    "sNext": "后一页",
+			    "sPrevious": "上一页",
+			    "sNext": "下一页",
 			    },
 			  "sZeroRecords": "没有检索到数据",
 			},
-			"processing": '<h1 class="ajax-loading-animation"><i class="fa fa-cog fa-spin"></i> Loading...</h1>',
-		  	//"ajax": '../ajax/data/arrays.txt',
-		  	"serverSide": false,
+			"columns": [
+	            { "data": "_id" },
+	            { "data": "school_name" },
+	            { "data": "ranking" },
+	            { "data": "region_name" },
+	            { "data": "batch_name" },
+	            { "data": "student_class" }
+			],
 		  	"columnDefs": [ {
-		  	    "targets": 3,
-		  	    "render": function ( data, type, full, meta ) {
-		  	        return '<span class="sparkline display-inline" data-sparkline-type="box" data-sparkline-width="150">0,'+data+',720</span><br />'
-		  	        +'<small class="text-muted  font-sm font-xs ">最低分:'+data.split(',')[0]
-		  	        +'平均分:'+data.split(',')[1]
-		  	        +'最高分:'+data.split(',')[2]+'</small>';
-		  	    }
+		  	  "targets": 2,
+		  	    "defaultContent": "-"
 		  	  }, {
 		  	    "targets": 1,
 		  	    "render": function ( data, type, full, meta ) {
-					return '<strong>'+data+'</strong><br /><img src="img/school/211.jpg" title="211工程院校" height="30px"></img><img src="img/school/985.png" height="30px"></img></h4>';
-		  	        //return '<a href="javascript:void(0);">'+data+'</a><small>211</small><small>985</small>';
-		  	    }
+		  	        var tdHtml = '<strong>'+data+'</strong><br />';
+		  	        if (full.mark_211) {
+		  	          tdHtml += '<img src="img/school/211.jpg" title="211工程院校" height="30px"></img>';
+		  	        }
+		  	        if (full.mark_985) {
+		  	          tdHtml += '<img src="img/school/985.png" height="30px"></img>';
+		  	        }
+					return tdHtml;
+		  	    },
+		  	  	"sortable": true,
+		  	  	"sWidth": "30%"
 		  	  }, {
 	                "targets": [ 0 ],
-	                "visible": false,
-	                "searchable": false
+	                "visible": false
+		  	  }, {
+	                "targets": [ 3, 4, 5 ],
+	                "sortable": false,
+	                "sWidth": "20%"
 		  	  }],
-		  	"fnDrawCallback": function (oSettings) {
-		  	  runAllCharts();
-             }
+		  	/* "fnDrawCallback": function (oSettings) {
+		  	 	runAllCharts();
+             } */
 		  	
         });
         
+        //定义图表头信息
+        var chartsHeader = [
+        	'<span>近3年分数趋势图</span>',
+        	'<span>近3年招生计划趋势图</span>',
+        	'<span>往年招生计划比例图</span>',
+        ];
         
+        var chartsBody = [
+			'<div id="score-graph" class="chart no-padding"><h1 class="ajax-loading-animation text-center"><i class="fa fa-cog fa-spin"></i> Loading...</h1></div>',
+			'<div id="plan-graph" class="chart no-padding"><h1 class="ajax-loading-animation text-center"><i class="fa fa-cog fa-spin"></i> Loading...</h1></div>',
+			'<div id="bar-graph" class="chart no-padding"><h1 class="ajax-loading-animation text-center"><i class="fa fa-cog fa-spin"></i> Loading...</h1></div>',
+        ];
         function format ( d ) {
-            return '<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">					<div class="well well-sm well-light">						<h4 class="txt-color-blue">Pie <span class="semi-bold">Chart</span> </h4>						<br>						<div class="text-center">							<div class="sparkline txt-color-blue display-inline" 							data-sparkline-type="pie" 							data-sparkline-offset="90" 							data-sparkline-piesize="75px">3,5,2</div>							<div class="sparkline txt-color-blue display-inline" 							data-sparkline-type="pie" 							data-sparkline-offset="90" 							data-sparkline-piesize="75px">30,20,15,35</div>						</div>					</div>				</div>				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">					<div class="well well-sm well-light padding-10">						<h4 class="txt-color-green">Composite <span class="semi-bold">Chart</span> </h4>						<br>						<div class="sparkline" 						data-sparkline-type="compositeline" 						data-sparkline-spotradius-top="5" 						data-sparkline-color-top="#3a6965" 						data-sparkline-line-width-top="3" 						data-sparkline-color-bottom="#2b5c59" 						data-sparkline-spot-color="#2b5c59" 						data-sparkline-minspot-color-top="#97bfbf" 						data-sparkline-maxspot-color-top="#c2cccc" 						data-sparkline-highlightline-color-top="#cce8e4" 						data-sparkline-highlightspot-color-top="#9dbdb9" 						data-sparkline-width="96%" 						data-sparkline-height="78px" 						data-sparkline-line-val="[6,4,7,8,4,3,2,2,5,6,7,4,1,5,7,9,9,8,7,6]" 						data-sparkline-bar-val="[4,1,5,7,9,9,8,7,6,6,4,7,8,4,3,2,2,5,6,7]">						</div> 						</div>				</div>				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">					<div class="well well-sm well-light">						<h4 class="txt-color-blueLight">Bar <span class="semi-bold">Chart</span> </h4>						<br>						<div class="sparkline txt-color-blueLight text-center" 						data-sparkline-type="bar" 						data-sparkline-width="96%" 						data-sparkline-barwidth="11" 						data-sparkline-barspacing = "5" 						data-sparkline-height="80px">							4,3,5,7,9,9,8,7,6,6,4,7,8,4						</div>					</div>				</div>				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">					<div class="well well-sm well-light">						<h4 class="txt-color-blueLight">Bar <span class="semi-bold">Stacked Chart</span> </h4>						<br>						<div class="sparkline txt-color-blue text-center" 						data-sparkline-type="bar" 						data-sparkline-width="96%" 						data-sparkline-barwidth="11" 						data-sparkline-barspacing = "5" 						data-sparkline-barstacked-color=\'["#92A2A8", "#4493B1"]\' 						data-sparkline-height="80px">4:5,3:4,5:7,6:3,4:6,6:5,8:2,4:3,6:4,6:2,4:4,7:2,8:5,4:2</div>					</div>				</div></div>';
+            //var graphsHtml = '<div class="row"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">';
+            var graphsHtml = '<div class="row">';
+            for (var i = 0; i < 3; i++) {
+                graphsHtml += '<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">';
+                //graphsHtml += '<div class="well well-lg well-right">';
+                //graphsHtml += '<div class="text-left">';
+                graphsHtml += chartsHeader[i]+chartsBody[i];
+                //graphsHtml += '</div>';
+                //graphsHtml += '</div>';
+                graphsHtml += '</div>';
+            }
+            return graphsHtml+"</div>";
         }
+        
+        //初始化datatables点击显示图表
         $('#datatable_col_reorder tbody').on( 'click', "tr[role='row']", function () {
             var tr = $(this);
             var row = dt.row(tr);
@@ -402,10 +368,134 @@
             }
             else {
                 row.child( format( row.data() ) ).show();
-                runAllCharts();
+                //runAllCharts();
+             	// area graph
+                initGraphs(row.data());
             }
         } );
         
+        function initGraphs(d) {
+            if ($('#score-graph').length){
+                $.ajax({
+    		        url:'/schoolInfo/scores',
+    		        type:'GET',
+    		        data : {
+						school_name : d.school_name,
+                		batch_name : d.batch_name,
+                		student_class : d.student_class
+					},
+					success : function(datas) {
+				        var data_arr = [];
+				        var all_score = [];
+				        $.each(datas.datas, function(idx, rowData){
+				            data_arr.push({
+				                period: ""+rowData.year,
+				                x: rowData.tidang_score ? rowData.tidang_score : null,
+				            	y: rowData.average_score ? rowData.average_score : null,
+				            	z: rowData.max_score ? rowData.max_score : null
+				            });
+				            if (rowData.tidang_score)
+				            	all_score.push(rowData.tidang_score);
+				            if (rowData.average_score)
+				            	all_score.push(rowData.average_score);
+				            if (rowData.max_score)
+				            	all_score.push(rowData.max_score);
+				        });
+				        all_score.sort(function sortNumber(a,b){ 
+				            return a - b 
+				        });
+				        var maxScore = all_score[all_score.length - 1];
+				        var minScore = all_score[0];
+				        Morris.Line({
+		      				element: 'score-graph',
+		      				data: data_arr,
+		      				xkey: 'period',
+		      				ykeys: ['z', 'y', 'x'],
+		      				labels: ['最高分', '平均分', '最低分'],
+		      				ymax:maxScore + (maxScore - minScore) / 2,
+		      				ymin:minScore - (maxScore - minScore) / 2
+		      				//pointSize: 6,
+		    				//xLabels:'year',
+		    				//events:['2013','2012','2011']
+		      			})
+					}
+    		    });
+    		};
+    		
+    		if ($('#plan-graph').length){
+    		    $.ajax({
+    		        url:'/schoolInfo/plans',
+    		        type:'GET',
+    		        data : {
+						school_name : d.school_name,
+                		batch_name : d.batch_name,
+                		student_class : d.student_class
+					},
+					success : function(datas) {
+				        var data_arr = [];
+				        var all_score = [];
+				        $.each(datas.datas, function(idx, rowData){
+				            data_arr.push({
+				                period: ""+rowData.year,
+				                x: rowData.apply_num ? rowData.apply_num : null,
+				                y: rowData.plan_hire_num ? rowData.plan_hire_num : null,
+				            	z: rowData.enrolled_num ? rowData.enrolled_num : null
+				            });
+				            if (rowData.plan_hire_num)
+				            	all_score.push(rowData.plan_hire_num);
+				            if (rowData.apply_num)
+				            	all_score.push(rowData.apply_num);
+				            if (rowData.enrolled_num)
+				            	all_score.push(rowData.enrolled_num);
+				        });
+				        all_score.sort(function sortNumber(a,b){ 
+				            return a - b 
+				        });
+				        var maxScore = all_score[all_score.length - 1];
+				        var minScore = all_score[0];
+				        Morris.Line({
+		      				element: 'plan-graph',
+		      				data: data_arr,
+		      				xkey: 'period',
+		      				ykeys: ['x', 'y', 'z'],
+		      				labels: ['考生报考', '计划招生', '实际录取'],
+		      				ymax:maxScore + (maxScore - minScore) / 2,
+		      				ymin:minScore - (maxScore - minScore) / 2 < 0 ? 0 : minScore - (maxScore - minScore) / 2
+		      				//pointSize: 6,
+		    				//xLabels:'year',
+		    				//events:['2013','2012','2011']
+		      			})
+					}
+    		    });
+    		};
+    		
+    		// donut
+    		if ($('#bar-graph').length){
+    		    $.ajax({
+    		        url:'/schoolInfo/plan',
+    		        type:'GET',
+    		        data : {
+						_id : d._id
+					},
+					success : function(data) {
+				        var data_arr = [
+							{ value: data.apply_num ? data.apply_num : null, label: '考生报考人数'},
+				            { value: data.plan_hire_num ? data.plan_hire_num : null, label: '计划招生人数'},
+		    			    { value: data.enrolled_num ? data.enrolled_num : null, label: '实际录取人数'}
+		    			    
+				        ];
+					    Morris.Donut({
+		    			  element: 'bar-graph',
+		    			  data: data_arr,
+		    			  formatter: function(d) {
+		    			      return d+"人";
+		    			  }
+		    			});
+					}
+    		    });
+    		}
+    		
+        }
         
      
         // On each draw, loop over the `detailRows` array and show any child rows
@@ -434,8 +524,46 @@
         
 	    $("div.toolbar").html('<div class="text-right"><img src="img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
         */
-        
+        //b.html('<h1 class="ajax-loading-animation"><i class="fa fa-cog fa-spin"></i> Loading...</h1>'),
         $("#datatable_col_reorder_wrapper").addClass("table-responsive");
+        //$(dt.table().container()).addClass( 'table-responsive' );
+        //dt.tables().containers().to$().addClass("table-responsive");
+        /* tables
+        .tables()
+        .containers()
+        .to$() */
+        //定义查询按钮
+        $("#submit").on('click', function(){
+            dt.ajax.reload();
+        });
+        
+        $("#school_name").autocomplete({
+			source : function(request, response) {
+				$.ajax({
+					url : "/school/names",
+					dataType : "json",
+					data : {
+						featureClass : "P",
+						style : "full",
+						maxRows : 14,
+						name_startsWith : request.term
+					},
+					success : function(data) {
+					    response($.map(data, function(item) {
+							return {
+								label : item.name,
+								value : item.name
+							}
+						}));
+					}
+				});
+			},
+			minLength : 2,
+			select : function(event, ui) {
+				$('#school_name').attr('value', ui.item.label);
+			}
+		});
+        
     };
     
     
@@ -444,7 +572,11 @@
     	loadScript("js/plugin/datatables/jquery.dataTables.min.js", function(){
 			loadScript("js/plugin/datatables/dataTables.colVis.min.js", function(){
 				loadScript("js/plugin/datatables/dataTables.tableTools.min.js", function(){
-					loadScript("js/plugin/datatables/dataTables.bootstrap.min.js", pagefunction);
+				    loadScript("js/plugin/morris/raphael.min.js", function(){
+				    	loadScript("js/plugin/morris/morris.min.js", function(){
+							loadScript("js/plugin/datatables/dataTables.bootstrap.min.js", pagefunction);
+				    	});
+				    });
 				});
 			});
 		});

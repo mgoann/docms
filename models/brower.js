@@ -5,5 +5,5 @@ exports.BrowerSchema = new mongoose.Schema({
     brower_men : String,
     brower_time : String,
     brower_mark : String,
-    is_back : Boolean
+    is_back : {type:Boolean, default:false}
 });
