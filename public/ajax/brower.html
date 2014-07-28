@@ -65,12 +65,10 @@
 						});
 					    
 					    if (data._id) {
-					    	 $('#brower_id').val(data._id);
-					    	 $('#remoteModal').modal('hide');
-						} else {
-						    $('#brower_id').val('');
-						}
-					    
+					    	 var modal = $('#remoteModal');
+					    	 modal.data.result = 'true';
+					    	 modal.modal('hide');
+						} 
 					},
 					error: function(data) {
 					    $.bigBox({
