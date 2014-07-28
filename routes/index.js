@@ -54,10 +54,12 @@ exports.saveDoc = function(req, res) {
 exports.browerDoc = function(req, res) {
     console.log('browerDoc started');
     Doc.count({"doc_id": req.body.doc_id, "store_num":{"$gt":0}}).exec(function (err, count) {
-        if (count < 0)
-            return res.json({
+        if (count < 0) {
+            res.json({
                 msg: '档案没有可用库存，无法借阅！'
             });
+            return;
+        }
         Doc.findOneAndUpdate({"doc_id": req.body.doc_id, "store_num":{"$gt":0}}, { $inc: { store_num: -1 }}, function(err, doc){
             if (doc.store_num < 0)
                 return res.json({
@@ -85,38 +87,41 @@ exports.browerDoc = function(req, res) {
 //归还档案
 exports.backDoc = function(req, res) {
     console.log('backDoc started');
-    Doc.count({"doc_id": req.body.doc_id, $where: "this.store_num != this.total_num"}).exec(function (err, count) {
-        if (count < 0)
-            return res.json({
-                msg: '档案未被借阅，无法归还！'
+    Doc.count({"doc_id": req.body.doc_id, $where: "this.store_num < this.total_num" }, function(err, count){
+        console.log('doc_count='+count);
+        if (count == 0) {
+            res.json({
+                msg: '档案未被'+req.body.brower_men+'借阅，无法归还！'
             });
-        Brower.findOneAndUpdate({"doc_id": req.body.doc_id, "brower_men": req.body.brower_men, "is_back": false}, {$set:{is_back:true}}, function(err, browerInfo){
-            
-            if (!browerInfo)
-                return res.json({
+            return;
+        }
+        Brower.count({"doc_id": req.body.doc_id, "brower_mark":"借阅","brower_men": req.body.brower_men, "is_back": false}, function(err, count){
+            console.log('brower_count='+count);
+            if (count == 0) {
+                res.json({
                     msg: '档案未被'+req.body.brower_men+'借阅，无法归还！'
                 });
-            Doc.findOneAndUpdate({"doc_id": req.body.doc_id, $where: "this.store_num != this.total_num" }, { $inc: { store_num: 1 }}, function(err, doc){
-                if (!doc || (doc.store_num == doc.total_num))
-                    return res.json({
-                        msg: '档案未被借阅，无法归还！'
+                return;
+            }
+            Brower.findOneAndUpdate({"doc_id": req.body.doc_id, "brower_men": req.body.brower_men, "is_back": false}, {$set:{is_back:true}}, function(err, browerInfo){
+                Doc.findOneAndUpdate({"doc_id": req.body.doc_id, $where: "this.store_num < this.total_num" }, { $inc: { store_num: 1 }}, function(err, docInfo){
+                    var now = new Date();
+                    var reqBody = req.body, browerObj = {
+                            doc_id : reqBody.doc_id,
+                            brower_men : reqBody.brower_men,
+                            brower_time : now.getFullYear()+'-'+(now.getMonth()+1)+'-'+now.getDate()+' '+now.getHours()+':'+now.getMinutes()+':'+now.getSeconds(),
+                            brower_mark: '归还'
+                    };
+                    var brower = new Brower(browerObj);
+                    brower.save(function(err, doc) {
+                        if (err || !doc) {
+                            throw err;
+                        } else {
+                            res.json(doc);
+                        }
                     });
-                var now = new Date();
-                var reqBody = req.body, browerObj = {
-                        doc_id : reqBody.doc_id,
-                        brower_men : reqBody.brower_men,
-                        brower_time : now.getFullYear()+'-'+(now.getMonth()+1)+'-'+now.getDate()+' '+now.getHours()+':'+now.getMinutes()+':'+now.getSeconds(),
-                        brower_mark: '归还'
-                };
-                var brower = new Brower(browerObj);
-                brower.save(function(err, doc) {
-                    if (err || !doc) {
-                        throw err;
-                    } else {
-                        res.json(doc);
-                    }
                 });
-            });
+              });
         });
     });
 };

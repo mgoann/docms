@@ -338,7 +338,7 @@
         $("#submit").on('click', function(){
             dt.ajax.reload();
         });
-        
+      	
       	//初始化datatables点击显示图表
         $('#datatable_col_reorder tbody').on( 'click', "tr td:first-child", function () {
             var tr = $(this).closest('tr');
@@ -385,7 +385,7 @@
             return $("#tdDetail").html();
         }
        
-        $("#datatable_col_reorder_wrapper").addClass("table-responsive");
+        //$("#datatable_col_reorder_wrapper").addClass("table-responsive");
         
         function bindClick() {
             $('a[action=brower]').click(function(event) {
@@ -396,20 +396,20 @@
                 //检查库存量
                 var store_num = tr.children('td').eq(6).text();
                 if (store_num > 0) {
-                    $('#remoteModal').modal({
+                    var remoteModal = $('#remoteModal').modal({
                         keyboard: false,
                         remote: "ajax/brower.html"
                     });
                     $('#remoteModal').on('hidden.bs.modal', function (e) {
-                        if ($('#brower_id').val() && $('#brower_id').val()!= '')
-                        	tr.children('td').eq(6).text(store_num - 1);
-                        $('#brower_id').val('');
-                        $('#remoteModal').find('#brower_mark').val('');
+				    	if(remoteModal.data.result) {
+				    	    dt.ajax.reload();
+				    	}
                      });
                      
-                    $('#remoteModal').on('shown.bs.modal', function (e) {
+                    $('#remoteModal').on('show.bs.modal', function (e) {
                         $('#remoteModal').find('#brower_doc_id').val(doc_id);
                         $('#remoteModal').find('#brower_mark').val('借阅');
+                        remoteModal.data.result = undefined;
                      });
                 } else {
                     event.preventDefault();
@@ -433,23 +433,20 @@
                 var store_num = tr.children('td').eq(6).text();
                 var total_num = tr.children('td').eq(7).text();
                 if (store_num != total_num) {
-                    $('#remoteModal').modal({
+                    var remoteModal = $('#remoteModal').modal({
                         keyboard: false,
                         remote: "ajax/brower.html"
                     });
                     $('#remoteModal').on('hidden.bs.modal', function (e) {
-                        if ($('#brower_id').val() && $('#brower_id').val()!= '' && $('#remoteModal').find('#brower_mark').val() == '归还')
-                        	tr.children('td').eq(6).text((store_num - 1));
-                        else
-                            tr.children('td').eq(6).text((store_num -0 + 1));
-                        $('#brower_id').val('');
-                        $('#remoteModal').find('#brower_mark').val('');
+				    	if(remoteModal.data.result) {
+				    	    dt.ajax.reload();
+				    	}
                      });
                      
-                    $('#remoteModal').on('shown.bs.modal', function (e) {
+                    $('#remoteModal').on('show.bs.modal', function (e) {
                         $('#remoteModal').find('#brower_doc_id').val(doc_id);
                         $('#remoteModal').find('#brower_mark').val('归还');
-                        $('#brower_id').val('');
+                        remoteModal.data.result = undefined;
                      });
                 } else {
                     event.preventDefault();

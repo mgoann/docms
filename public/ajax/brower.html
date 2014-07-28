@@ -2,7 +2,7 @@
 	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 		&times;
 	</button>
-	<h4 class="modal-title" id="myModalLabel">档案借阅</h4>
+	<h4 class="modal-title" id="myModalLabel">档案借阅/归还</h4>
 </div>
 
 <div class="modal-body">
@@ -10,7 +10,7 @@
 	<form id="brower-form" class="smart-form">
 			<section class="col col-4  col-sm-6">
 				<label class="select"> <select id="brower_men" name="brower_men">
-					<option value="">借阅人</option>
+					<option value="">借阅/归还人</option>
 				  	<option value="管理员1">管理员1</option>
 				  	<option value="管理员2">管理员2</option> 
 			    	</select> <i></i>
@@ -32,7 +32,6 @@
 </div>
 
 <script>
-		
 		$('#brower-sure').on('click', function(){
 		    $("#brower-form").submit();
 		});
@@ -65,12 +64,10 @@
 						});
 					    
 					    if (data._id) {
-					    	 $('#brower_id').val(data._id);
-					    	 $('#remoteModal').modal('hide');
-						} else {
-						    $('#brower_id').val('');
-						}
-					    
+					    	 var modal = $('#remoteModal');
+					    	 modal.data.result = 'true';
+					    	 modal.modal('hide');
+						} 
 					},
 					error: function(data) {
 					    $.bigBox({
