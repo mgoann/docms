@@ -179,7 +179,14 @@
 	<!-- end row -->
 </section>
 <!-- end widget grid -->
-
+<!-- Dynamic Modal -->  
+<div class="modal fade" id="remoteModal" tabindex="-1" role="dialog" aria-labelledby="remoteModalLabel" aria-hidden="true">  
+    <div class="modal-dialog">  
+        <div class="modal-content">
+        	<!-- content will be filled here from "ajax/modal-content/model-content-1.html" -->
+        </div>  
+    </div>  
+</div>  
 <script type="text/javascript">
     /* DO NOT REMOVE : GLOBAL FUNCTIONS!
      *
@@ -212,8 +219,35 @@
      */
 
     pageSetUp();
-
+	
     // PAGE RELATED SCRIPTS
+    function updateUser(obj){
+            if (obj ) {
+            	var create_user = $(obj).parent().prevAll().eq(0).html();
+            	var isvalid = $(obj).parent().prevAll().eq(1).html()
+            	var user_role = $(obj).parent().prevAll().eq(2).html();
+            	var user_name = $(obj).parent().prevAll().eq(3).html()
+            	var user_id = $(obj).parent().prevAll().eq(4).html();
+                $('#remoteModal').modal({
+                    keyboard: false,
+                    remote: "ajax/userupdate.html"
+                });
+                $('#remoteModal').on('hidden.bs.modal', function (e) {
+                    if ($('#brower_id').val() && $('#brower_id').val()!= '')
+                    	tr.children('td').eq(6).text(store_num - 1);
+                    $('#brower_id').val('');
+                    $('#remoteModal').find('#brower_mark').val('');
+                 });
+                 
+                $('#remoteModal').on('shown.bs.modal', function (e) {
+                	$('#remoteModal').find('#user_id').val(user_id);
+                	$('#remoteModal').find('#user_name').val(user_name);
+                	$('#remoteModal').find('#user_role').val(user_role);
+                	$('#remoteModal').find('#isvalid').val(isvalid);
+                	$('#remoteModal').find('#create_user').val(create_user);
+                 });
+            }  
+    }
     function deleteUser(userID){
     	$.ajax('user/delete', { 
 		dataType : 'json',
@@ -319,7 +353,7 @@
                      "targets": [5], // 目标列位置，下标从0开始
                      "data": "user_id", // 数据列名
                      "render": function(data, type, full) { // 返回自定义内容
-                         return "<a href='/user/toupdate/" + data + "'>修改</a>&nbsp;|&nbsp;<a class='deleteClass' onclick=deleteUser('"+data+"')>删除</a>";
+                         return "<a onclick=updateUser(this)>修改</a>&nbsp;|&nbsp;<a class='deleteClass' onclick=deleteUser('"+data+"')>删除</a>";
                      }
                  }
              ]
@@ -333,6 +367,8 @@
         $("#submit").on('click', function(){
             dt.ajax.reload();
         });
+        
+        
 
     };
     

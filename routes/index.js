@@ -326,13 +326,10 @@ exports.updateUser = function(req, res) {
   };
   var user = new User(userObj);
   console.log(user);
-  user.save(function(err, user) {
-      if (err || !user) {
-          throw err;
-      } else {
-          res.json(user);
-      }
-  	});
+  User.findOneAndUpdate( {"user_id":reqBody.user_id}, { $set: { user_name: user.user_name,user_role:user.user_role,isvalid:user.isvalid } }, function (err, settings) {
+	  var data = "true";
+      res.json(data);
+    });
 };
 //查询对应修改记录，并跳转到修改页面
 exports.toUserModify = function(req, res) {
@@ -348,7 +345,30 @@ exports.toUserModify = function(req, res) {
 		});
 	};
 };
-
+exports.getUserByID = function(req, res) {
+	  console.log('getUserByID started');
+	  //获取查询参数
+	  var user_id = req.body.user_id;
+	  
+	  var paramsstr = "{";
+	  if (user_id !== undefined && user_id !== "") {
+	      paramsstr += '"user_id":"'+user_id+'",';
+	  }
+	  if (paramsstr.indexOf(",") > -1){
+	  	paramsstr = paramsstr.substring(0, paramsstr.length-1);
+	  }
+	  paramsstr += '}';
+	  console.log("paramsstr=" + paramsstr);
+	  var params = eval("("+paramsstr+")");
+	  //调用mongodb查询用户信息
+	  User.findOne(params,  
+		  function(error,user){
+		  console.log(user);
+			  res.json({
+	              data: user, 
+	          })
+	  } );
+}
 //查询用户
 exports.getUserInfo = function(req, res) {
   console.log('getUserInfo started');
