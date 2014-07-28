@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<h1 class="page-title txt-color-blueDark">
-			<i class="fa fa-picture-o fa-fw "></i> 图册录入
+			<i class="fa fa-picture-o fa-fw "></i> 档案录入
 		</h1>
 	</div>
 </div>
@@ -43,115 +43,143 @@
 
 					<!-- widget content -->
 					<div class="widget-body">
-						<form action="" class="smart-form">
+						<form id="docadd-form" action="" class="smart-form">
 							<fieldset>
-								<div class="row">
-									<!--<section class="col col-4  col-sm-6">
-										<label class="select">
-												<select name="year">
-											 		<option value="2013">2013</option>
-													<option value="2012">2012</option>
-													<option value="2011">2011</option>
-												</select>
-												<i></i>
-										</label>
-									</section>-->
-									<section class="col col-4  col-sm-6">
-										<label class="input"> 
-											<i class="icon-prepend fa fa-barcode"></i>
-											<input type="text"
-												name="lastname" placeholder="档案编号">
-										</label>
-									</section>
-									<section class="col col-4  col-sm-6">
-										<label class="input"> 
-											<i class="icon-prepend fa fa-folder"></i>
-											<input type="text"
-												name="lastname" placeholder="项目名称">
-										</label>
-									</section>
-									<section class="col col-4  col-sm-6">
-										<label class="select"> <select name="region_name">
-												<option value="">档案类型</option>
-											  	<option value="XX项目">XX项目</option>
-											  	<option value="棚户区改造项目">棚户区改造项目</option> 
-										       	<option value="">全部</option>
-										    </select> <i></i>
-										</label>
-									</section>
+							<div class="row">
+								<section class="col col-4  col-sm-6">
+									<label class="input"> 
+										<i class="icon-prepend fa fa-folder"></i>
+										<input type="text"
+											name="doc_name" placeholder="档案名称">
+										<input type="hidden" id="doc_img" name="doc_img" value="">
+										<input type="hidden" id="doc_file" name="doc_file" value="">
+									</label>
+								</section>
+								<section class="col col-4  col-sm-6">
+									<label class="input"> 
+										<i class="icon-prepend fa fa-folder"></i>
+										<input type="text"
+											name="project_name" placeholder="项目名称">
+									</label>
+								</section>
+								<section class="col col-4  col-sm-6">
+									<label class="select"> <select name="doc_type">
+											<option value="">档案类型</option>
+										  	<option value="控规">控规</option>
+										  	<option value="详规">详规</option> 
+									    </select> <i></i>
+									</label>
+								</section>
 								</div>
-								
 								<div class="row">
-									
-									<section class="col col-4 col-sm-6">
-										<label class="input"> <i class="icon-prepend fa fa-calendar"></i>
-											<input type="text" name="startdate" id="startdate" placeholder="录入时间" class="hasDatepicker">
-										</label>
-									</section>
-									
-									<section class="col col-4 col-sm-6">
-										<label class="input"> 
-											<i class="icon-prepend fa fa-user"></i>
-											<input type="text"
-												name="lastname" placeholder="档案员">
-										</label>
-									</section>
-									<section class="col col-4 col-sm-6">
-										<label class="select"> <select name="region_name">
-												<option value="">东1柜</option>
-											  	<option value="XX项目">西1柜</option>
-											  	<option value="棚户区改造项目">北1柜</option> 
-										    </select> <i></i>
-										</label>
-									</section>
-									<section class="col col-4 col-sm-6">
-										<label for="file" class="input input-file">
-										<div class="button"><input type="file" name="file" onchange="this.parentNode.nextSibling.value = this.value">上传</div><input type="text" placeholder="图册封面" readonly="">
+								<section class="col col-4 col-sm-6">
+									<label class="select"> <select name=doc_mgr>
+											<option value="">档案管理员</option>
+										  	<option value="管理员1">管理员1</option>
+										  	<option value="管理员2">管理员2</option> 
+									    </select> <i></i>
 									</label>
-									</section>
-									<section class="col col-4 col-sm-6">
-										<label for="file" class="input input-file">
-										<div class="button"><input type="file" name="file" onchange="this.parentNode.nextSibling.value = this.value">上传</div><input type="text" placeholder="电子档案" readonly="">
+								</section>
+								<section class="col col-4 col-sm-6">
+									<label class="select"> <select name="doc_location">
+											<option value="">档案位置</option>
+										  	<option value="西1柜">西1柜</option>
+										  	<option value="北1柜">北1柜</option> 
+									    </select> <i></i>
 									</label>
-									</section>
+								</section>
+								<section class="col col-4 col-sm-6">
+									<label class="input"> 
+										<i class="icon-prepend fa fa-database"></i>
+										<input type="text"
+											name="total_num" placeholder="库存数量">
+									</label>
+								</section>
+								</div>
+								<div class="row">
 									<section class="col col-4 col-sm-6">
 										<label class="input"> 
 											<i class="icon-prepend fa fa-database"></i>
 											<input type="text"
-												name="lastname" placeholder="库存数量">
+												name="doc_tag" placeholder="主题词">
 										</label>
-									</section>
-									</div>
-									<div class="row">
-									<section class="col col-4 col-sm-6">
-										<label class="input"> 
-											<img class="media-object" alt="64x64" src="img/demo/sample.jpg">
-										</label>
-									</section>
-									
-<!--
-									<section  class="col col-2 col-sm-1">
-										<label class="checkbox"> <input type="checkbox"
-											name="mark_211" id="mark_211"> <i></i>211院校
-										</label> 
-									</section>
-									<section  class="col col-2 col-sm-1">
-										<label class="checkbox"> <input type="checkbox"
-											name="mark_985" id="mark_985"> <i></i>985院校</label>
-									</section>
-		-->							
-								</div>
-								
-								<div class="row">
-									<section  class="col col-12 col-sm-12"> 
-										<button class="btn btn-primary btn-sm" type="submit">
-											<i class="fa fa-save"></i>
-											提交
-										</button>
 									</section>
 								</div>
 							</fieldset>
+							<fieldset>
+								<span class="btn btn-sm btn-primary fileinput-button dz-clickable">
+						            <i class="glyphicon glyphicon-plus"></i>
+						            <span>添加档案封面</span>
+						        </span>
+								<div class="table table-striped" class="files" id="previews" >
+								  <div id="template" class="">
+								    <div style="margin-top:20px;">
+								        <span class="preview"><img data-dz-thumbnail /></span>
+								    </div>
+								     <div>
+										<p class="name" data-dz-name></p>
+										<strong class="error text-danger" data-dz-errormessage></strong>
+									</div>
+								    <div style="margin-top:5px;">
+								        <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+								          <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+								        </div>
+								    </div>
+								    <div>
+								      <span data-dz-upload class="btn btn-primary btn-sm start"> <i class="glyphicon glyphicon-upload"></i>上传</span>
+								      <!-- <a data-dz-remove class="btn btn-warning btn-sm cancel disabled">
+								        <i class="glyphicon glyphicon-stop"></i>
+								        <span>停止</span>
+								      </a> -->
+								      <a data-dz-remove class="btn btn-danger btn-sm delete">
+								        <i class="glyphicon glyphicon-trash"></i>
+								        <span>删除</span>
+								      </a>
+								    </div>
+								  </div>
+								</div>
+							</fieldset>
+							<fieldset>
+								<span class="btn btn-sm btn-primary docfileinput-button dz-clickable">
+						            <i class="glyphicon glyphicon-plus"></i>
+						            <span>添加电子档案</span>
+						        </span>
+								<div class="table table-striped" class="files" id="docpreviews" >
+								  <div id="doctemplate" class="">
+								    <div style="margin-top:20px;">
+								        <span class="preview"><img data-dz-thumbnail /></span>
+								    </div>
+								     <div>
+										<p class="name" data-dz-name></p>
+										<strong class="error text-danger" data-dz-errormessage></strong>
+									</div>
+								    <div style="margin-top:5px;">
+								        <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+								          <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+								        </div>
+								    </div>
+								    <div>
+								      <span data-dz-upload class="btn btn-primary btn-sm start"> <i class="glyphicon glyphicon-upload"></i>上传</span>
+								      <!-- <a data-dz-remove class="btn btn-warning btn-sm cancel disabled">
+								        <i class="glyphicon glyphicon-stop"></i>
+								        <span>停止</span>
+								      </a> -->
+								      <a data-dz-remove class="btn btn-danger btn-sm delete">
+								        <i class="glyphicon glyphicon-trash"></i>
+								        <span>删除</span>
+								      </a>
+								    </div>
+								  </div>
+								</div>
+							</fieldset>
+							<footer>
+								<button id="submit-form" type="submit" class="btn btn-primary">
+								<i class="fa fa-save"></i>
+									提交
+								</button>
+							</footer>
 						</form>
+						
 					</div>
 					<!-- end widget content -->
 
@@ -161,25 +189,6 @@
 			</div>
 			<!-- end widget -->
 			
-			<!-- Widget ID (each widget will need unique ID)-->
-			<div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-deletebutton="false" >
-				<!-- widget options:
-				usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-
-				data-widget-colorbutton="false"
-				data-widget-editbutton="false"
-				data-widget-togglebutton="false"
-				data-widget-deletebutton="false"
-				data-widget-fullscreenbutton="false"
-				data-widget-custombutton="false"
-				data-widget-collapsed="true"
-				data-widget-sortable="false"
-
-				-->
-		 
-			</div>
-			<!-- end widget -->
-
 		</article>
 		<!-- WIDGET END -->
 
@@ -189,152 +198,179 @@
 <!-- end widget grid -->
 
 <script type="text/javascript">
-    /* DO NOT REMOVE : GLOBAL FUNCTIONS!
-     *
-     * pageSetUp(); WILL CALL THE FOLLOWING FUNCTIONS
-     *
-     * // activate tooltips
-     * $("[rel=tooltip]").tooltip();
-     *
-     * // activate popovers
-     * $("[rel=popover]").popover();
-     *
-     * // activate popovers with hover states
-     * $("[rel=popover-hover]").popover({ trigger: "hover" });
-     *
-     * // activate inline charts
-     * runAllCharts();
-     *
-     * // setup widgets
-     * setup_widgets_desktop();
-     *
-     * // run form elements
-     * runAllForms();
-     *
-     ********************************
-     *
-     * pageSetUp() is needed whenever you load a page.
-     * It initializes and checks for all basic elements of the page
-     * and makes rendering easier.
-     *
-     */
 
     pageSetUp();
 
-    // PAGE RELATED SCRIPTS
-
-    // pagefunction
-
     var pagefunction = function() {
-        var dt = $('#datatable_col_reorder').DataTable({
-            "iDisplayLength":30,
-            "bProcessing":true,
-            "bPaginate": true,
-            "bFilter": true,
-            "bSort": true, //排序功能
-            "bLengthChange":false,
-            "bInfo": false,
-            //"scrollX": true,
-            //"scrollCollapse": true,
-	        "aaSorting": [
-				[ 2, "asc" ]
-			],
-			"oLanguage": {
-			    "sZeroRecords": "没有检索到数据",
-			    "oPaginate": {
-			    "sPrevious": "前一页",
-			    "sNext": "后一页",
-			    },
-			  "sZeroRecords": "没有检索到数据",
+        $("#docadd-form").validate({
+			rules : {
+				doc_name : {
+					required : true
+				},
+				doc_type : {
+				    required : true
+				},
+				total_num : {
+				    required : true,
+				    digits : true
+				},
+				doc_location : {
+				    required : true,
+				},
+				doc_mgr : {
+				    required : true,
+				},
+				project_name : {
+					required : true
+				}
 			},
-			"processing": '<h1 class="ajax-loading-animation"><i class="fa fa-cog fa-spin"></i> Loading...</h1>',
-		  	//"ajax": '../ajax/data/arrays.txt',
-		  	"serverSide": false,
-		  	"columnDefs": [ {
-		  	    "targets": 3,
-		  	    "render": function ( data, type, full, meta ) {
-		  	        return '<span class="sparkline display-inline" data-sparkline-type="box" data-sparkline-width="150">0,'+data+',720</span><br />'
-		  	        +'<small class="text-muted  font-sm font-xs ">最低分:'+data.split(',')[0]
-		  	        +'平均分:'+data.split(',')[1]
-		  	        +'最高分:'+data.split(',')[2]+'</small>';
-		  	    }
-		  	  }, {
-		  	    "targets": 1,
-		  	    "render": function ( data, type, full, meta ) {
-					return '<strong>'+data+'</strong><br /><img src="img/school/211.jpg" title="211工程院校" height="30px"></img><img src="img/school/985.png" height="30px"></img></h4>';
-		  	        //return '<a href="javascript:void(0);">'+data+'</a><small>211</small><small>985</small>';
-		  	    }
-		  	  }, {
-	                "targets": [ 0 ],
-	                "visible": false,
-	                "searchable": false
-		  	  }],
-		  	"fnDrawCallback": function (oSettings) {
-		  	  runAllCharts();
-             }
-		  	
+
+			submitHandler : function(form) {
+			    $.ajax({
+			        url:'/doc/save',
+			        type:'POST',
+			        data : $("#docadd-form").serialize(),
+					success : function(data) {
+					    $.bigBox({
+							title : "提示信息",
+							content : "保存档案信息成功！档案Id为"+data.doc_id,
+							color : "#739E73",
+							timeout : 6000,
+							icon : "fa fa-check"
+						});
+					    //setTimeout(location.reload(), 20000);
+					},
+					error: function(data) {
+					    $.bigBox({
+	             			title : "错误信息",
+	             			content : "保存档案信息失败！",
+	             			color : "#C46A69",
+	             			icon : "fa fa-warning shake animated",
+	             			timeout : 6000
+	             		});
+					}
+			    });
+			},
+
+			errorPlacement : function(error, element) {
+				error.insertAfter(element.parent());
+			}
+		});
+        
+        var previewNode = document.querySelector("#template");
+        previewNode.id = "";
+        var previewTemplate = previewNode.parentNode.innerHTML;
+        previewNode.parentNode.removeChild(previewNode);
+         
+        var myDropzone = new Dropzone(previewNode,{ // Make the whole body a dropzone
+          url: "/fileupload", // Set the url
+          thumbnailWidth: 200,
+          thumbnailHeight: 150,
+          parallelUploads: 20,
+          previewTemplate: previewTemplate,
+          autoQueue: false, // Make sure the files aren't queued until manually added
+          previewsContainer: "#previews", // Define the container to display the previews
+          clickable: ".fileinput-button", // Define the element that should be used as click trigger to select files.
+          maxFiles: 1,
+          maxFilesize: 2,
+          acceptedFiles: "image/*",
+           dictFileTooBig: "上传文件 ({{filesize}}MiB)超过最大限制{{maxFilesize}}MiB.",
+           dictInvalidFileType: "无法上传此类型文件！",
+           dictResponseError: "Server responded with {{statusCode}} code.",
+           dictCancelUpload: "取消上传！",
+           dictCancelUploadConfirmation: "确定要中断上传？",
+           dictMaxFilesExceeded: "无法上传更多的文件！",
         });
         
+        myDropzone.on("maxfilesexceeded", function(file) {
+            var preview = file.previewElement;
+       		preview.parentNode.removeChild(preview);
+  			myDropzone.removeFile(file);
+        });
         
-        function format ( d ) {
-            return '<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">					<div class="well well-sm well-light">						<h4 class="txt-color-blue">Pie <span class="semi-bold">Chart</span> </h4>						<br>						<div class="text-center">							<div class="sparkline txt-color-blue display-inline" 							data-sparkline-type="pie" 							data-sparkline-offset="90" 							data-sparkline-piesize="75px">3,5,2</div>							<div class="sparkline txt-color-blue display-inline" 							data-sparkline-type="pie" 							data-sparkline-offset="90" 							data-sparkline-piesize="75px">30,20,15,35</div>						</div>					</div>				</div>				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">					<div class="well well-sm well-light padding-10">						<h4 class="txt-color-green">Composite <span class="semi-bold">Chart</span> </h4>						<br>						<div class="sparkline" 						data-sparkline-type="compositeline" 						data-sparkline-spotradius-top="5" 						data-sparkline-color-top="#3a6965" 						data-sparkline-line-width-top="3" 						data-sparkline-color-bottom="#2b5c59" 						data-sparkline-spot-color="#2b5c59" 						data-sparkline-minspot-color-top="#97bfbf" 						data-sparkline-maxspot-color-top="#c2cccc" 						data-sparkline-highlightline-color-top="#cce8e4" 						data-sparkline-highlightspot-color-top="#9dbdb9" 						data-sparkline-width="96%" 						data-sparkline-height="78px" 						data-sparkline-line-val="[6,4,7,8,4,3,2,2,5,6,7,4,1,5,7,9,9,8,7,6]" 						data-sparkline-bar-val="[4,1,5,7,9,9,8,7,6,6,4,7,8,4,3,2,2,5,6,7]">						</div> 						</div>				</div>				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">					<div class="well well-sm well-light">						<h4 class="txt-color-blueLight">Bar <span class="semi-bold">Chart</span> </h4>						<br>						<div class="sparkline txt-color-blueLight text-center" 						data-sparkline-type="bar" 						data-sparkline-width="96%" 						data-sparkline-barwidth="11" 						data-sparkline-barspacing = "5" 						data-sparkline-height="80px">							4,3,5,7,9,9,8,7,6,6,4,7,8,4						</div>					</div>				</div>				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">					<div class="well well-sm well-light">						<h4 class="txt-color-blueLight">Bar <span class="semi-bold">Stacked Chart</span> </h4>						<br>						<div class="sparkline txt-color-blue text-center" 						data-sparkline-type="bar" 						data-sparkline-width="96%" 						data-sparkline-barwidth="11" 						data-sparkline-barspacing = "5" 						data-sparkline-barstacked-color=\'["#92A2A8", "#4493B1"]\' 						data-sparkline-height="80px">4:5,3:4,5:7,6:3,4:6,6:5,8:2,4:3,6:4,6:2,4:4,7:2,8:5,4:2</div>					</div>				</div></div>';
-        }
-        $('#datatable_col_reorder tbody').on( 'click', "tr[role='row']", function () {
-            var tr = $(this);
-            var row = dt.row(tr);
-            dt.rows().eq(0).each(function(idx){
-                if (row.index() != idx && dt.row(idx).child.isShown()) {
-                    dt.row(idx).child.hide();
-                }
-            });
-            if ( row.child.isShown() ) {
-                row.child.hide();
+        myDropzone.on("addedfile", function(file) {
+          file.previewElement.querySelector(".start").onclick = function() { myDropzone.enqueueFile(file); };
+        });
+         
+        myDropzone.on("removedfile", function(file) {
+            $("#doc_img").attr('value', '');
+        });
+        
+        myDropzone.on("sending", function(file) {
+          file.previewElement.querySelector(".start").setAttribute("disabled", "disabled");
+          $('#submit-form').addClass("disabled");
+        });
+        myDropzone.on("success", function(file, responseText) {
+            if (responseText.msg) {
+                $("#previews div strong").text(responseText.msg);
             }
-            else {
-                row.child( format( row.data() ) ).show();
-                runAllCharts();
-            }
-        } );
+            if (responseText.url)
+            	$("#doc_img").attr('value', responseText.url);
+         });
         
+        myDropzone.on("queuecomplete", function(progress) {
+            $('#submit-form').removeClass("disabled");
+        });
         
-     
-        // On each draw, loop over the `detailRows` array and show any child rows
-       /*  dt.on( 'draw', function () {
-            $.each( detailRows, function ( i, id ) {
-                $('#'+id+' td:first-child').trigger( 'click' );
-            } );
-        } ); */
+        var previewNodedoc = document.querySelector("#doctemplate");
+        previewNodedoc.id = "";
+        var previewTemplatedoc = previewNodedoc.parentNode.innerHTML;
+        previewNodedoc.parentNode.removeChild(previewNodedoc);
+         
+        var myDropzonedoc = new Dropzone(previewNodedoc,{ // Make the whole body a dropzone
+          url: "/fileuploaddoc", // Set the url
+          parallelUploads: 20,
+          previewTemplate: previewTemplatedoc,
+          autoQueue: false, // Make sure the files aren't queued until manually added
+          previewsContainer: "#docpreviews", // Define the container to display the previews
+          clickable: ".docfileinput-button", // Define the element that should be used as click trigger to select files.
+          maxFiles: 1,
+          maxFilesize: 2000,
+           dictFileTooBig: "上传文件 ({{filesize}}MiB)超过最大限制{{maxFilesize}}MiB.",
+           dictInvalidFileType: "无法上传此类型文件！",
+           dictResponseError: "Server responded with {{statusCode}} code.",
+           dictCancelUpload: "取消上传！",
+           dictCancelUploadConfirmation: "确定要中断上传？",
+           dictMaxFilesExceeded: "无法上传更多的文件！",
+        });
         
-        /* COLUMN FILTER  
-	    var otable = $('#datatable_col_reorder').DataTable({
-	        "bPaginate": true, //翻页功能
-	        "bLengthChange": false, //改变每页显示数据数量
-	        "bFilter": false, //过滤功能
-	        "bSort": true, //排序功能
-	        "bInfo": true,//页脚信息
-	        "bAutoWidth": true,//自动宽度
-	        "aaSorting": [
-				[ 1, "asc" ]
-			],
-			"bProcessing":true,
-			"iDeferLoading":true,
-			"iDisplayLength":30,
-			"sAjaxSource":"datasource.txt"
-	    });
+        myDropzonedoc.on("maxfilesexceeded", function(file) {
+            var preview = file.previewElement;
+       		preview.parentNode.removeChild(preview);
+       		myDropzonedoc.removeFile(file);
+        });
         
-	    $("div.toolbar").html('<div class="text-right"><img src="img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
-        */
+        myDropzonedoc.on("addedfile", function(file) {
+          file.previewElement.querySelector(".start").onclick = function() { myDropzonedoc.enqueueFile(file); };
+        });
+        myDropzonedoc.on("removedfile", function(file) {
+            $("#doc_file").attr('value', '');
+        });
+         
+        myDropzonedoc.on("sending", function(file) {
+          file.previewElement.querySelector(".start").setAttribute("disabled", "disabled");
+          $('#submit-form').addClass("disabled");
+        });
+        myDropzonedoc.on("success", function(file, responseText) {
+            if (responseText.msg)
+                $("#docpreviews div strong").text(responseText.msg);
+            if (responseText.url)
+            	$("#doc_file").attr('value', responseText.url);
+         });
         
-        $("#datatable_col_reorder_wrapper").addClass("table-responsive");
+        myDropzonedoc.on("queuecomplete", function(progress) {
+            $('#submit-form').removeClass("disabled");
+        });
+         
     };
-    
-    
     
     loadScript("js/plugin/sparkline/jquery.sparkline.min.js", function(){
     	loadScript("js/plugin/datatables/jquery.dataTables.min.js", function(){
 			loadScript("js/plugin/datatables/dataTables.colVis.min.js", function(){
 				loadScript("js/plugin/datatables/dataTables.tableTools.min.js", function(){
+				    loadScript("js/plugin/dropzone/dropzone.js", function(){
 					loadScript("js/plugin/datatables/dataTables.bootstrap.min.js", pagefunction);
+				    });
 				});
 			});
 		});
