@@ -23,6 +23,20 @@ DocSchema.pre('save', function(next) {
 
 console.log("index route is init");
 
+//删除档案信息
+exports.deleteDoc = function(req, res) {
+    console.log('deleteDoc started');
+    Doc.findOneAndRemove({doc_id:req.body.doc_id}, function(err, doc) {
+        Brower.remove({doc_id:req.body.doc_id}, function(err, brower){
+            if (err || !doc) {
+                throw err;
+            } else {
+                res.json(doc);
+            }
+        });
+    });
+};
+
 //保存档案信息
 exports.saveDoc = function(req, res) {
     console.log('saveDoc started');

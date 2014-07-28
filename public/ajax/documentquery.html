@@ -220,7 +220,7 @@
 			<a href="javascript:void(0);">编辑</a>
 		</li>
 		<li>
-			<a href="javascript:void(0);">删除</a>
+			<a action="delete">删除</a>
 		</li>
 		<li>
 			<a href="javascript:void(0);">借阅历史</a>
@@ -234,7 +234,14 @@
         	<!-- content will be filled here from "ajax/modal-content/model-content-1.html" -->
         </div>  
     </div>  
-</div>  
+</div>
+<!-- ui-dialog -->
+<div id="dialog_simple" title="Dialog Simple Title">
+	<p>
+		确定要删除该档案记录吗？（删除档案的同时也会将借阅归还信息一并删除）
+		<input type="hidden" id="delete_doc_id" value=''/>
+	</p>
+</div>
 
 </div>
 
@@ -406,7 +413,7 @@
 				    	}
                      });
                      
-                    $('#remoteModal').on('show.bs.modal', function (e) {
+                    $('#remoteModal').on('shown.bs.modal', function (e) {
                         $('#remoteModal').find('#brower_doc_id').val(doc_id);
                         $('#remoteModal').find('#brower_mark').val('借阅');
                         remoteModal.data.result = undefined;
@@ -424,6 +431,15 @@
                 }
             });
             
+            $('a[action=delete]').click(function(event) {
+                event = event ? event : window.event;
+                var e = event.srcElement ? event.srcElement : event.target; 
+                var tr = $(e).closest('tr');
+                var doc_id = tr.children('td').eq(1).text();
+                $('#delete_doc_id').val(doc_id);
+                $('#dialog_simple').dialog('open');
+                
+            });
             $('a[action=back]').click(function(event) {
                 event = event ? event : window.event;
                 var e = event.srcElement ? event.srcElement : event.target; 
@@ -443,7 +459,7 @@
 				    	}
                      });
                      
-                    $('#remoteModal').on('show.bs.modal', function (e) {
+                    $('#remoteModal').on('shown.bs.modal', function (e) {
                         $('#remoteModal').find('#brower_doc_id').val(doc_id);
                         $('#remoteModal').find('#brower_mark').val('归还');
                         remoteModal.data.result = undefined;
@@ -461,6 +477,55 @@
                 }
             });
         }
+        
+        $('#dialog_simple').dialog({
+			autoOpen : false,
+			width : 600,
+			resizable : false,
+			modal : true,
+			title : "档案删除",
+			buttons : [{
+				html : "取消",
+				"class" : "btn btn-default",
+				click : function() {
+					$(this).dialog("close");
+				}
+			}, {
+				html : "确定",
+				"class" : "btn btn-primary",
+				click : function() {
+				    var doc_id = $('#delete_doc_id').val();
+				    $.ajax({
+				        url:'/doc/delete',
+				        type:'POST',
+				        data : "doc_id="+$('#delete_doc_id').val(),
+						success : function(data) {
+						    $.bigBox({
+								title : "提示信息",
+								content : '档案删除成功！',
+								color : "#739E73",
+								timeout : 6000,
+								icon : "fa fa-check"
+							});
+						    
+						    if (data._id) {
+						        dt.ajax.reload();
+							} 
+						},
+						error: function(data) {
+						    $.bigBox({
+		             			title : "错误信息",
+		             			content : "档案删除失败！",
+		             			color : "#C46A69",
+		             			icon : "fa fa-warning shake animated",
+		             			timeout : 6000
+		             		});
+						}
+				    });
+					$(this).dialog("close");
+				}
+			}, ]
+		});
         
     };
     
