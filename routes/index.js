@@ -28,7 +28,7 @@ exports.deleteDoc = function(req, res) {
     console.log('deleteDoc started');
     Doc.findOneAndRemove({doc_id:req.body.doc_id}, function(err, doc) {
         Brower.remove({doc_id:req.body.doc_id}, function(err, brower){
-            if (err || !doc) {
+            if (err) {
                 throw err;
             } else {
                 res.json(doc);
@@ -57,7 +57,7 @@ exports.updateDoc = function(req, res) {
     Doc.findOne( {"doc_id":reqBody.doc_id}, function (err, docInfo) {
         if (err) throw err;
         
-        var inc = docInfo.total_num - docObj.total_num;
+        var inc = docObj.total_num - docInfo.total_num;
         console.log('docInfo.store_num='+docInfo.store_num);
         docObj.store_num = docInfo.store_num;
         docObj.store_num += inc;
