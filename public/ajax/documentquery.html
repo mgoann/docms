@@ -148,7 +148,7 @@
 					<!-- widget content -->
 					<div class="widget-body no-padding">
 						<h1 id="loading" class="ajax-loading-animation text-center"><i class="fa fa-cog fa-spin"></i> Loading...</h1>
-						<table id="datatable_col_reorder" class="table table-striped table-condensed table-hover" cellspacing="0" width="100%">
+						<table id="datatable_col_reorder" class="table table-striped table-condensed " cellspacing="0" width="100%">
 							<thead>
 								<tr> 
 									<th>详情</th>
@@ -181,24 +181,36 @@
 	<!-- end row -->
 </section>
 <!-- end widget grid -->
-<div id="tdDetail" class="eleTicket hidden">
-<div class="eleTicket alert-info alert-block" style="padding:5px 10px 10px 10px; margin:5px 10px 30px 10px; border-left-color: rgb(156, 180, 197);border-left-style: solid;border-left-width: 10px;">
-	<div class="media">
-		<img id="doc_img" class="media-object pull-left" width="200" alt="无封面" >
-		<div id="media_body" class="media-body">
-			<h4 class="media-heading font-lg"></h4>
-			<dl>
-	        <dt>档案编号</dt>
-	        <dd></dd>
-	        <dt>项目描述</dt>
-	        <dd></dd>
-	        <dt>录入时间</dt>
-	        <dd></dd>
-	        <dt>设计者</dt>
-	        <dd></dd>
-	        <dt>权限</dt>
-	        <dd>本图纸为规划局机密文件，不可外传，违者必究</dd>
-	      </dl> 	 
+<div id="tdDetail" class="hidden">
+<div  class="row">
+	<div class="page foldtl col-lg-8 col-md-12 col-lg-offset-2">
+		<div class="media">
+			<p class="media-heading font-lg text-center "><strong></strong></p>
+			<div class="col-lg-8 col-md-8">
+				<div id="media_body" class="media-body" >
+					<dl class="dl-horizontal">
+			        <dt style="padding-top:5px">档案编号</dt>
+			        <dd style="padding-top:5px"></dd>
+			        <dt style="padding-top:5px">项目名称</dt>
+			        <dd style="padding-top:5px"></dd>
+			        <dt style="padding-top:5px">档案类型</dt>
+			        <dd style="padding-top:5px"></dd>
+			        <dt style="padding-top:5px">档案录入员</dt>
+			        <dd style="padding-top:5px"></dd>
+			        <dt style="padding-top:5px">档案位置</dt>
+			        <dd style="padding-top:5px"></dd>
+			        <dt style="padding-top:5px">档案总数</dt>
+			        <dd style="padding-top:5px"></dd>
+			        <dt style="padding-top:5px">主题词</dt>
+			        <dd style="padding-top:5px"></dd>
+			        <dt style="padding-top:5px">电子档案</dt>
+			        <dd style="padding-top:5px"><a href=""></a></dd>
+			      </dl> 	 
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-4">
+				<img id="doc_img_preview" class="media-object pull-right col-lg-12 col-md-12" alt="无封面" >
+			</div>
 		</div>
 	</div>
 </div>
@@ -217,13 +229,13 @@
 			<a action="back">归还</a>
 		</li>
 		<li>
-			<a href="javascript:void(0);">编辑</a>
+			<a action="update">编辑</a>
 		</li>
 		<li>
 			<a action="delete">删除</a>
 		</li>
 		<li>
-			<a href="javascript:void(0);">借阅历史</a>
+			<a action="downloadfile">电子档案下载</a>
 		</li>
 	</ul>
 </div>
@@ -316,7 +328,7 @@
 	            { "data": "store_num" },
 	            { "data": "total_num" },
 	            { "data": "create_time" },
-	            { "data": "_id" }
+	            { "data": "doc_file" }
 	            
 			],
 		  	"columnDefs": [ {
@@ -368,31 +380,54 @@
         } );
         
         function format ( d ) {
-            if (d.doc_img)
-            	$('#doc_img').attr('src', d.doc_img);
-            else
-                $('#doc_img').attr('src', '');
-            if (d.doc_name)
-                $('.media-heading').text(d.doc_name);
-            else
-                $('.media-heading').text('');
-            if (d.doc_id)
-                $('#media_body dd').eq(0).text(d.doc_id);
-            else
-                $('#media_body dd').eq(0).text('');
-            if (d.project_name)
-                $('#media_body dd').eq(1).text(d.project_name);
-            else
-                $('#media_body dd').eq(1).text('');
-            if (d.create_time) {
-                $('#media_body dd').eq(2).text(d.create_time);
-            }
-            else
-                $('#media_body dd').eq(2).text('');
+            initEcard(d);
             return $("#tdDetail").html();
         }
        
-        //$("#datatable_col_reorder_wrapper").addClass("table-responsive");
+        $("#datatable_col_reorder_wrapper").addClass("table-responsive");
+        
+        function initEcard(d, e) {
+            if (d.doc_img)
+                $('#doc_img_preview').attr('src', d.doc_img);
+            else
+                $('#doc_img_preview').attr('src', ' ');
+            if (d.doc_name)
+                $('.media-heading').text(d.doc_name);
+            else
+                $('.media-heading').text(' ');
+            if (d.doc_id)
+                $('#media_body dd').eq(0).text(d.doc_id);
+            else
+                $('#media_body dd').eq(0).text(' ');
+            if (d.project_name)
+                $('#media_body dd').eq(1).text(d.project_name);
+            else
+                $('#media_body dd').eq(1).text(' ');
+            if (d.doc_type)
+                $('#media_body dd').eq(2).text(d.doc_type);
+            else
+                $('#media_body dd').eq(2).text(' ');
+            if (d.doc_mgr)
+                $('#media_body dd').eq(3).text(d.doc_mgr);
+            else
+                $('#media_body dd').eq(3).text(' ');
+            if (d.doc_location)
+                $('#media_body dd').eq(4).text(d.doc_location);
+            else
+                $('#media_body dd').eq(4).text(' ');
+            if (d.total_num)
+                $('#media_body dd').eq(5).text(d.total_num);
+            else
+                $('#media_body dd').eq(5).text(' ');
+            if (d.doc_tag)
+                $('#media_body dd').eq(6).text(d.doc_tag);
+            else
+                $('#media_body dd').eq(6).text(" ");
+            if (d.doc_file)
+                $('#media_body dd').eq(7).find('a').attr('href', d.doc_file).text(d.doc_file.substr(d.doc_file.lastIndexOf('/')+1));
+            else
+                $('#media_body dd').eq(7).find('a').attr('href', ' ').text(' ');
+        }
         
         function bindClick() {
             $('a[action=brower]').click(function(event) {
@@ -401,7 +436,7 @@
                 var tr = $(e).closest('tr');
                 var doc_id = tr.children('td').eq(1).text();
                 //检查库存量
-                var store_num = tr.children('td').eq(6).text();
+                var store_num = tr.children('td').eq(1).text();
                 if (store_num > 0) {
                     var remoteModal = $('#remoteModal').modal({
                         keyboard: false,
@@ -439,6 +474,22 @@
                 $('#delete_doc_id').val(doc_id);
                 $('#dialog_simple').dialog('open');
                 
+            });
+            $('a[action=update]').click(function(event) {
+                event = event ? event : window.event;
+                var e = event.srcElement ? event.srcElement : event.target; 
+                var tr = $(e).closest('tr');
+                var doc_id = tr.children('td').eq(1).text();
+                window.location.hash = "#ajax/documentupdate.html?doc_id=" + doc_id;
+                checkURL();
+            });
+            $('a[action=downloadfile]').click(function(event) {
+                event = event ? event : window.event;
+                var e = event.srcElement ? event.srcElement : event.target; 
+                var tr = $(e).closest('tr');
+                var row = dt.row(tr);
+                var doc_file = row.data().doc_file;
+                window.open(doc_file);
             });
             $('a[action=back]').click(function(event) {
                 event = event ? event : window.event;

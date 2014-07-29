@@ -30,6 +30,7 @@ if ('development' == app.get('env')) {
 
 //设置控制器
 app.post('/doc/save', routes.saveDoc);
+app.post('/doc/update', routes.updateDoc);
 app.post('/doc/delete', routes.deleteDoc);
 app.post('/doc/all', routes.getDocAll);
 app.post('/doc/brower', routes.browerDoc);

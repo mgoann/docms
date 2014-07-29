@@ -13,13 +13,13 @@ var User = db.model('user', UserSchema);
 DocSchema.pre('save', function(next) {
     var doc = this;
     Seq.findOneAndUpdate( {"seq_name":'doc_id'}, { $inc: { seq: 1 } }, function (err, settings) {
-      if (err) next(err);
-      console.log(settings);
-      doc.doc_id = settings.seq - 1;
-      console.log(doc.doc_id);
-      next();
+        if (err) next(err);
+        console.log(settings);
+        doc.doc_id = settings.seq - 1;
+        console.log(doc.doc_id);
+        next();
     });
- });
+});
 
 console.log("index route is init");
 
@@ -35,6 +35,43 @@ exports.deleteDoc = function(req, res) {
             }
         });
     });
+};
+
+//更新档案信息
+exports.updateDoc = function(req, res) {
+    console.log('updateDoc started');
+    var reqBody = req.body, docObj = {
+            doc_id : reqBody.doc_id,
+            doc_name : reqBody.doc_name,
+            doc_type : reqBody.doc_type,
+            doc_img : reqBody.doc_img,
+            doc_file : reqBody.doc_file,
+            doc_tag : reqBody.doc_tag,
+            project_name : reqBody.project_name,
+            total_num : reqBody.total_num,
+            doc_location : reqBody.doc_location,
+            doc_mgr : reqBody.doc_mgr
+    };
+    console.log('doc_id='+reqBody.doc_id);
+    
+    Doc.findOne( {"doc_id":reqBody.doc_id}, function (err, docInfo) {
+        if (err) throw err;
+        
+        var inc = docInfo.total_num - docObj.total_num;
+        console.log('docInfo.store_num='+docInfo.store_num);
+        docObj.store_num = docInfo.store_num;
+        docObj.store_num += inc;
+        
+        Doc.findOneAndUpdate({doc_id:req.body.doc_id}, {$set:docObj}, function(err, doc) {
+            if (err || !doc) {
+                console.log(err);
+                throw err;
+            } else {
+                res.json(doc);
+            }
+        });
+    });
+    
 };
 
 //保存档案信息
@@ -127,8 +164,8 @@ exports.backDoc = function(req, res) {
                             brower_mark: '归还'
                     };
                     var brower = new Brower(browerObj);
-                    brower.save(function(err, doc) {
-                        if (err || !doc) {
+                    brower.update(function(err, doc) {
+                        if (err) {
                             throw err;
                         } else {
                             res.json(doc);

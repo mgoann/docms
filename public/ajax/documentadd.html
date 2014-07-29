@@ -43,6 +43,38 @@
 
 					<!-- widget content -->
 					<div class="widget-body">
+					<div id="tdDetail" class="row">
+							<div class="page foldtl col-lg-8 col-md-12 col-lg-offset-2">
+								<div class="media">
+									<p class="media-heading font-lg text-center "><strong></strong></p>
+									<div class="col-lg-8 col-md-8">
+										<div id="media_body" class="media-body" >
+											<dl class="dl-horizontal">
+									        <dt style="padding-top:5px">档案编号</dt>
+									        <dd style="padding-top:5px"></dd>
+									        <dt style="padding-top:5px">项目名称</dt>
+									        <dd style="padding-top:5px"></dd>
+									        <dt style="padding-top:5px">档案类型</dt>
+									        <dd style="padding-top:5px"></dd>
+									        <dt style="padding-top:5px">档案录入员</dt>
+									        <dd style="padding-top:5px"></dd>
+									        <dt style="padding-top:5px">档案位置</dt>
+									        <dd style="padding-top:5px"></dd>
+									        <dt style="padding-top:5px">档案总数</dt>
+									        <dd style="padding-top:5px"></dd>
+									        <dt style="padding-top:5px">主题词</dt>
+									        <dd style="padding-top:5px"></dd>
+									        <dt style="padding-top:5px">电子档案</dt>
+									        <dd style="padding-top:5px"><a href=""></a></dd>
+									      </dl> 	 
+										</div>
+									</div>
+									<div class="col-lg-4 col-md-4">
+										<img id="doc_img_preview" class="media-object pull-right col-lg-12 col-md-12" alt="无封面" >
+									</div>
+								</div>
+							</div>
+						</div>
 						<form id="docadd-form" action="" class="smart-form">
 							<fieldset>
 							<div class="row">
@@ -202,6 +234,59 @@
     pageSetUp();
 
     var pagefunction = function() {
+        function initEcard(d, e) {
+            if (d.doc_img)
+                $('#doc_img_preview').attr('src', d.doc_img);
+            else
+                $('#doc_img_preview').attr('src', ' ');
+            if (d.doc_name)
+                $('.media-heading').text(d.doc_name);
+            else
+                $('.media-heading').text(' ');
+            if (d.doc_id)
+                $('#media_body dd').eq(0).text(d.doc_id);
+            else
+                $('#media_body dd').eq(0).text(' ');
+            if (d.project_name)
+                $('#media_body dd').eq(1).text(d.project_name);
+            else
+                $('#media_body dd').eq(1).text(' ');
+            if (d.doc_type)
+                $('#media_body dd').eq(2).text(d.doc_type);
+            else
+                $('#media_body dd').eq(2).text(' ');
+            if (d.doc_mgr)
+                $('#media_body dd').eq(3).text(d.doc_mgr);
+            else
+                $('#media_body dd').eq(3).text(' ');
+            if (d.doc_location)
+                $('#media_body dd').eq(4).text(d.doc_location);
+            else
+                $('#media_body dd').eq(4).text(' ');
+            if (d.total_num)
+                $('#media_body dd').eq(5).text(d.total_num);
+            else
+                $('#media_body dd').eq(5).text(' ');
+            if (d.doc_tag)
+                $('#media_body dd').eq(6).text(d.doc_tag);
+            else
+                $('#media_body dd').eq(6).text(" ");
+            if (d.doc_file)
+                $('#media_body dd').eq(7).find('a').attr('href', d.doc_file).text(d.doc_file.substr(d.doc_file.lastIndexOf('/')+1));
+            else
+                $('#media_body dd').eq(7).find('a').attr('href', ' ').text(' ');
+        }
+        
+        $('#docadd-form').change(function(){
+			var d = $('#docadd-form').serialize();
+			var d={};  
+            $($('#docadd-form').serializeArray()).each(function(){  
+                d[this.name]=this.value;  
+            });
+            initEcard(d);
+            
+        });
+        
         $("#docadd-form").validate({
 			rules : {
 				doc_name : {
@@ -237,8 +322,9 @@
 							color : "#739E73",
 							timeout : 6000,
 							icon : "fa fa-check"
+						}, function() {
+							window.location.reload();
 						});
-					    //setTimeout(location.reload(), 20000);
 					},
 					error: function(data) {
 					    $.bigBox({
@@ -250,6 +336,7 @@
 	             		});
 					}
 			    });
+			    $('#submit-form').addClass('disabled');
 			},
 
 			errorPlacement : function(error, element) {
@@ -294,6 +381,7 @@
          
         myDropzone.on("removedfile", function(file) {
             $("#doc_img").attr('value', '');
+            $('#docadd-form').change();
         });
         
         myDropzone.on("sending", function(file) {
@@ -304,8 +392,10 @@
             if (responseText.msg) {
                 $("#previews div strong").text(responseText.msg);
             }
-            if (responseText.url)
-            	$("#doc_img").attr('value', responseText.url);
+            if (responseText.url) {
+                $("#doc_img").attr('value', responseText.url);
+                $('#docadd-form').change();
+            }
          });
         
         myDropzone.on("queuecomplete", function(progress) {
@@ -345,6 +435,7 @@
         });
         myDropzonedoc.on("removedfile", function(file) {
             $("#doc_file").attr('value', '');
+            $('#docadd-form').change();
         });
          
         myDropzonedoc.on("sending", function(file) {
@@ -354,8 +445,11 @@
         myDropzonedoc.on("success", function(file, responseText) {
             if (responseText.msg)
                 $("#docpreviews div strong").text(responseText.msg);
-            if (responseText.url)
-            	$("#doc_file").attr('value', responseText.url);
+            if (responseText.url){
+                $("#doc_file").attr('value', responseText.url);
+                $('#docadd-form').change();
+            }
+            	
          });
         
         myDropzonedoc.on("queuecomplete", function(progress) {
