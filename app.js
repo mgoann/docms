@@ -43,7 +43,9 @@ app.post('/user/all', routes.getUserInfo); // 列表：用户查询
 app.post('/user/one', routes.getUserByID); // 单个：用户查询
 app.get('/user/toupdate/:user_id', routes.toUserModify); //跳转到修改页面
 app.post('/user/update', routes.updateUser); // 用户修改
-
+app.post('/dict/all', routes.getDict); // 字典表查询
+app.post('/dict/save', routes.saveDict); // 字典表查询
+app.post('/dict/delete', routes.deleteDict); // 字典表查询
 //创建http server
 var server = http.createServer(app);
 //var io = require('socket.io').listen(server);
