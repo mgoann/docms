@@ -294,7 +294,7 @@
                  },
                  "error": function(request) {
                      $.bigBox({
-             			title : "Error",
+             			title : "错误",
              			content : "查询档案信息出错，请联系系统管理员！",
              			color : "#C46A69",
              			icon : "fa fa-warning shake animated",
@@ -459,7 +459,7 @@
                     $.bigBox({
         				title : "警告",
         				content : "库存量不足无法借阅！",
-        				color : "#C46A69",
+        				color : "#C79121",
         				timeout: 6000,
         				icon : "fa fa-warning shake animated",
         			});
@@ -489,7 +489,16 @@
                 var tr = $(e).closest('tr');
                 var row = dt.row(tr);
                 var doc_file = row.data().doc_file;
-                window.open(doc_file);
+                if (doc_file && doc_file != '')
+                	window.open(doc_file);
+                else
+                    $.bigBox({
+        				title : "警告",
+        				content : "档案没有相关联的电子档案！",
+        				color : "#C79121",
+        				timeout: 6000,
+        				icon : "fa fa-warning shake animated",
+        			});
             });
             $('a[action=back]').click(function(event) {
                 event = event ? event : window.event;
@@ -521,7 +530,7 @@
                     $.bigBox({
         				title : "警告",
         				content : "档案无借阅记录，归还失败！",
-        				color : "#C46A69",
+        				color : "#C79121",
         				timeout: 6000,
         				icon : "fa fa-warning shake animated",
         			});
