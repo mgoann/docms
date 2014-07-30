@@ -7,9 +7,9 @@
 
 <div class="modal-body">
 	<div class="row">
-	<form id="brower-form" class="smart-form">
+	<form id="brower-form-1" class="smart-form">
 			<section class="col col-4  col-sm-6">
-				<label class="select"> <select id="brower_men" name="brower_men">
+				<label class="select"> <select id="brower_men" >
 					<option value="">借阅/归还人</option>
 				  	<option value="管理员1">管理员1</option>
 				  	<option value="管理员2">管理员2</option> 
@@ -33,10 +33,10 @@
 
 <script>
 		$('#brower-sure').on('click', function(){
-		    $("#brower-form").submit();
+		    $("#brower-form-1").submit();
 		});
 	    
-	    $("#brower-form").validate({
+	    $("#brower-form-1").validate({
 			rules : {
 			    brower_men : {
 					required : true
@@ -45,6 +45,7 @@
 
 			submitHandler : function(form) {
 			    var url = '';
+			    alert($('#brower_men').val());
 			    if ($('#brower_mark').val() == '借阅')
 			    	url =  '/doc/brower';
 			    else

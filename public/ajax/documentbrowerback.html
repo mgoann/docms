@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<h1 class="page-title txt-color-blueDark">
-			<i class="fa fa-picture-o fa-fw "></i> 档案管理
+			<i class="fa fa-reply  fa-fw "></i> 借阅归还
 		</h1>
 	</div>
 </div>
@@ -79,8 +79,8 @@
 									</section>
 									
 								<section class="col col-4 col-sm-6">
-									<label class="select"> <select id=doc_mgr>
-											<option value="">档案管理员</option>
+									<label class="select"> <select id=brower_men>
+											<option value="">借阅归还人</option>
 										  	<option value="管理员1">管理员1</option>
 										  	<option value="管理员2">管理员2</option> 
 									    </select> <i></i>
@@ -102,6 +102,14 @@
 												name="odc_tag" placeholder="主题词">
 										</label>
 									</section>
+									<section class="col col-4 col-sm-6">
+									<label class="select"> <select id=brower_mark>
+											<option value="">借阅归还</option>
+										  	<option value="借阅">借阅</option>
+										  	<option value="归还">归还</option> 
+									    </select> <i></i>
+									</label>
+								</section>
 									<section class="col col-4 col-sm-6">
 									<button id="submit" type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>
 										查询
@@ -151,15 +159,14 @@
 						<table id="datatable_col_reorder" class="table table-striped table-condensed " cellspacing="0" width="100%">
 							<thead>
 								<tr> 
-									<th>详情</th>
 									<th>档案编号</th>
 									<th>档案名称</th>
-									<th>档案类型</th>
-									<th>区域</th>
-									<th>档案员</th>
+									<th>档案位置</th>
+									<th>借阅归还人</th>
 									<th>存档数</th>
-									<th>库存量</th>
-									<th>录入时间</th>
+									<th>借阅归还</th>
+									<th>时间</th>
+									<th>是否归还</th>
 									<th>操作</th>
 								</tr>
 							</thead>
@@ -180,41 +187,6 @@
 	</div>
 	<!-- end row -->
 </section>
-<!-- end widget grid -->
-<div id="tdDetail" class="hidden">
-<div  class="row">
-	<div class="page foldtl col-lg-8 col-md-12 col-lg-offset-2">
-		<div class="media">
-			<p class="media-heading font-lg text-center "><strong></strong></p>
-			<div class="col-lg-8 col-md-8">
-				<div id="media_body" class="media-body" >
-					<dl class="dl-horizontal">
-			        <dt style="padding-top:5px">档案编号</dt>
-			        <dd style="padding-top:5px"></dd>
-			        <dt style="padding-top:5px">项目名称</dt>
-			        <dd style="padding-top:5px"></dd>
-			        <dt style="padding-top:5px">档案类型</dt>
-			        <dd style="padding-top:5px"></dd>
-			        <dt style="padding-top:5px">档案录入员</dt>
-			        <dd style="padding-top:5px"></dd>
-			        <dt style="padding-top:5px">档案位置</dt>
-			        <dd style="padding-top:5px"></dd>
-			        <dt style="padding-top:5px">档案总数</dt>
-			        <dd style="padding-top:5px"></dd>
-			        <dt style="padding-top:5px">主题词</dt>
-			        <dd style="padding-top:5px"></dd>
-			        <dt style="padding-top:5px">电子档案</dt>
-			        <dd style="padding-top:5px"><a href=""></a></dd>
-			      </dl> 	 
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-4">
-				<img id="doc_img_preview" class="media-object pull-right col-lg-12 col-md-12" alt="无封面" >
-			</div>
-		</div>
-	</div>
-</div>
-</div>
 <div id="action" class="hidden">
 <div class="btn-group">
 	<button class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
@@ -228,31 +200,15 @@
 		<li>
 			<a action="back">归还</a>
 		</li>
-		<li>
-			<a action="update">编辑</a>
-		</li>
-		<li>
-			<a action="delete">删除</a>
-		</li>
-		<li>
-			<a action="downloadfile">电子档案下载</a>
-		</li>
 	</ul>
 </div>
 <!-- Dynamic Modal -->  
-<div class="modal fade" id="remoteModal" tabindex="-1" role="dialog" aria-labelledby="remoteModalLabel" aria-hidden="true">  
+<div class="modal fade" id="browerMoal" tabindex="-1" role="dialog" aria-labelledby="remoteModalLabel" aria-hidden="true">  
     <div class="modal-dialog">  
         <div class="modal-content">
         	<!-- content will be filled here from "ajax/modal-content/model-content-1.html" -->
         </div>  
     </div>  
-</div>
-<!-- ui-dialog -->
-<div id="dialog_simple" title="Dialog Simple Title">
-	<p>
-		确定要删除该档案记录吗？（删除档案的同时也会将借阅归还信息一并删除）
-		<input type="hidden" id="delete_doc_id" value=''/>
-	</p>
 </div>
 
 </div>
@@ -263,9 +219,6 @@
     
     var pagefunction = function() {
         
-        $('#remoteModal').on('hidden.bs.modal', function (e) {
-            // do something...
-        })
         var dt = $('#datatable_col_reorder').DataTable({
             "iDisplayLength":20,
             "bPaginate": true,
@@ -279,7 +232,7 @@
             "serverSide": true,
             "bDestroy": true,
             "ajax": {
-                "url": "/doc/all",
+                "url": "/brower/all",
                 "type": "POST",
                 "data": function ( d ) {
                     return $.extend( {}, d, {
@@ -287,15 +240,16 @@
                         "doc_name": $('#doc_name').val(),
                         "project_name": $('#project_name').val(),
                         "doc_type": $('#doc_type').val(),
-                        "doc_mgr": $('#doc_mgr').val(),
+                        "brower_men": $('#brower_men').val(),
                         "doc_location": $('#doc_location').val(),
-                        "doc_tag": $('#doc_tag').val()
+                        "doc_tag": $('#doc_tag').val(),
+                        "brower_mark": $('#brower_mark').val(),
                       } );
                  },
                  "error": function(request) {
                      $.bigBox({
              			title : "错误",
-             			content : "查询档案信息出错，请联系系统管理员！",
+             			content : "查询借阅归还信息出错，请联系系统管理员！",
              			color : "#C46A69",
              			icon : "fa fa-warning shake animated",
              			timeout : 6000
@@ -319,30 +273,35 @@
 			  "sZeroRecords": "没有检索到数据",
 			},
 			"columns": [
-			    { "data": "_id" },
 	            { "data": "doc_id" },
 	            { "data": "doc_name" },
-	            { "data": "doc_type" },
 	            { "data": "doc_location" },
-	            { "data": "doc_mgr" },
+	            { "data": "brower_men" },
 	            { "data": "store_num" },
-	            { "data": "total_num" },
-	            { "data": "create_time" },
-	            { "data": "doc_file" }
+	            { "data": "brower_mark" },
+	            { "data": "brower_time" },
+	            { "data": "is_back" },
+	            { "data": "_id" }
 	            
 			],
 		  	"columnDefs": [ {
-		  	    "targets": 0,
-		  	    "render": function ( data, type, full, meta ) {
-					return '<a href="javascript:void(0);" btn btn-primary btn-xs><i class="fa fa-plus"></i></a>';
-		  	    },
-		  	  	"sortable": false,
-		  	  },  {
-	                "targets": [2, 3, 4, 5, 6, 7, 8 ],
+	                "targets": [2, 3, 4, 5, 6],
 	                "sortable": false,
 	                "defaultContent": ""
 		  	  } , {
-	                "targets": 9,
+	                "targets": 7,
+	                "render": function ( data, type, full, meta ) {
+	                    var msg = '';
+	                    if (full.brower_mark == '借阅') {
+	                    	if (full.is_back)
+		                        msg = '已归还';
+	                    	else
+	                    	    msg = '未归还';
+	                    }
+						return msg;
+					}
+		  	  } , {
+	                "targets": 8,
 	                "render": function ( data, type, full, meta ) {
 						var action = $('#action');
 						return action.html();
@@ -358,101 +317,35 @@
             dt.ajax.reload();
         });
       	
-      	//初始化datatables点击显示图表
-        $('#datatable_col_reorder tbody').on( 'click', "tr td:first-child", function () {
-            var tr = $(this).closest('tr');
-            var row = dt.row(tr);
-            var iTag = tr.find("td:eq(0)").find("i");
-            dt.rows().eq(0).each(function(idx){
-                if (row.index() != idx && dt.row(idx).child.isShown()) {
-                    $("#datatable_col_reorder tbody").find("tr:eq("+idx+")").find("td:eq(0)").find("i").attr("class", "fa fa-plus");
-                    dt.row(idx).child.hide();
-                }
-            });
-            if ( row.child.isShown() ) {
-                iTag.attr("class", "fa fa-plus");
-                row.child.hide();
-            }
-            else {
-                iTag.attr("class", "fa fa-minus");
-                row.child( format( row.data() ) ).show();
-            }
-        } );
-        
-        function format ( d ) {
-            initEcard(d);
-            return $("#tdDetail").html();
-        }
-       
         $("#datatable_col_reorder_wrapper").addClass("table-responsive");
-        
-        function initEcard(d, e) {
-            if (d.doc_img)
-                $('#doc_img_preview').attr('src', d.doc_img);
-            else
-                $('#doc_img_preview').attr('src', ' ');
-            if (d.doc_name)
-                $('.media-heading').text(d.doc_name);
-            else
-                $('.media-heading').text(' ');
-            if (d.doc_id)
-                $('#media_body dd').eq(0).text(d.doc_id);
-            else
-                $('#media_body dd').eq(0).text(' ');
-            if (d.project_name)
-                $('#media_body dd').eq(1).text(d.project_name);
-            else
-                $('#media_body dd').eq(1).text(' ');
-            if (d.doc_type)
-                $('#media_body dd').eq(2).text(d.doc_type);
-            else
-                $('#media_body dd').eq(2).text(' ');
-            if (d.doc_mgr)
-                $('#media_body dd').eq(3).text(d.doc_mgr);
-            else
-                $('#media_body dd').eq(3).text(' ');
-            if (d.doc_location)
-                $('#media_body dd').eq(4).text(d.doc_location);
-            else
-                $('#media_body dd').eq(4).text(' ');
-            if (d.total_num)
-                $('#media_body dd').eq(5).text(d.total_num);
-            else
-                $('#media_body dd').eq(5).text(' ');
-            if (d.doc_tag)
-                $('#media_body dd').eq(6).text(d.doc_tag);
-            else
-                $('#media_body dd').eq(6).text(" ");
-            if (d.doc_file)
-                $('#media_body dd').eq(7).find('a').attr('href', d.doc_file).text(d.doc_file.substr(d.doc_file.lastIndexOf('/')+1));
-            else
-                $('#media_body dd').eq(7).find('a').attr('href', ' ').text(' ');
-        }
-        
+       
+         
         function bindClick() {
             $('a[action=brower]').click(function(event) {
                 event = event ? event : window.event;
                 var e = event.srcElement ? event.srcElement : event.target; 
                 var tr = $(e).closest('tr');
-                var doc_id = tr.children('td').eq(1).text();
+                var doc_id = tr.children('td').eq(0).text();
                 //检查库存量
-                var store_num = tr.children('td').eq(1).text();
+                var store_num = tr.children('td').eq(4).text();
                 if (store_num > 0) {
-                    var remoteModal = $('#remoteModal').modal({
+                    $('#browerMoal').modal({
                         keyboard: false,
-                        remote: "ajax/brower.html"
+                        remote: "ajax/brower.html",
+                        show:false
                     });
-                    $('#remoteModal').on('hidden.bs.modal', function (e) {
-				    	if(remoteModal.data.result) {
+                    $('#browerMoal').on('shown.bs.modal', function (e) {
+                        $('#browerMoal').find('#brower_doc_id').eq(0).val(doc_id);
+                        $('#browerMoal').find('#brower_mark').eq(0).val('借阅');
+                        $('#browerMoal').data.result = undefined;
+                     });
+                    
+                    $('#browerMoal').on('hidden.bs.modal', function (e) {
+				    	if($('#browerMoal').data.result) {
 				    	    dt.ajax.reload();
 				    	}
                      });
-                     
-                    $('#remoteModal').on('shown.bs.modal', function (e) {
-                        $('#remoteModal').find('#brower_doc_id').val(doc_id);
-                        $('#remoteModal').find('#brower_mark').val('借阅');
-                        remoteModal.data.result = undefined;
-                     });
+                    $('#browerMoal').modal('show');
                 } else {
                     event.preventDefault();
                     event.stopPropagation();
@@ -466,63 +359,30 @@
                 }
             });
             
-            $('a[action=delete]').click(function(event) {
-                event = event ? event : window.event;
-                var e = event.srcElement ? event.srcElement : event.target; 
-                var tr = $(e).closest('tr');
-                var doc_id = tr.children('td').eq(1).text();
-                $('#delete_doc_id').val(doc_id);
-                $('#dialog_simple').dialog('open');
-                
-            });
-            $('a[action=update]').click(function(event) {
-                event = event ? event : window.event;
-                var e = event.srcElement ? event.srcElement : event.target; 
-                var tr = $(e).closest('tr');
-                var doc_id = tr.children('td').eq(1).text();
-                window.location.hash = "#ajax/documentupdate.html?doc_id=" + doc_id;
-                checkURL();
-            });
-            $('a[action=downloadfile]').click(function(event) {
-                event = event ? event : window.event;
-                var e = event.srcElement ? event.srcElement : event.target; 
-                var tr = $(e).closest('tr');
-                var row = dt.row(tr);
-                var doc_file = row.data().doc_file;
-                if (doc_file && doc_file != '')
-                	window.open(doc_file);
-                else
-                    $.bigBox({
-        				title : "警告",
-        				content : "档案没有相关联的电子档案！",
-        				color : "#C79121",
-        				timeout: 6000,
-        				icon : "fa fa-warning shake animated",
-        			});
-            });
             $('a[action=back]').click(function(event) {
                 event = event ? event : window.event;
                 var e = event.srcElement ? event.srcElement : event.target; 
                 var tr = $(e).closest('tr');
-                var doc_id = tr.children('td').eq(1).text();
+                var doc_id = tr.children('td').eq(0).text();
                 //检查库存量
-                var store_num = tr.children('td').eq(6).text();
-                var total_num = tr.children('td').eq(7).text();
+                var row = dt.row(tr).data();
+                var store_num = row.store_num;
+                var total_num = row.total_num;
                 if (store_num != total_num) {
-                    var remoteModal = $('#remoteModal').modal({
+                    var browerMoal = $('#browerMoal').modal({
                         keyboard: false,
                         remote: "ajax/brower.html"
                     });
-                    $('#remoteModal').on('hidden.bs.modal', function (e) {
-				    	if(remoteModal.data.result) {
+                    $('#browerMoal').on('hidden.bs.modal', function (e) {
+				    	if(browerMoal.data.result) {
 				    	    dt.ajax.reload();
 				    	}
                      });
                      
-                    $('#remoteModal').on('shown.bs.modal', function (e) {
-                        $('#remoteModal').find('#brower_doc_id').val(doc_id);
-                        $('#remoteModal').find('#brower_mark').val('归还');
-                        remoteModal.data.result = undefined;
+                    $('#browerMoal').on('shown.bs.modal', function (e) {
+                        $('#browerMoal').find('#brower_doc_id').val(doc_id);
+                        $('#browerMoal').find('#brower_mark').val('归还');
+                        browerMoal.data.result = undefined;
                      });
                 } else {
                     event.preventDefault();
@@ -537,55 +397,6 @@
                 }
             });
         }
-        
-        $('#dialog_simple').dialog({
-			autoOpen : false,
-			width : 600,
-			resizable : false,
-			modal : true,
-			title : "档案删除",
-			buttons : [{
-				html : "取消",
-				"class" : "btn btn-default",
-				click : function() {
-					$(this).dialog("close");
-				}
-			}, {
-				html : "确定",
-				"class" : "btn btn-primary",
-				click : function() {
-				    var doc_id = $('#delete_doc_id').val();
-				    $.ajax({
-				        url:'/doc/delete',
-				        type:'POST',
-				        data : "doc_id="+$('#delete_doc_id').val(),
-						success : function(data) {
-						    $.bigBox({
-								title : "提示信息",
-								content : '档案删除成功！',
-								color : "#739E73",
-								timeout : 6000,
-								icon : "fa fa-check"
-							});
-						    
-						    if (data._id) {
-						        dt.ajax.reload();
-							} 
-						},
-						error: function(data) {
-						    $.bigBox({
-		             			title : "错误信息",
-		             			content : "档案删除失败！",
-		             			color : "#C46A69",
-		             			icon : "fa fa-warning shake animated",
-		             			timeout : 6000
-		             		});
-						}
-				    });
-					$(this).dialog("close");
-				}
-			}, ]
-		});
         
     };
     

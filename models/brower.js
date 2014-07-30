@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 exports.BrowerSchema = new mongoose.Schema({
-    doc_id : Number,
+    doc_id : {type:Number,ref: 'doc'},
     brower_men : String,
     brower_time : String,
     brower_mark : String,

@@ -35,6 +35,7 @@ app.post('/doc/delete', routes.deleteDoc);
 app.post('/doc/all', routes.getDocAll);
 app.post('/doc/brower', routes.browerDoc);
 app.post('/doc/back', routes.backDoc);
+app.post('/brower/all', routes.getbrowreAll);
 app.post('/fileupload', routes.saveImageFile);
 app.post('/fileuploaddoc', routes.saveDocFile);
 app.post('/user/save', routes.saveUser); // 用户新增

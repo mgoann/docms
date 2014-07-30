@@ -124,11 +124,11 @@ exports.browerDoc = function(req, res) {
                     brower_mark: '借阅'
             };
             var brower = new Brower(browerObj);
-            brower.save(function(err, doc) {
-                if (err || !doc) {
+            brower.save(function(err, brower) {
+                if (err || !brower) {
                     throw err;
                 } else {
-                    res.json(doc);
+                    res.json(brower);
                 }
             });
         });
@@ -164,11 +164,11 @@ exports.backDoc = function(req, res) {
                             brower_mark: '归还'
                     };
                     var brower = new Brower(browerObj);
-                    brower.update(function(err, doc) {
+                    brower.save(function(err, brower) {
                         if (err) {
                             throw err;
                         } else {
-                            res.json(doc);
+                            res.json(brower);
                         }
                     });
                 });
@@ -177,7 +177,162 @@ exports.backDoc = function(req, res) {
     });
 };
 
-//保存档案信息
+//查询借阅归还信息
+exports.getbrowreAll = function(req, res) {
+    console.log('getbrowreAll started');
+    //获取查询参数
+    var doc_id = req.body.doc_id;
+    var doc_name = req.body.doc_name;
+    var project_name = req.body.project_name;
+    var doc_type = req.body.doc_type;
+    var doc_mgr = req.body.doc_mgr;
+    var doc_location = req.body.doc_location;
+    var doc_tag = req.body.doc_tag;
+    var brower_men = req.body.brower_men;
+    var brower_mark = req.body.brower_mark;
+    
+    var paramsstr = "{";
+    if (doc_id !== undefined  && doc_id !== "") {
+        paramsstr += '"doc_id":'+doc_id+',';
+    }
+    if (doc_name !== undefined && doc_name !== "") {
+        paramsstr += '"doc_name":/'+doc_name+'/,';
+    }
+    if (project_name !== undefined && project_name !== "") {
+        paramsstr += '"project_name":/'+project_name+'/,';
+    }
+    if (doc_type !== undefined && doc_type !== "") {
+        paramsstr += '"doc_type":"'+doc_type+'",';
+    }
+    if (doc_mgr !== undefined && doc_mgr !== "") {
+        paramsstr += '"doc_mgr":"'+doc_mgr+'",';
+    }
+    if (doc_location !== undefined && doc_location !== "") {
+        paramsstr += '"doc_location":"'+doc_location+'",';
+    }
+    if (doc_tag !== undefined && doc_tag !== "") {
+        paramsstr += '"doc_tag":"'+doc_tag+'",';
+    }
+    if (paramsstr.indexOf(",") != -1)
+        paramsstr = paramsstr.substring(0, paramsstr.length-1);
+    paramsstr += '}';
+    
+    console.log('doc_filter='+paramsstr);
+    
+    var paramsBrowerStr = "{";
+    if (brower_men !== undefined  && brower_men !== "") {
+        paramsBrowerStr += '"brower_men":"'+brower_men+'",';
+    }
+    if (brower_mark !== undefined && brower_mark !== "") {
+        paramsBrowerStr += '"brower_mark":"'+brower_mark+'",';
+    }
+    if (paramsBrowerStr.indexOf(",") != -1)
+        paramsBrowerStr = paramsBrowerStr.substring(0, paramsBrowerStr.length-1);
+    paramsBrowerStr += '}';
+    
+    console.log('brower_filter='+paramsBrowerStr);
+    var paramsBrower = eval("("+paramsBrowerStr+")");
+    
+    var browerWrapInfos = [];
+    //没有对文档进行条件限制，直接查询借阅归还记录
+    if (paramsstr.indexOf(':') == -1) {
+        Brower.find(paramsBrower).skip(req.body.start).limit(req.body.length).exec(function(error, browerInfos) {
+            Brower.count(paramsBrower).exec(function(error, count) {
+                //查询档案信息
+                var doc_id_arr = [];
+                for (var i in browerInfos) {
+                    doc_id_arr.push(browerInfos[i].doc_id);
+                }
+                
+                Doc.find({}).where('doc_id').in(doc_id_arr).exec(function(err, docInfos){
+                    console.log('doc_id_arr='+doc_id_arr);
+                    for (var i in browerInfos) {
+                        var browerInfo = browerInfos[i];
+                        for (var j in docInfos) {
+                            var docInfo = docInfos[j];
+                            if (browerInfo.doc_id == docInfo.doc_id) {
+                                browerWrapInfos[i] = {
+                                    _id : browerInfo._id,
+                                    doc_id: browerInfo.doc_id,
+                                    doc_name: docInfo.doc_name,
+                                    doc_location: docInfo.doc_location,
+                                    brower_men: browerInfo.brower_men,
+                                    brower_mark: browerInfo.brower_mark,
+                                    store_num: docInfo.store_num,
+                                    total_num: docInfo.total_num,
+                                    brower_time: browerInfo.brower_time,
+                                    is_back: browerInfo.is_back
+                                };
+                                break;
+                            }
+                        }
+                    }
+                    //返回结果
+                    res.json({
+                        draw: req.body.draw,
+                        recordsTotal: count,
+                        recordsFiltered: count,
+                        data: browerWrapInfos, 
+                    });
+                });
+            });
+        });
+    } else {
+        console.log("paramsstr=" + paramsstr);
+        var params = eval("("+paramsstr+")");
+        Doc.find(params).exec(function(error, docInfos) {
+            //查询出档案id，组装档案id条件
+            var doc_id_arr = [];
+            for (var i in docInfos) {
+                doc_id_arr.push(docInfos[i].doc_id);
+            }
+            
+            console.log('doc_id_arr='+doc_id_arr);
+            Brower.find(paramsBrower).where('doc_id').in(doc_id_arr).skip(req.body.start).limit(req.body.length).populate('doc_id').exec(function(err, browerInfos){
+                Brower.count(paramsBrower).where('doc_id').in(doc_id_arr).exec(function(error, count) {
+                    //遍历借阅信息，将档案信息加入
+                    if (count == 0) {
+                        res.json({
+                            msg: '没有查到相关借阅归还信息！'
+                        });
+                        return; 
+                    }
+                    for (var i in browerInfos) {
+                        var browerInfo = browerInfos[i];
+                        for (var j in docInfos) {
+                            var docInfo = docInfos[j];
+                            if (browerInfo.doc_id == docInfo.doc_id) {
+                                browerWrapInfos[i] = {
+                                        _id : browerInfo._id,
+                                        doc_id: browerInfo.doc_id,
+                                        doc_name: docInfo.doc_name,
+                                        doc_location: docInfo.doc_location,
+                                        brower_men: browerInfo.brower_men,
+                                        brower_mark: browerInfo.brower_mark,
+                                        store_num: docInfo.store_num,
+                                        total_num: docInfo.total_num,
+                                        brower_time: browerInfo.brower_time,
+                                        is_back: browerInfo.is_back
+                                };
+                            }
+                        }
+                    }
+                    //返回结果
+                    res.json({
+                        draw: req.body.draw,
+                        recordsTotal: count,
+                        recordsFiltered: count,
+                        data: browerWrapInfos, 
+                    });
+                });
+            });
+            
+        });
+    }
+    
+};
+
+//查询档案信息
 exports.getDocAll = function(req, res) {
     console.log('getDocAll started');
     //获取查询参数
