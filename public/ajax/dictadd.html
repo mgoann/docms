@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<h1 class="page-title txt-color-blueDark">
-			<i class="fa fa-graduation-cap fa-fw "></i> 用户修改
+			<i class="fa fa-graduation-cap fa-fw "></i> 新增数据
 		</h1>
 	</div>
 </div>
@@ -34,7 +34,7 @@
 				<header>
 					<span class="widget-icon"> <i class="fa fa-edit"></i>
 					</span>
-					<h2>编辑:可以修改用户名、是否过期、角色</h2>
+					<h2>新增:</h2>
 
 				</header>
 
@@ -45,74 +45,27 @@
 					<div class="widget-body">
 						<form action="" id="userupdate-form" class="smart-form">
 							<fieldset>
-								<div class="row">
-									<!--<section class="col col-4  col-sm-6">
-										<label class="select">
-												<select name="year">
-											 		<option value="2013">2013</option>
-													<option value="2012">2012</option>
-													<option value="2011">2011</option>
-												</select>
-												<i></i>
-										</label>
-									</section>-->
-									<section class="col col-4  col-sm-6">
-										<label class="input"> 
-											<i class="icon-prepend fa fa-database"></i>
-											<input type="text" id="user_id"
-												name="user_id" readonly="readonly" placeholder="用户编号">
-										</label>
-									</section>
-									<section class="col col-4  col-sm-6">
-										<label class="input"> 
-											<i class="icon-prepend fa fa-graduation-cap"></i>
-											<input type="text" id="user_name"
-												name="user_name" placeholder="用户名称">
-										</label>
-									</section>
-									<section class="col col-4  col-sm-6">
-										<label class="select"> <select id="isvalid" name="isvalid">
-												<option value="">是否过期</option>
-											  	<option value="有效">有效</option>
-											  	<option value="过期">过期</option>  
-										    </select> <i></i>
-										</label>
-									</section>
-								</div>
 								
 								<div class="row">
-									<section class="col col-4 col-sm-6">
-										<label class="input"> 
-											<i class="icon-prepend fa fa-database"></i>
-											<input type="text" id="create_user" readonly="readonly"
-												name="create_user" placeholder="操作员">
-										</label>
-									</section>
-									<section class="col col-4 col-sm-6">
-										<label class="select"> <select name="user_role" id="user_role">
-												<option value="">角色</option>
-											  	<option value="管理员">管理员</option>
-											  	<option value="普通用户">普通用户</option>  
+									<section class="col col-6 col-sm-6">
+										<label class="select"> <select name="dict_type" id="dict_type">
+												<option value="">请选择</option>
+											  	<option value="档案类型">档案类型</option>
+											  	<option value="档案位置">档案位置</option>  
 										    </select> <i></i>
 										</label>
 									</section>  			
-									
-									<section class="col col-4 col-sm-6">
-<!-- 										<label class="input"> <i class="icon-prepend fa fa-calendar"></i> -->
-<!-- 											<input type="text" name="startdate" id="startdate" placeholder="录入时间" class="hasDatepicker"> -->
-<!-- 										</label> -->
+									<section class="col col-6 col-sm-6">
+										<label class="input"> 
+											<i class="icon-prepend fa fa-database"></i>
+											<input type="text" id="dict_value"  
+												name="dict_value" placeholder="请填写名称">
+										</label>
 									</section>
+									
 									
 								</div>
 								
-<!-- 								<div class="row"> -->
-<!-- 									<section  class="col col-12 col-sm-12">  -->
-<!-- 										<button class="btn btn-primary btn-sm" type="submit"> -->
-<!-- 											<i class="fa fa-save"></i> -->
-<!-- 											提交 -->
-<!-- 										</button> -->
-<!-- 									</section> -->
-<!-- 								</div> -->
 							</fieldset>
 							<input id="brower_doc_id" type="hidden" value="" />
 							<input id="brower_id" type="hidden" value="" />
@@ -174,26 +127,23 @@
     var pagefunction = function() {
         $("#userupdate-form").validate({
 			rules : {
-				user_name : {
+				dict_type : {
 					required : true
 				},
-				isvalid : {
+				dict_value : {
 				    required : true
-				},
-				create_user : {
-				    required : true
-				}
+				} 
 			},
 
 			submitHandler : function(form) {
 			    $.ajax({
-			        url:'/user/update',
+			        url:'/dict/save',
 			        type:'POST',
 			        data : $('#userupdate-form').serialize(),
 					success : function(data) {
 					    $.bigBox({
 							title : "提示信息",
-							content : "更新用户信息成功！用户Id为"+data.user_id,
+							content : "保存基础数据成功！",
 							color : "#739E73",
 							timeout : 2000,
 							icon : "fa fa-check"
@@ -205,7 +155,7 @@
 					error: function(data) {
 					    $.bigBox({
 	             			title : "错误信息",
-	             			content : "更新用户信息失败！",
+	             			content : "保存基础数据失败！",
 	             			color : "#C46A69",
 	             			icon : "fa fa-warning shake animated",
 	             			timeout : 6000

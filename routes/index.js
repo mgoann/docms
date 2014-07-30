@@ -9,6 +9,8 @@ var Doc = db.model('doc', DocSchema);
 var Brower = db.model('brower', BrowerSchema);
 var UserSchema = require('../models/user.js').UserSchema;
 var User = db.model('user', UserSchema);
+var DictSchema = require('../models/dict.js').DictSchema;
+var Dict = db.model('dict', DictSchema);
 
 DocSchema.pre('save', function(next) {
     var doc = this;
@@ -445,7 +447,6 @@ exports.saveDocFile = function(req,res){
  
 UserSchema.pre('save', function(next) {
     var user = this;
-    console.log("user.save  pre to set user_id");
     Seq.findOneAndUpdate( {"seq_name":'user_id'}, { $inc: { seq: 1 } }, function (err, settings) {
       if (err) next(err);
       console.log(settings);
@@ -520,7 +521,6 @@ exports.deleteUser = function(req, res) {
 	      if (err || !user) {
 	          throw err;
 	      } else {
-	    	  console.log("#################### deleted");
 	    	  data = "true";
 	          res.json(data);
 	      }
@@ -580,6 +580,7 @@ exports.getUserByID = function(req, res) {
 	          })
 	  } );
 }
+
 //查询用户
 exports.getUserInfo = function(req, res) {
   console.log('getUserInfo started');
@@ -627,4 +628,59 @@ exports.getUserInfo = function(req, res) {
           })
         });
   });
+};
+
+exports.getDict = function(req, res) {
+	  console.log('getDict started');
+	  //获取查询参数
+	  
+	  var paramsstr = "{}";
+	  var params = eval("("+paramsstr+")");
+	  //调用mongodb查询字典表信息
+	  Dict.find(params, {}).limit(req.body.length).exec(function(error, dicts) {
+		  Dict.count(params).exec(function (err, count) {
+	          res.json({
+	              draw: req.body.draw,
+	              recordsTotal: count,
+	              recordsFiltered: count,
+	              data: dicts, 
+	          })
+	        });
+	  });
+	};
+
+//保存用户信息
+exports.saveDict = function(req, res) {
+	  console.log('saveDict started');
+	  var reqBody = req.body, dictObj = {
+			  dict_type : reqBody.dict_type,
+			  dict_value : reqBody.dict_value
+	  };
+	  var dict = new Dict(dictObj);
+	  dict.save(function(err, dict) {
+	      if (err || !dict) {
+	          throw err;
+	      } else {
+	          res.json(dict);
+	      }
+	  });
+	};
+//删除档案信息
+exports.deleteDict = function(req, res) {
+    console.log('deleteDict started');
+	  var reqBody = req.body, dictObj = {
+			  dict_type : reqBody.dict_type,
+			  dict_value: reqBody.dict_value
+	  };
+	  var dict = new Dict(dictObj);
+	  console.log(dict);
+	  var data ;
+	  Dict.remove( {dict_type:dict.dict_type,dict_value:dict.dict_value},function(err, dict) {
+	      if (err || !dict) {
+	          throw err;
+	      } else {
+	    	  data = "true";
+	          res.json(data);
+	      }
+	  });
 };
