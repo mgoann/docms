@@ -72,8 +72,6 @@
 									<section class="col col-4  col-sm-6">
 										<label class="select"> <select id="doc_type">
 											<option value="">档案类型</option>
-										  	<option value="控规">控规</option>
-										  	<option value="详规">详规</option> 
 									    	</select> <i></i>
 										</label>
 									</section>
@@ -81,16 +79,12 @@
 								<section class="col col-4 col-sm-6">
 									<label class="select"> <select id=doc_mgr>
 											<option value="">档案管理员</option>
-										  	<option value="管理员1">管理员1</option>
-										  	<option value="管理员2">管理员2</option> 
 									    </select> <i></i>
 									</label>
 								</section>
 								<section class="col col-4 col-sm-6">
 									<label class="select"> <select id="doc_location">
 											<option value="">档案位置</option>
-										  	<option value="西1柜">西1柜</option>
-										  	<option value="北1柜">北1柜</option> 
 									    </select> <i></i>
 									</label>
 								</section>
@@ -239,6 +233,7 @@
 		</li>
 	</ul>
 </div>
+</div>
 <!-- Dynamic Modal -->  
 <div class="modal fade" id="remoteModal" tabindex="-1" role="dialog" aria-labelledby="remoteModalLabel" aria-hidden="true">  
     <div class="modal-dialog">  
@@ -255,13 +250,17 @@
 	</p>
 </div>
 
-</div>
+
 
 <script type="text/javascript">
     pageSetUp();
     
     
     var pagefunction = function() {
+        
+        initDict('档案类型', $('#doc_type'));
+        initDict('档案位置', $('#doc_location'));
+        initUser( $('#doc_mgr'));
         
         $('#remoteModal').on('hidden.bs.modal', function (e) {
             // do something...
@@ -346,7 +345,8 @@
 	                "render": function ( data, type, full, meta ) {
 						var action = $('#action');
 						return action.html();
-					}
+					},
+					"defaultContent": ""
 		  	  } ],
 		  	 "fnDrawCallback": function (oSettings) {
 		  	   bindClick();

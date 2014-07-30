@@ -98,8 +98,6 @@
 								<section class="col col-4  col-sm-6">
 									<label class="select"> <select name="doc_type" id="doc_type">
 											<option value="">档案类型</option>
-										  	<option value="控规">控规</option>
-										  	<option value="详规">详规</option> 
 									    </select> <i></i>
 									</label>
 								</section>
@@ -108,16 +106,12 @@
 								<section class="col col-4 col-sm-6">
 									<label class="select"> <select name=doc_mgr id="doc_mgr">
 											<option value="">档案录入员</option>
-										  	<option value="管理员1">管理员1</option>
-										  	<option value="管理员2">管理员2</option> 
 									    </select> <i></i>
 									</label>
 								</section>
 								<section class="col col-4 col-sm-6">
 									<label class="select"> <select name="doc_location" id="doc_location">
 											<option value="">档案位置</option>
-										  	<option value="西1柜">西1柜</option>
-										  	<option value="北1柜">北1柜</option> 
 									    </select> <i></i>
 									</label>
 								</section>
@@ -238,6 +232,10 @@
     
     
     var pagefunction = function() {
+        initDict('档案类型', $('#doc_type'));
+        initDict('档案位置', $('#doc_location'));
+        initUser( $('#doc_mgr'));
+        
         function initEcard(d, e) {
             if (d.doc_img)
                 $('#doc_img_preview').attr('src', d.doc_img);
@@ -311,11 +309,12 @@
         		$('#doc_id').val(doc_id);
         		$('#doc_name').val(doc_name);
         		$('#doc_type').val(doc_type);
+        		$("#doc_type").find("option[value="+doc_type+"]").attr("selected",true);
         		$('#doc_tag').val(doc_tag);
         		$('#project_name').val(project_name);
         		$('#total_num').val(total_num);
-        		$('#doc_location').val(doc_location);
-        		$('#doc_mgr').val(doc_mgr);
+        		$("#doc_location").find("option[value="+doc_location+"]").attr("selected",true);
+        		$("#doc_mgr").find("option[value="+doc_mgr+"]").attr("selected",true);
         		$('#doc_img').val(doc_img);
         		$('#doc_file').val(doc_file);
         		

@@ -1,0 +1,90 @@
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+		&times;
+	</button>
+	<h4 class="modal-title" id="myModalLabel">档案借阅/归还</h4>
+</div>
+
+<div class="modal-body">
+	<div class="row">
+	<form id="brower-form-1" class="smart-form">
+			<section class="col col-4  col-sm-6">
+				<label class="select"> <select id="brower_men" name="brower_men" >
+					<option value="">借阅/归还人</option>
+			    	</select> <i></i>
+				</label>
+			</section>
+			<input id="brower_doc_id" type="hidden" value="" />
+			<input id="brower_id" type="hidden" value="" />
+			<input id="brower_mark" type="hidden" value="" />
+	</form>
+	</div>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-default" data-dismiss="modal">
+		取消
+	</button>
+	<button id="brower-sure" type="submit" class="btn btn-primary">
+		确定
+	</button>
+</div>
+
+<script type="text/javascript">
+
+    	    initUser($('#brower-form-1').find('#brower_men'));
+
+    		$('#brower-sure').on('click', function(){
+    		    $("#brower-form-1").submit();
+    		});
+    	    
+    	    $("#brower-form-1").validate({
+    			rules : {
+    			    brower_men : {
+    					required : true
+    				}
+    			},
+
+    			submitHandler : function(form) {
+    			    var url = '';
+    			    if ($('#brower-form-1').find('#brower_mark').val() == '借阅')
+    			    	url =  '/doc/brower';
+    			    else
+    			        url = '/doc/back';
+    			    $.ajax({
+    			        url:url,
+    			        type:'POST',
+    			        data : "brower_men="+$('#brower-form-1').find('#brower_men').val()+"&doc_id="+$('#brower-form-1').find('#brower_doc_id').val(),
+    					success : function(data) {
+    					    var msg = data.msg ? data.msg : $('#brower-form-1').find('#brower_mark').val()+"成功！";
+    					    $.bigBox({
+    							title : "提示信息",
+    							content : msg,
+    							color : "#739E73",
+    							timeout : 6000,
+    							icon : "fa fa-check"
+    						});
+    					    
+    					    if (data._id) {
+    					    	 var modal = $('#browerMoal');
+    					    	 modal.data.result = 'true';
+    					    	 modal.modal('hide');
+    						} 
+    					},
+    					error: function(data) {
+    					    $.bigBox({
+    	             			title : "错误信息",
+    	             			content : "借阅失败！",
+    	             			color : "#C46A69",
+    	             			icon : "fa fa-warning shake animated",
+    	             			timeout : 6000
+    	             		});
+    					}
+    			    });
+    			},
+
+    			errorPlacement : function(error, element) {
+    				error.insertAfter(element.parent());
+    			}
+    		});
+	
+</script>

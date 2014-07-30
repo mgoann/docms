@@ -9,10 +9,8 @@
 	<div class="row">
 	<form id="brower-form-1" class="smart-form">
 			<section class="col col-4  col-sm-6">
-				<label class="select"> <select id="brower_men" >
+				<label class="select"> <select id="brower_men" name="brower_men" >
 					<option value="">借阅/归还人</option>
-				  	<option value="管理员1">管理员1</option>
-				  	<option value="管理员2">管理员2</option> 
 			    	</select> <i></i>
 				</label>
 			</section>
@@ -31,61 +29,61 @@
 	</button>
 </div>
 
-<script>
-		$('#brower-sure').on('click', function(){
-		    $("#brower-form-1").submit();
-		});
-	    
-	    $("#brower-form-1").validate({
-			rules : {
-			    brower_men : {
-					required : true
-				}
-			},
+<script type="text/javascript">
+    	    initUser($('#brower_men'));
 
-			submitHandler : function(form) {
-			    var url = '';
-			    alert($('#brower_men').val());
-			    if ($('#brower_mark').val() == '借阅')
-			    	url =  '/doc/brower';
-			    else
-			        url = '/doc/back';
-			    $.ajax({
-			        url:url,
-			        type:'POST',
-			        data : "brower_men="+$('#brower_men').val()+"&doc_id="+$('#brower_doc_id').val(),
-					success : function(data) {
-					    var msg = data.msg ? data.msg : $('#brower_mark').val()+"成功！";
-					    $.bigBox({
-							title : "提示信息",
-							content : msg,
-							color : "#739E73",
-							timeout : 6000,
-							icon : "fa fa-check"
-						});
-					    
-					    if (data._id) {
-					    	 var modal = $('#remoteModal');
-					    	 modal.data.result = 'true';
-					    	 modal.modal('hide');
-						} 
-					},
-					error: function(data) {
-					    $.bigBox({
-	             			title : "错误信息",
-	             			content : "借阅失败！",
-	             			color : "#C46A69",
-	             			icon : "fa fa-warning shake animated",
-	             			timeout : 6000
-	             		});
-					}
-			    });
-			},
+    		$('#brower-sure').on('click', function(){
+    		    $("#brower-form-1").submit();
+    		});
+    	    
+    	    $("#brower-form-1").validate({
+    			rules : {
+    			    brower_men : {
+    					required : true
+    				}
+    			},
 
-			errorPlacement : function(error, element) {
-				error.insertAfter(element.parent());
-			}
-		});
-	
+    			submitHandler : function(form) {
+    			    var url = '';
+    			    if ($('#brower_mark').val() == '借阅')
+    			    	url =  '/doc/brower';
+    			    else
+    			        url = '/doc/back';
+    			    $.ajax({
+    			        url:url,
+    			        type:'POST',
+    			        data : "brower_men="+$('#brower_men').val()+"&doc_id="+$('#brower_doc_id').val(),
+    					success : function(data) {
+    					    var msg = data.msg ? data.msg : $('#brower_mark').val()+"成功！";
+    					    $.bigBox({
+    							title : "提示信息",
+    							content : msg,
+    							color : "#739E73",
+    							timeout : 6000,
+    							icon : "fa fa-check"
+    						});
+    					    
+    					    if (data._id) {
+    					    	 var modal = $('#remoteModal');
+    					    	 modal.data.result = 'true';
+    					    	 modal.modal('hide');
+    						} 
+    					},
+    					error: function(data) {
+    					    $.bigBox({
+    	             			title : "错误信息",
+    	             			content : "借阅失败！",
+    	             			color : "#C46A69",
+    	             			icon : "fa fa-warning shake animated",
+    	             			timeout : 6000
+    	             		});
+    					}
+    			    });
+    			},
+
+    			errorPlacement : function(error, element) {
+    				error.insertAfter(element.parent());
+    			}
+    		});
 	
 </script>

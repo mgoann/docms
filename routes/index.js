@@ -631,21 +631,31 @@ exports.getUserInfo = function(req, res) {
 };
 
 exports.getDict = function(req, res) {
+    console.log('getDict started');
+    //获取查询参数
+    
+    var paramsstr = "{}";
+    var params = eval("("+paramsstr+")");
+    //调用mongodb查询字典表信息
+    Dict.find(params, {}).limit(req.body.length).exec(function(error, dicts) {
+        Dict.count(params).exec(function (err, count) {
+            res.json({
+                draw: req.body.draw,
+                recordsTotal: count,
+                recordsFiltered: count,
+                data: dicts, 
+            })
+        });
+    });
+};
+
+exports.getDictOne = function(req, res) {
 	  console.log('getDict started');
-	  //获取查询参数
-	  
-	  var paramsstr = "{}";
-	  var params = eval("("+paramsstr+")");
 	  //调用mongodb查询字典表信息
-	  Dict.find(params, {}).limit(req.body.length).exec(function(error, dicts) {
-		  Dict.count(params).exec(function (err, count) {
-	          res.json({
-	              draw: req.body.draw,
-	              recordsTotal: count,
-	              recordsFiltered: count,
-	              data: dicts, 
-	          })
-	        });
+	  Dict.find({dict_type:req.body.dict_type}).exec(function(error, dicts) {
+          res.json({
+              data: dicts, 
+          });
 	  });
 	};
 
