@@ -151,8 +151,8 @@
 									<th>档案类型</th>
 									<th>区域</th>
 									<th>档案员</th>
+									<th>可借阅数量</th>
 									<th>存档数</th>
-									<th>库存量</th>
 									<th>录入时间</th>
 									<th>操作</th>
 								</tr>
@@ -180,7 +180,7 @@
 	<div class="page foldtl col-lg-8 col-md-12 col-lg-offset-2">
 		<div class="media">
 			<p class="media-heading font-lg text-center "><strong></strong></p>
-			<div class="col-lg-8 col-md-8">
+			<div class="col-lg-6 col-md-6">
 				<div id="media_body" class="media-body" >
 					<dl class="dl-horizontal">
 			        <dt style="padding-top:5px">档案编号</dt>
@@ -195,6 +195,8 @@
 			        <dd style="padding-top:5px"></dd>
 			        <dt style="padding-top:5px">档案总数</dt>
 			        <dd style="padding-top:5px"></dd>
+			        <dt style="padding-top:5px">光盘位置</dt>
+			        <dd style="padding-top:5px"></dd>
 			        <dt style="padding-top:5px">主题词</dt>
 			        <dd style="padding-top:5px"></dd>
 			        <dt style="padding-top:5px">电子档案</dt>
@@ -202,7 +204,7 @@
 			      </dl> 	 
 				</div>
 			</div>
-			<div class="col-lg-4 col-md-4">
+			<div class="col-lg-6 col-md-6">
 				<img id="doc_img_preview" class="media-object pull-right col-lg-12 col-md-12" alt="无封面" >
 			</div>
 		</div>
@@ -303,6 +305,7 @@
                  "complete": function() {
                      $("#loading").hide();
                      $("#datatable_col_reorder_wrapper").fadeIn(500);
+                     alert('complete');
                  },
                  "beforeSend": function() {
                      $("#loading").show();
@@ -356,6 +359,7 @@
       	//定义查询按钮
         $("#submit").on('click', function(){
             dt.ajax.reload();
+            alert('submit');
         });
       	
       	//初始化datatables点击显示图表
@@ -420,13 +424,17 @@
             else
                 $('#media_body dd').eq(5).text(' ');
             if (d.doc_tag)
-                $('#media_body dd').eq(6).text(d.doc_tag);
+                $('#media_body dd').eq(7).text(d.doc_tag);
             else
-                $('#media_body dd').eq(6).text(" ");
+                $('#media_body dd').eq(7).text(" ");
             if (d.doc_file)
-                $('#media_body dd').eq(7).find('a').attr('href', d.doc_file).text(d.doc_file.substr(d.doc_file.lastIndexOf('/')+1));
+                $('#media_body dd').eq(8).find('a').attr('href', d.doc_file).text(d.doc_file.substr(d.doc_file.lastIndexOf('/')+1));
             else
-                $('#media_body dd').eq(7).find('a').attr('href', ' ').text(' ');
+                $('#media_body dd').eq(8).find('a').attr('href', ' ').text(' ');
+            if (d.ele_location)
+                $('#media_body dd').eq(6).text(d.ele_location);
+            else
+                $('#media_body dd').eq(6).text('');
         }
         
         function bindClick() {
@@ -436,7 +444,7 @@
                 var tr = $(e).closest('tr');
                 var doc_id = tr.children('td').eq(1).text();
                 //检查库存量
-                var store_num = tr.children('td').eq(1).text();
+                var store_num = tr.children('td').eq(6).text();
                 if (store_num > 0) {
                     var remoteModal = $('#remoteModal').modal({
                         keyboard: false,
@@ -451,6 +459,7 @@
                     $('#remoteModal').on('shown.bs.modal', function (e) {
                         $('#remoteModal').find('#brower_doc_id').val(doc_id);
                         $('#remoteModal').find('#brower_mark').val('借阅');
+                        $('#remoteModal').find('#store_num').val(store_num);
                         remoteModal.data.result = undefined;
                      });
                 } else {
@@ -508,7 +517,8 @@
                 //检查库存量
                 var store_num = tr.children('td').eq(6).text();
                 var total_num = tr.children('td').eq(7).text();
-                if (store_num != total_num) {
+                var back_max_num = total_num - store_num;
+                if (back_max_num > 0) {
                     var remoteModal = $('#remoteModal').modal({
                         keyboard: false,
                         remote: "ajax/brower.html"
@@ -522,6 +532,7 @@
                     $('#remoteModal').on('shown.bs.modal', function (e) {
                         $('#remoteModal').find('#brower_doc_id').val(doc_id);
                         $('#remoteModal').find('#brower_mark').val('归还');
+                        $('#remoteModal').find('#store_num').val(back_max_num);
                         remoteModal.data.result = undefined;
                      });
                 } else {

@@ -34,7 +34,7 @@
 				<header>
 					<span class="widget-icon"> <i class="fa fa-edit"></i>
 					</span>
-					<h2>编辑:可以修改用户名、是否过期、角色</h2>
+					<h2>编辑:可以修改密码，角色</h2>
 
 				</header>
 
@@ -44,6 +44,7 @@
 					<!-- widget content -->
 					<div class="widget-body">
 						<form action="" id="userupdate-form" class="smart-form">
+							<input type="hidden" id="user_id" name="user_id" />
 							<fieldset>
 								<div class="row">
 									<!--<section class="col col-4  col-sm-6">
@@ -56,51 +57,10 @@
 												<i></i>
 										</label>
 									</section>-->
-									<section class="col col-4  col-sm-6">
-										<label class="input"> 
-											<i class="icon-prepend fa fa-database"></i>
-											<input type="text" id="user_id"
-												name="user_id" readonly="readonly" placeholder="用户编号">
-										</label>
-									</section>
-									<section class="col col-4  col-sm-6">
-										<label class="input"> 
-											<i class="icon-prepend fa fa-graduation-cap"></i>
-											<input type="text" id="user_name"
-												name="user_name" placeholder="用户名称">
-										</label>
-									</section>
-									<section class="col col-4  col-sm-6">
-										<label class="select"> <select id="isvalid" name="isvalid">
-												<option value="">是否过期</option>
-											  	<option value="有效">有效</option>
-											  	<option value="过期">过期</option>  
-										    </select> <i></i>
-										</label>
-									</section>
-								</div>
-								
-								<div class="row">
 									<section class="col col-4 col-sm-6">
-										<label class="input"> 
-											<i class="icon-prepend fa fa-database"></i>
-											<input type="text" id="create_user" readonly="readonly"
-												name="create_user" placeholder="操作员">
+										<label class="input"> <i class="icon-prepend fa fa-calendar"></i>
+											<input type="text" name="password" id="password" style='ime-mode: disabled; ' placeholder="用户密码" class="hasDatepicker">
 										</label>
-									</section>
-									<section class="col col-4 col-sm-6">
-										<label class="select"> <select name="user_role" id="user_role">
-												<option value="">角色</option>
-											  	<option value="管理员">管理员</option>
-											  	<option value="普通用户">普通用户</option>  
-										    </select> <i></i>
-										</label>
-									</section>  			
-									
-									<section class="col col-4 col-sm-6">
-<!-- 										<label class="input"> <i class="icon-prepend fa fa-calendar"></i> -->
-<!-- 											<input type="text" name="startdate" id="startdate" placeholder="录入时间" class="hasDatepicker"> -->
-<!-- 										</label> -->
 									</section>
 									
 								</div>
@@ -114,9 +74,7 @@
 <!-- 									</section> -->
 <!-- 								</div> -->
 							</fieldset>
-							<input id="brower_doc_id" type="hidden" value="" />
 							<input id="brower_id" type="hidden" value="" />
-							<input id="brower_mark" type="hidden" value="" />
 						</form>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">
@@ -174,14 +132,15 @@
     var pagefunction = function() {
         $("#userupdate-form").validate({
 			rules : {
-				user_name : {
-					required : true
-				},
-				isvalid : {
+				password : {
 				    required : true
 				},
-				create_user : {
-				    required : true
+			},
+			
+			// Messages for form validation
+			messages : {
+				password : {
+					required : '密码不可以为空！'
 				}
 			},
 
@@ -193,7 +152,7 @@
 					success : function(data) {
 					    $.bigBox({
 							title : "提示信息",
-							content : "更新用户信息成功！用户Id为"+data.user_id,
+							content : "更新用户信息成功！",
 							color : "#739E73",
 							timeout : 2000,
 							icon : "fa fa-check"
@@ -201,6 +160,7 @@
 						var modal = $('#remoteModal');
 				    	 modal.data.result = 'true';
 				    	 modal.modal('hide');
+				    	 window.reload();
 					},
 					error: function(data) {
 					    $.bigBox({

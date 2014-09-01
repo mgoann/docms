@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 exports.DocSchema = new mongoose.Schema({
-    doc_id : Number,
+    doc_id : String,
     doc_name : String,
     doc_type : String,
     doc_tag : String,
@@ -12,5 +12,7 @@ exports.DocSchema = new mongoose.Schema({
     store_num : Number,
     create_time : String,
     doc_location : String,
+    ele_location : String,
     doc_mgr : String,
+    
 });

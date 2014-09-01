@@ -14,9 +14,17 @@
 			    	</select> <i></i>
 				</label>
 			</section>
+			<section class="col col-4 col-sm-6">
+				<label class="input"> 
+					<i class="icon-prepend fa fa-database"></i>
+					<input type="text"
+						id="brower_num" name="brower_num" placeholder="数量">
+				</label>
+			</section>
 			<input id="brower_doc_id" type="hidden" value="" />
 			<input id="brower_id" type="hidden" value="" />
 			<input id="brower_mark" type="hidden" value="" />
+			<input id="store_num" type="hidden" value="" />
 	</form>
 	</div>
 </div>
@@ -44,15 +52,28 @@
     			},
 
     			submitHandler : function(form) {
+    			    var brower_num = $('#brower_num').val();
+    			    var store_num = $('#store_num').val();
     			    var url = '';
-    			    if ($('#brower_mark').val() == '借阅')
-    			    	url =  '/doc/brower';
-    			    else
+    			    if ($('#brower_mark').val() == '借阅') {
+    			        if ((brower_num - store_num) > 0) {
+        			        alert('借阅数量'+brower_num+'超过最大可借阅数量为'+store_num);
+        			        return;
+        			    }
+    			        url =  '/doc/brower';
+    			    }
+    			    else {
+    			        if ((brower_num - store_num) > 0) {
+    			            alert('归还数量'+brower_num+'超过最大可归还数量为'+store_num);
+        			        return;
+    			        }
     			        url = '/doc/back';
+    			    }
+    			        
     			    $.ajax({
     			        url:url,
     			        type:'POST',
-    			        data : "brower_men="+$('#brower_men').val()+"&doc_id="+$('#brower_doc_id').val(),
+    			        data : "brower_men="+$('#brower_men').val()+"&doc_id="+$('#brower_doc_id').val()+"&brower_num="+brower_num,
     					success : function(data) {
     					    var msg = data.msg ? data.msg : $('#brower_mark').val()+"成功！";
     					    $.bigBox({
@@ -63,11 +84,11 @@
     							icon : "fa fa-check"
     						});
     					    
-    					    if (data._id) {
+    					    if (data.data.length!=0) {
     					    	 var modal = $('#remoteModal');
     					    	 modal.data.result = 'true';
     					    	 modal.modal('hide');
-    						} 
+    						}
     					},
     					error: function(data) {
     					    $.bigBox({

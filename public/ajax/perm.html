@@ -1,0 +1,276 @@
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<h1 class="page-title txt-color-blueDark">
+			<i class="fa fa-user fa-fw "></i> 权限管理
+		</h1>
+	</div>
+</div>
+
+<!-- widget grid -->
+<section id="widget-grid" class="">
+
+	<!-- row -->
+	<div class="row">
+
+		<!-- NEW WIDGET START -->
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+			<!-- Widget ID (each widget will need unique ID)-->
+			<div class="jarviswidget" id="wid-id-0"
+				data-widget-deletebutton="false" data-widget-editbutton="false">
+				<header>
+					<span class="widget-icon"> <i class="fa fa-edit"></i>
+					</span>
+					<h2>编辑</h2>
+
+				</header>
+
+				<!-- widget div-->
+				<div>
+
+					<!-- widget content -->
+					<div class="widget-body">
+						<div class="tabs-left">
+							<ul class="nav nav-tabs tabs-left" id="demo-pill-nav">
+								<li class="active">
+									<a href="#tab-r1" data-toggle="tab"> 副管理员 </a>
+								</li>
+								<li>
+									<a href="#tab-r2" data-toggle="tab"> 普通人员 </a>
+								</li>
+							</ul>
+							<div class="tab-content">
+								<div class="tab-pane active" id="tab-r1">
+									<form action="/perm/one/2" id="perm-form-2" method="post" class="smart-form">
+									<fieldset>
+									<section class="col col-6">
+										<label class="toggle">
+											<input type="checkbox" name="/ajax/documentquery.html">
+											<i data-swchon-text="开" data-swchoff-text="关"></i>档案管理</label>
+										<label class="toggle">
+											<input type="checkbox" name="/ajax/documentadd.html">
+											<i data-swchon-text="开" data-swchoff-text="关"></i>档案录入</label>
+										<label class="toggle">
+											<input type="checkbox" name="/ajax/documentbrowerback.html">
+											<i data-swchon-text="开" data-swchoff-text="关"></i>借阅归还</label>
+										<label class="toggle">
+											<input type="checkbox" name="/ajax/documentupdate.html">
+											<i data-swchon-text="开" data-swchoff-text="关"></i>借阅编辑</label>
+									</section>
+									</fieldset>
+									<fieldset>
+									<section class="col col-6">
+										<label class="toggle">
+											<input type="checkbox" name="/ajax/userquery.html">
+											<i data-swchon-text="开" data-swchoff-text="关"></i>用户查询</label>
+										<label class="toggle">
+											<input type="checkbox" name="/ajax/useradd.html">
+											<i data-swchon-text="开" data-swchoff-text="关"></i>用户新增</label>
+										<label class="toggle">
+											<input type="checkbox" name="/ajax/userudpate.html">
+											<i data-swchon-text="开" data-swchoff-text="关"></i>用户修改</label>
+										
+									</section>
+									</fieldset>
+									<fieldset>
+									<section class="col col-6">
+										<label class="toggle">
+											<input type="checkbox" name="/ajax/dictdetail.html">
+											<i data-swchon-text="开" data-swchoff-text="关"></i>字典表维护</label>
+										<label class="toggle">
+											<input type="checkbox" name="/ajax/perm.html">
+											<i data-swchon-text="开" data-swchoff-text="关"></i>权限维护</label>
+										<label class="toggle">
+											<input type="checkbox" name="/ajax/log.html">
+											<i data-swchon-text="开" data-swchoff-text="关"></i>操作日志</label>
+									</section>
+									</fieldset>
+									<footer>
+										<button id="submit-form-2"  class="btn btn-primary">
+										<i class="fa fa-save"></i>
+											提交
+										</button>
+									</footer>
+									</form>
+								</div>
+								<div class="tab-pane" id="tab-r2">
+									<form action="/perm/one/1" id="perm-form-1" method="post" class="smart-form">
+									<fieldset>
+									<section class="col col-6">
+										<label class="toggle">
+											<input type="checkbox" name="/ajax/documentquery.html">
+											<i data-swchon-text="开" data-swchoff-text="关"></i>档案管理</label>
+										<label class="toggle">
+											<input type="checkbox" name="/ajax/documentadd.html">
+											<i data-swchon-text="开" data-swchoff-text="关"></i>档案录入</label>
+										<label class="toggle">
+											<input type="checkbox" name="/ajax/documentbrowerback.html">
+											<i data-swchon-text="开" data-swchoff-text="关"></i>借阅归还</label>
+										<label class="toggle">
+											<input type="checkbox" name="/ajax/documentupdate.html">
+											<i data-swchon-text="开" data-swchoff-text="关"></i>借阅编辑</label>
+									</section>
+									</fieldset>
+									<fieldset>
+									<section class="col col-6">
+										<label class="toggle">
+											<input type="checkbox" name="/ajax/userquery.html">
+											<i data-swchon-text="开" data-swchoff-text="关"></i>用户查询</label>
+										<label class="toggle">
+											<input type="checkbox" name="/ajax/useradd.html">
+											<i data-swchon-text="开" data-swchoff-text="关"></i>用户新增</label>
+										<label class="toggle">
+											<input type="checkbox" name="/ajax/userudpate.html">
+											<i data-swchon-text="开" data-swchoff-text="关"></i>用户修改</label>
+										
+									</section>
+									</fieldset>
+									<fieldset>
+									<section class="col col-6">
+										<label class="toggle">
+											<input type="checkbox" name="/ajax/dictdetail.html">
+											<i data-swchon-text="开" data-swchoff-text="关"></i>字典表维护</label>
+										<label class="toggle">
+											<input type="checkbox" name="/ajax/perm.html">
+											<i data-swchon-text="开" data-swchoff-text="关"></i>权限维护</label>
+										<label class="toggle">
+											<input type="checkbox" name="/ajax/log.html">
+											<i data-swchon-text="开" data-swchoff-text="关"></i>操作日志</label>
+									</section>
+									</fieldset>
+									<footer>
+										<button id="submit-form-1"  class="btn btn-primary">
+										<i class="fa fa-save"></i>
+											提交
+										</button>
+									</footer>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- end widget content -->
+
+				</div>
+				<!-- end widget div -->
+
+			</div>
+			<!-- end widget -->
+
+		</article>
+		<!-- WIDGET END -->
+
+	</div>
+	<!-- end row -->
+</section>
+<!-- end widget grid -->
+
+<script type="text/javascript">
+    /* DO NOT REMOVE : GLOBAL FUNCTIONS!
+     *
+     * pageSetUp(); WILL CALL THE FOLLOWING FUNCTIONS
+     *
+     * // activate tooltips
+     * $("[rel=tooltip]").tooltip();
+     *
+     * // activate popovers
+     * $("[rel=popover]").popover();
+     *
+     * // activate popovers with hover states
+     * $("[rel=popover-hover]").popover({ trigger: "hover" });
+     *
+     * // activate inline charts
+     * runAllCharts();
+     *
+     * // setup widgets
+     * setup_widgets_desktop();
+     *
+     * // run form elements
+     * runAllForms();
+     *
+     ********************************
+     *
+     * pageSetUp() is needed whenever you load a page.
+     * It initializes and checks for all basic elements of the page
+     * and makes rendering easier.
+     *
+     */
+
+    pageSetUp();
+
+    // PAGE RELATED SCRIPTS
+
+    // pagefunction
+
+    var pagefunction = function() {
+        $('#submit-form-1').click(function(e){
+            
+            $.ajax({
+		        url:'/perm/one/1',
+		        type:'POST',
+		        data : $("#perm-form-1").serialize(),
+				success : function(datas) {
+				    $.bigBox({
+						title : "提示信息",
+						content : "修改成功！",
+						color : "#739E73",
+						timeout : 6000,
+						icon : "fa fa-check"
+					}, function() {
+						
+					});
+				},
+				error : function(datas) {
+				    $.bigBox({
+             			title : "错误信息",
+             			content : "修改失败！",
+             			color : "#C46A69",
+             			icon : "fa fa-warning shake animated",
+             			timeout : 6000
+             		});
+				}
+		    });
+            e.preventDefault();
+            e.stopPropagation();
+        });
+        $('#submit-form-2').click(function(e){
+            $.ajax({
+		        url:'/perm/one/2',
+		        type:'POST',
+		        data : $("#perm-form-2").serialize(),
+				success : function(datas) {
+				    $.bigBox({
+						title : "提示信息",
+						content : "修改成功！",
+						color : "#739E73",
+						timeout : 6000,
+						icon : "fa fa-check"
+					}, function() {
+						
+					});
+				},
+				error : function(datas) {
+				    $.bigBox({
+             			title : "错误信息",
+             			content : "修改失败！",
+             			color : "#C46A69",
+             			icon : "fa fa-warning shake animated",
+             			timeout : 6000
+             		});
+				}
+		    });
+            e.preventDefault();
+            e.stopPropagation();
+        });
+    };
+    
+    loadScript("js/plugin/sparkline/jquery.sparkline.min.js", function(){
+    	loadScript("js/plugin/datatables/jquery.dataTables.min.js", function(){
+			loadScript("js/plugin/datatables/dataTables.colVis.min.js", function(){
+				loadScript("js/plugin/datatables/dataTables.tableTools.min.js", function(){
+					loadScript("js/plugin/datatables/dataTables.bootstrap.min.js", pagefunction);
+				});
+			});
+		});
+    });
+</script>

@@ -46,23 +46,6 @@
 						<form id="useradd-form" action="" class="smart-form">
 							<fieldset>
 								<div class="row">
-									<!--<section class="col col-4  col-sm-6">
-										<label class="select">
-												<select name="year">
-											 		<option value="2013">2013</option>
-													<option value="2012">2012</option>
-													<option value="2011">2011</option>
-												</select>
-												<i></i>
-										</label>
-									</section>-->
-									<section class="col col-4  col-sm-6">
-										<label class="input"> 
-											<i class="icon-prepend fa fa-database"></i>
-											<input type="text"
-												name="lastname" readonly="readonly" placeholder="用户编号 后台自动生成">
-										</label>
-									</section>
 									<section class="col col-4  col-sm-6">
 										<label class="input"> 
 											<i class="icon-prepend fa fa-graduation-cap"></i>
@@ -70,36 +53,17 @@
 												name="user_name" placeholder="用户姓名">
 										</label>
 									</section>
-									<section class="col col-4  col-sm-6">
-										<label class="select"> <select name="isvalid">
-												<option value="">是否过期</option>
-											  	<option value="有效">有效</option>
-											  	<option value="过期">过期</option>  
-										    </select> <i></i>
-										</label>
-									</section>
-								</div>
-								
-								<div class="row">
-									
 									<section class="col col-4 col-sm-6">
-										<label class="input"> <i class="icon-prepend fa fa-calendar"></i>
-											<input type="text" name="startdate" id="startdate" placeholder="录入时间" class="hasDatepicker">
-										</label>
-									</section>
-									
-									<section class="col col-4 col-sm-6">
-										<label class="input"> 
-											<i class="icon-prepend fa fa-database"></i>
-											<input type="text"
-												name="create_user" placeholder="操作员">
+										<label class="input"> <i class="icon-prepend fa fa-lock"></i>
+											<input type="text" name="password" id="password" style='ime-mode: disabled; ' placeholder="用户密码" class="hasDatepicker">
 										</label>
 									</section>
 									<section class="col col-4  col-sm-6">
 										<label class="select"> <select name="user_role">
 												<option value="">角色</option>
+												<option value="普通用户">普通用户</option> 
+											  	<option value="副管理员">副管理员</option>
 											  	<option value="管理员">管理员</option>
-											  	<option value="普通用户">普通用户</option>  
 										    </select> <i></i>
 										</label>
 									</section>
@@ -194,14 +158,28 @@
 				user_name : {
 					required : true
 				},
-				isvalid : {
-				    required : true
+				password : {
+				    required : true,
+				    minlength : 3,
+					maxlength : 20
 				},
-				create_user : {
+				user_role : {
 				    required : true
 				}
 			},
 
+			// Messages for form validation
+			messages : {
+			    user_name : {
+					required : '用户名不可以为空！',
+				},
+				password : {
+					required : '密码不可以为空！'
+				},
+				user_role : {
+					required : '用户角色不可以为空！'
+				}
+			},
 			submitHandler : function(form) {
 			    $.ajax({
 			        url:'/user/save',

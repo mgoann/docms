@@ -157,11 +157,11 @@
 									<th>档案名称</th>
 									<th>档案位置</th>
 									<th>借阅归还人</th>
-									<th>存档数</th>
+									<th>可借阅</th>
+									<th>已借阅</th>
 									<th>借阅归还</th>
 									<th>时间</th>
 									<th>是否归还</th>
-									<th>操作</th>
 								</tr>
 							</thead>
 						</table>
@@ -272,18 +272,18 @@
 	            { "data": "doc_location" },
 	            { "data": "brower_men" },
 	            { "data": "store_num" },
+	            { "data": "total_num" },
 	            { "data": "brower_mark" },
 	            { "data": "brower_time" },
 	            { "data": "is_back" },
-	            { "data": "_id" }
 	            
 			],
 		  	"columnDefs": [ {
-	                "targets": [2, 3, 4, 5, 6],
+	                "targets": [2, 3, 4, 5, 7],
 	                "sortable": false,
 	                "defaultContent": ""
 		  	  } , {
-	                "targets": 7,
+	                "targets": 8,
 	                "render": function ( data, type, full, meta ) {
 	                    var msg = '';
 	                    if (full.brower_mark == '借阅') {
@@ -294,13 +294,13 @@
 	                    }
 						return msg;
 					}
-		  	  } , {
-	                "targets": 8,
+		  	  }/*  , {
+	                "targets": 9,
 	                "render": function ( data, type, full, meta ) {
 						var action = $('#action');
 						return action.html();
 					}
-		  	  } ],
+		  	  }  */],
 		  	 "fnDrawCallback": function (oSettings) {
 		  	   bindClick();
            	  } 

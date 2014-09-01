@@ -70,36 +70,13 @@
 												name="user_name" placeholder="用户名称">
 										</label>
 									</section>
-									<section class="col col-4  col-sm-6">
-										<label class="select"> <select id="isvalid" name="isvalid">
-												<option value="">是否过期</option>
-											  	<option value="有效">有效</option>
-											  	<option value="过期">过期</option> 
-										    </select> <i></i>
-										</label>
-									</section>
-								</div>
-								
-								<div class="row">
-									
-									<section class="col col-4 col-sm-6">
-										<label class="input"> <i class="icon-prepend fa fa-calendar"></i>
-											<input type="text" name="create_date" id="create_date" placeholder="录入时间" class="hasDatepicker">
-										</label>
-									</section>
-									
-									<section class="col col-4 col-sm-6">
-										<label class="input"> 
-											<i class="icon-prepend fa fa-database"></i>
-											<input type="text" id="create_user"
-												name="create_user" placeholder="操作员">
-										</label>
-									</section>
 									<section class="col col-4 col-sm-6">
 										<label class="select"> <select name="user_role" id="user_role"> 
 												<option value="">角色</option>
+												<option value="普通用户">普通用户</option>  
+											  	<option value="副管理员">副管理员</option>
 											  	<option value="管理员">管理员</option>
-											  	<option value="普通用户">普通用户</option>  
+											  	
 										    </select> <i></i>
 										</label>
 									</section> 
@@ -156,8 +133,6 @@
 									<th>用户编号</th>
 									<th>用户名称</th>
 									<th>用户角色</th>
-									<th>状态</th>
-									<th>创建人</th>
 									<th>操作</th>
 								</tr>
 							</thead>
@@ -223,28 +198,16 @@
     // PAGE RELATED SCRIPTS
     function updateUser(obj){
             if (obj ) {
-            	var create_user = $(obj).parent().prevAll().eq(0).html();
-            	var isvalid = $(obj).parent().prevAll().eq(1).html()
-            	var user_role = $(obj).parent().prevAll().eq(2).html();
-            	var user_name = $(obj).parent().prevAll().eq(3).html()
-            	var user_id = $(obj).parent().prevAll().eq(4).html();
+            	var user_id = $(obj).parent().prevAll().eq(2).html();
+            	var user_role = $(obj).parent().prevAll().eq(0).html();
                 $('#remoteModal').modal({
                     keyboard: false,
                     remote: "ajax/userupdate.html"
                 });
-                $('#remoteModal').on('hidden.bs.modal', function (e) {
-                    if ($('#brower_id').val() && $('#brower_id').val()!= '')
-                    	tr.children('td').eq(6).text(store_num - 1);
-                    $('#brower_id').val('');
-                    $('#remoteModal').find('#brower_mark').val('');
-                 });
                  
                 $('#remoteModal').on('shown.bs.modal', function (e) {
                 	$('#remoteModal').find('#user_id').val(user_id);
-                	$('#remoteModal').find('#user_name').val(user_name);
-                	$('#remoteModal').find('#user_role').val(user_role);
-                	$('#remoteModal').find('#isvalid').val(isvalid);
-                	$('#remoteModal').find('#create_user').val(create_user);
+                	$("#user_role_forupadte").val(user_role);
                  });
             }  
     }
@@ -309,11 +272,9 @@
                 "type": "POST",
                 "data": function ( d ) {
                     return $.extend( {}, d, {
-                        "isvalid": $('#isvalid').val(),
                         "user_name": $('#user_name').val(),
                         "user_id": $('#user_id').val(),
                         "user_role": $('#user_role').val(),
-                        "create_user": $('#create_user').val() 
                       } );
                  },
                  "error": function(request) {
@@ -344,13 +305,11 @@
 	            { "data": "user_id" },
 	            { "data": "user_name" },
 	            { "data": "user_role" },
-	            { "data": "isvalid" },
-	            { "data": "create_user" },
 			],
 			"columnDefs": [
                  // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
                  {
-                     "targets": [5], // 目标列位置，下标从0开始
+                     "targets": [3], // 目标列位置，下标从0开始
                      "data": "user_id", // 数据列名
                      "render": function(data, type, full) { // 返回自定义内容
                          return "<a onclick=updateUser(this)>修改</a>&nbsp;|&nbsp;<a class='deleteClass' onclick=deleteUser('"+data+"')>删除</a>";

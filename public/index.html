@@ -2,7 +2,7 @@
 <html lang="en-us">	
 	<head>
 		<meta charset="utf-8">
-		<title>规划局档案管理系统</title>
+		<title>包头市规划局档案管理系统</title>
 		<meta name="description" content="">
 		<meta name="author" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -194,17 +194,12 @@
 				<ul id="mobile-profile-img" class="header-dropdown-list hidden-xs padding-5">
 					<li class="">
 						<a href="#" class="dropdown-toggle no-margin userdropdown" data-toggle="dropdown"> 
-							<img src="img/avatars/phonte.jpg" alt="John Doe" class="online" />  
+							<img src="img/avatars/phonte.jpg" class="online" />  
 						</a>
 						<ul class="dropdown-menu pull-right">
 							<li>
-								<a href="javascript:void(0);" class="padding-10 padding-top-0 padding-bottom-0"><i class="fa fa-cog"></i> 设置</a>
-							</li>
-							<li class="divider"></li>
-							<li>
 								<a href="#ajax/personal.html" class="padding-10 padding-top-0 padding-bottom-0"> <i class="fa fa-user"></i> 个人信息</a>
 							</li>
-							<li class="divider"></li>
 							<!-- <li>
 								<a href="javascript:void(0);" class="padding-10 padding-top-0 padding-bottom-0" data-action="toggleShortcut"><i class="fa fa-arrow-down"></i> 截图</a>
 							</li> -->
@@ -222,7 +217,7 @@
 
 				<!-- logout button -->
 				<div id="logout" class="btn-header transparent pull-right">
-					<span> <a href="login.html" title="Sign Out" data-action="userLogout" data-logout-msg="确定要退出演示系统吗？"><i class="fa fa-sign-out"></i></a> </span>
+					<span> <a href="login.html" title="Sign Out" data-action="userLogout" data-logout-msg="确定要退出登陆吗？"><i class="fa fa-sign-out"></i></a> </span>
 				</div>
 				<!-- end logout button -->
 
@@ -235,29 +230,7 @@
 				<!-- #SEARCH -->
 				<!-- input: search field -->
 				<form action="#ajax/search.html" class="header-search pull-right">
-					<input id="search-fld"  type="text" name="param" placeholder="本站搜索" data-autocomplete='[
-					"ActionScript",
-					"AppleScript",
-					"Asp",
-					"BASIC",
-					"C",
-					"C++",
-					"Clojure",
-					"COBOL",
-					"ColdFusion",
-					"Erlang",
-					"Fortran",
-					"Groovy",
-					"Haskell",
-					"Java",
-					"JavaScript",
-					"Lisp",
-					"Perl",
-					"PHP",
-					"Python",
-					"Ruby",
-					"Scala",
-					"Scheme"]'>
+					<input id="search-fld"  type="text" name="param" placeholder="本站搜索" >
 					<button type="submit">
 						<i class="fa fa-search"></i>
 					</button>
@@ -305,12 +278,12 @@
 			<div class="login-info">
 				<span> <!-- User image size is adjusted inside CSS, it should stay as is --> 
 					
-					<a href="javascript:void(0);" id="show-shortcut" >
+					<a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
 						<img src="img/avatars/phonte.jpg" alt="me" class="online" /> 
-						<span>
-							Admin
+						<span id="username_index">
+							
 						</span>
-					<!--	<i class="fa fa-angle-down"></i>-->
+					    <i class="fa fa-angle-down"></i>
 					 </a>
 					
 				</span>
@@ -340,7 +313,7 @@
 					<li>
 						<a href="ajax/documentbrowerback.html"><i class="fa fa-lg  fa-fw fa-reply "></i> <span class="menu-item-parent">借阅归还</span></a>
 					</li>
-					<li>
+					<li id="user-nav" class="">
 						<a href="#"><i class="fa fa-lg fa-fw fa-user"></i> <span class="menu-item-parent">用户管理</span></a>
 						<ul>
 							<li>
@@ -351,230 +324,20 @@
 							</li>
 						</ul>
 					</li>
-					<li>
+					<li id="sys-nav">
 						<a href="#"><i class="fa fa-lg fa-fw fa-list-alt"></i> <span class="menu-item-parent">系统管理</span></a>
 						<ul>
 							<li>
 								<a href="ajax/dictdetail.html">字典表维护</a>
 							</li>
-						</ul>
-					</li>
-					<!-- 
-					<li>
-						<a href="#"><i class="fa fa-lg fa-fw fa-table"></i> <span class="menu-item-parent">Tables</span></a>
-						<ul>
 							<li>
-								<a href="ajax/table.html">Normal Tables</a>
+								<a href="ajax/perm.html">权限管理</a>
 							</li>
 							<li>
-								<a href="ajax/datatables.html">Data Tables <span class="badge inbox-badge bg-color-greenLight">v1.10</span></a>
-							</li>
-							<li>
-								<a href="ajax/jqgrid.html">Jquery Grid</a>
+								<a href="ajax/log.html">操作日志</a>
 							</li>
 						</ul>
 					</li>
-					<li>
-						<a href="#"><i class="fa fa-lg fa-fw fa-pencil-square-o"></i> <span class="menu-item-parent">Forms</span></a>
-						<ul>
-							<li>
-								<a href="ajax/form-elements.html">Smart Form Elements</a>
-							</li>
-							<li>
-								<a href="ajax/form-templates.html">Smart Form Layouts</a>
-							</li>
-							<li>
-								<a href="ajax/validation.html">Smart Form Validation</a>
-							</li>
-							<li>
-								<a href="ajax/bootstrap-forms.html">Bootstrap Form Elements</a>
-							</li>
-							<li>
-								<a href="ajax/plugins.html">Form Plugins</a>
-							</li>
-							<li>
-								<a href="ajax/wizard.html">Wizards</a>
-							</li>
-							<li>
-								<a href="ajax/other-editors.html">Bootstrap Editors</a>
-							</li>
-							<li>
-								<a href="ajax/dropzone.html">Dropzone</a>
-							</li>
-							<li>
-								<a href="ajax/image-editor.html">Image Cropping <span class="badge pull-right inbox-badge bg-color-yellow">new</span></a>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<a href="#"><i class="fa fa-lg fa-fw fa-desktop"></i> <span class="menu-item-parent">UI Elements</span></a>
-						<ul>
-							<li>
-								<a href="ajax/general-elements.html">General Elements</a>
-							</li>
-							<li>
-								<a href="ajax/buttons.html">Buttons</a>
-							</li>
-							<li>
-								<a href="#">Icons</a>
-								<ul>
-									<li>
-										<a href="ajax/fa.html"><i class="fa fa-plane"></i> Font Awesome</a>
-									</li>
-									<li>
-										<a href="ajax/glyph.html"><i class="glyphicon glyphicon-plane"></i> Glyph Icons</a>
-									</li>
-									<li>
-										<a href="ajax/flags.html"><i class="fa fa-flag"></i> Flags</a>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<a href="ajax/grid.html">Grid</a>
-							</li>
-							<li>
-								<a href="ajax/treeview.html">Tree View</a>
-							</li>
-							<li>
-								<a href="ajax/nestable-list.html">Nestable Lists</a>
-							</li>
-							<li>
-								<a href="ajax/jqui.html">JQuery UI</a>
-							</li>
-							<li>
-								<a href="ajax/typography.html">Typography</a>
-							</li>
-							<li>
-								<a href="#">Six Level Menu</a>
-								<ul>
-									<li>
-										<a href="#"><i class="fa fa-fw fa-folder-open"></i> Item #2</a>
-										<ul>
-											<li>
-												<a href="#"><i class="fa fa-fw fa-folder-open"></i> Sub #2.1 </a>
-												<ul>
-													<li>
-														<a href="#"><i class="fa fa-fw fa-file-text"></i> Item #2.1.1</a>
-													</li>
-													<li>
-														<a href="#"><i class="fa fa-fw fa-plus"></i> Expand</a>
-														<ul>
-															<li>
-																<a href="#"><i class="fa fa-fw fa-file-text"></i> File</a>
-															</li>
-															<li>
-																<a href="#"><i class="fa fa-fw fa-trash-o"></i> Delete</a></li>
-														</ul>
-													</li>
-												</ul>
-											</li>
-										</ul>
-									</li>
-									<li>
-										<a href="#"><i class="fa fa-fw fa-folder-open"></i> Item #3</a>
-		
-										<ul>
-											<li>
-												<a href="#"><i class="fa fa-fw fa-folder-open"></i> 3ed Level </a>
-												<ul>
-													<li>
-														<a href="#"><i class="fa fa-fw fa-file-text"></i> File</a>
-													</li>
-													<li>
-														<a href="#"><i class="fa fa-fw fa-file-text"></i> File</a>
-													</li>
-												</ul>
-											</li>
-										</ul>
-		
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<a href="ajax/calendar.html"><i class="fa fa-lg fa-fw fa-calendar"><em>3</em></i> <span class="menu-item-parent">Calendar</span></a>
-					</li>
-					<li>
-						<a href="ajax/widgets.html"><i class="fa fa-lg fa-fw fa-list-alt"></i> <span class="menu-item-parent">Widgets</span></a>
-					</li>
-					<li>
-						<a href="ajax/gallery.html"><i class="fa fa-lg fa-fw fa-picture-o"></i> <span class="menu-item-parent">Gallery</span></a>
-					</li>
-					<li>
-						<a href="ajax/gmap-xml.html"><i class="fa fa-lg fa-fw fa-map-marker"></i> <span class="menu-item-parent">GMap Skins</span><span class="badge bg-color-greenLight pull-right inbox-badge">9</span></a>
-					</li>
-					<li>
-						<a href="#"><i class="fa fa-lg fa-fw fa-windows"></i> <span class="menu-item-parent">Miscellaneous</span></a>
-						<ul>
-							<li>
-								<a href="#"><i class="fa fa-file"></i> Other Pages</a>
-								<ul>
-									<li>
-										<a href="ajax/forum.html">Forum Layout</a>
-									</li>
-									<li>
-										<a href="ajax/profile.html">Profile</a>
-									</li>
-									<li>
-										<a href="ajax/timeline.html">Timeline</a>
-									</li>
-								</ul>	
-							</li>
-							<li>
-								<a href="ajax/pricing-table.html">Pricing Tables</a>
-							</li>
-							<li>
-								<a href="ajax/invoice.html">Invoice</a>
-							</li>
-							<li>
-								<a href="login.html" target="_top">Login</a>
-							</li>
-							<li>
-								<a href="register.html" target="_top">Register</a>
-							</li>
-							<li>
-								<a href="lock.html" target="_top">Locked Screen</a>
-							</li>
-							<li>
-								<a href="ajax/error404.html">Error 404</a>
-							</li>
-							<li>
-								<a href="ajax/error500.html">Error 500</a>
-							</li>
-							<li>
-								<a href="ajax/blank_.html">Blank Page</a>
-							</li>
-							<li>
-								<a href="ajax/email-template.html">Email Template</a>
-							</li>
-							<li>
-								<a href="ajax/search.html">Search Page</a>
-							</li>
-							<li>
-								<a href="ajax/ckeditor.html">CK Editor</a>
-							</li>
-						</ul>
-					</li>
-					 
-					<li class="top-menu-hidden">
-						<a href="#"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i> <span class="menu-item-parent">SmartAdmin Intel</span></a>
-						<ul>
-							<li>
-								<a href="ajax/difver.html"><i class="fa fa-stack-overflow"></i> Different Versions</a>
-							</li>
-							<li>
-								<a href="ajax/applayout.html"><i class="fa fa-cube"></i> App Settings</a>
-							</li>
-							<li>
-								<a href="http://bootstraphunter.com/smartadmin/BUGTRACK/track_/documentation/index.html" target="_blank"><i class="fa fa-book"></i> Documentation</a>
-							</li>
-							<li>
-								<a href="http://bootstraphunter.com/smartadmin/BUGTRACK/track_/" target="_blank"><i class="fa fa-bug"></i> Bug Tracker</a>
-							</li>
-						</ul>
-					</li>
-					-->
 				</ul>
 			</nav>
 			<span class="minifyme" data-action="minifyMenu"> <i class="fa fa-arrow-circle-left hit"></i> </span>
@@ -626,7 +389,7 @@
 		<div class="page-footer">
 			<div class="row">
 				<div class="col-xs-12 col-sm-6">
-					<span class="txt-color-white">档案管理系统    © 2013-2014</span>
+					<span class="txt-color-white">包头市规划局档案管理系统    © 2013-2014</span>
 				</div>
 			</div>
 			<!-- end row -->
@@ -663,6 +426,8 @@
 
 		<!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)
 		<script data-pace-options='{ "restartOnRequestAfter": true }' src="js/plugin/pace/pace.min.js"></script>-->
+		
+		<script src="js/plugin/pace/pace.min.js"></script>
 		
 		<!-- #PLUGINS -->
 		<!-- Link to Google CDN's jQuery + jQueryUI; fall back to local 
@@ -720,11 +485,63 @@
 			<h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
 		<![endif]-->
 		<script type="text/javascript" src="js/plugin/scrollUp/jquery.scrollUp.min.js"></script>
+		
+		<script type="text/javascript">
+		window.location.hash='';
+		//获取用户信息
+		$.ajax({
+		    url:'/user/curr',
+		    type:'GET',
+		    success : function(data) {
+		        if (data.data.user_name) {
+		            $('#username_index').text(data.data.user_name);
+		        }  else {
+		            window.location.href='/login.html';
+		        }
+		    },
+		    error: function(data) {
+		        window.location.href='error500.html';
+		    }
+		});
+		//获取该用户角色权限
+		$.ajax({
+		    url:'/perm/user',
+		    type:'GET',
+		    success : function(data) {
+		        if (data.perm_string) {
+		            var permArr = data.perm_string.split('&');
+		            $('nav').find('a').each(function(){
+		                var hrefs = $(this).attr('href');
+		                if (hrefs != '#' && $.inArray("/"+hrefs, permArr) == -1) {
+		                    $(this).parent().addClass('hidden');
+		                }
+		                
+		            });
+		            if ($.inArray('/ajax/userquery.html', permArr)==-1 && $.inArray('/ajax/useradd.html', permArr)==-1) {
+	                    $('#user-nav').addClass('hidden');
+		            }
+		            if ($.inArray('/ajax/dictdetail.html', permArr)==-1 && $.inArray('/ajax/perm.html', permArr)==-1
+		                    && $.inArray('/ajax/log.html', permArr)==-1) {
+	                    $('#sys-nav').addClass('hidden');
+		            }
+		        } else {
+		            window.location.href='/login.html';
+		        }
+		    },
+		    error: function(data) {
+		        window.location.href='/ajax/error500.html';
+		    }
+		});
+		
+		</script>
+		
 		<!-- Demo purpose only -->
 		<script src="js/demo.min.js"></script>
 
 		<!-- MAIN APP JS FILE -->
 		<script src="js/app.min.js"></script>
+		
+		
 
 		<!-- Your GOOGLE ANALYTICS CODE Below 
 		<script type="text/javascript">

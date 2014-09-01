@@ -47,20 +47,20 @@
 							<div class="page foldtl col-lg-8 col-md-12 col-lg-offset-2">
 								<div class="media">
 									<p class="media-heading font-lg text-center "><strong></strong></p>
-									<div class="col-lg-8 col-md-8">
+									<div class="col-lg-6 col-md-6">
 										<div id="media_body" class="media-body" >
 											<dl class="dl-horizontal">
-									        <dt style="padding-top:5px">档案编号</dt>
-									        <dd style="padding-top:5px"></dd>
 									        <dt style="padding-top:5px">项目名称</dt>
 									        <dd style="padding-top:5px"></dd>
 									        <dt style="padding-top:5px">档案类型</dt>
-									        <dd style="padding-top:5px"></dd>
+									        <dd style="padding-top:5px"><span></span></dd>
 									        <dt style="padding-top:5px">档案录入员</dt>
-									        <dd style="padding-top:5px"></dd>
+									        <dd style="padding-top:5px"><span></span></dd>
 									        <dt style="padding-top:5px">档案位置</dt>
-									        <dd style="padding-top:5px"></dd>
+									        <dd style="padding-top:5px"><span></span></dd>
 									        <dt style="padding-top:5px">档案总数</dt>
+									        <dd style="padding-top:5px"><span></span></dd>
+									        <dt style="padding-top:5px">光盘位置</dt>
 									        <dd style="padding-top:5px"></dd>
 									        <dt style="padding-top:5px">主题词</dt>
 									        <dd style="padding-top:5px"></dd>
@@ -69,7 +69,7 @@
 									      </dl> 	 
 										</div>
 									</div>
-									<div class="col-lg-4 col-md-4">
+									<div class="col-lg-6 col-md-6">
 										<img id="doc_img_preview" class="media-object pull-right col-lg-12 col-md-12" alt="无封面" >
 									</div>
 								</div>
@@ -129,6 +129,12 @@
 											<i class="icon-prepend fa fa-database"></i>
 											<input type="text"
 												name="doc_tag" id="doc_tag" placeholder="主题词">
+										</label>
+									</section>
+									<section class="col col-4 col-sm-6">
+										<label class="select"> <select id="ele_location"  name="ele_location">
+												<option value="">光盘位置</option>
+										    </select> <i></i>
 										</label>
 									</section>
 								</div>
@@ -234,6 +240,7 @@
     var pagefunction = function() {
         initDict('档案类型', $('#doc_type'));
         initDict('档案位置', $('#doc_location'));
+        initDict('光盘位置', $('#ele_location'));
         initUser( $('#doc_mgr'));
         
         function initEcard(d, e) {
@@ -245,30 +252,26 @@
                 $('.media-heading').text(d.doc_name);
             else
                 $('.media-heading').text(' ');
-            if (d.doc_id)
-                $('#media_body dd').eq(0).text(d.doc_id);
+            if (d.project_name)
+                $('#media_body dd').eq(0).text(d.project_name);
             else
                 $('#media_body dd').eq(0).text(' ');
-            if (d.project_name)
-                $('#media_body dd').eq(1).text(d.project_name);
+            if (d.doc_type)
+                $('#media_body dd').eq(1).text(d.doc_type);
             else
                 $('#media_body dd').eq(1).text(' ');
-            if (d.doc_type)
-                $('#media_body dd').eq(2).text(d.doc_type);
+            if (d.doc_mgr)
+                $('#media_body dd').eq(2).text(d.doc_mgr);
             else
                 $('#media_body dd').eq(2).text(' ');
-            if (d.doc_mgr)
-                $('#media_body dd').eq(3).text(d.doc_mgr);
+            if (d.doc_location)
+                $('#media_body dd').eq(3).text(d.doc_location);
             else
                 $('#media_body dd').eq(3).text(' ');
-            if (d.doc_location)
-                $('#media_body dd').eq(4).text(d.doc_location);
+            if (d.total_num)
+                $('#media_body dd').eq(4).text(d.total_num);
             else
                 $('#media_body dd').eq(4).text(' ');
-            if (d.total_num)
-                $('#media_body dd').eq(5).text(d.total_num);
-            else
-                $('#media_body dd').eq(5).text(' ');
             if (d.doc_tag)
                 $('#media_body dd').eq(6).text(d.doc_tag);
             else
@@ -277,6 +280,10 @@
                 $('#media_body dd').eq(7).find('a').attr('href', d.doc_file).text(d.doc_file.substr(d.doc_file.lastIndexOf('/')+1));
             else
                 $('#media_body dd').eq(7).find('a').attr('href', ' ').text(' ');
+            if (d.ele_location)
+                $('#media_body dd').eq(5).text(d.ele_location);
+            else
+                $('#media_body dd').eq(5).text('');
         }
         
         var url = window.location.hash;
@@ -306,6 +313,7 @@
 			    var total_num = datas.data[0].total_num;
 			    var doc_location = datas.data[0].doc_location;
 			    var doc_mgr = datas.data[0].doc_mgr;
+			    var ele_location = datas.data[0].ele_location;
         		$('#doc_id').val(doc_id);
         		$('#doc_name').val(doc_name);
         		$('#doc_type').val(doc_type);
@@ -317,6 +325,7 @@
         		$("#doc_mgr").find("option[value="+doc_mgr+"]").attr("selected",true);
         		$('#doc_img').val(doc_img);
         		$('#doc_file').val(doc_file);
+        		$("#ele_location").find("option[value="+ele_location+"]").attr("selected",true);
         		
         		initEcard(d);
 			},
