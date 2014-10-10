@@ -93,7 +93,7 @@
 									<section class="col col-4 col-sm-6">
 										<label class="input">
 											<input type="text"
-												name="odc_tag" placeholder="主题词">
+												name="doc_tag" placeholder="主题词">
 										</label>
 									</section>
 									<section class="col col-4 col-sm-6">
@@ -305,7 +305,6 @@
                  "complete": function() {
                      $("#loading").hide();
                      $("#datatable_col_reorder_wrapper").fadeIn(500);
-                     alert('complete');
                  },
                  "beforeSend": function() {
                      $("#loading").show();
@@ -357,9 +356,10 @@
         });
         
       	//定义查询按钮
-        $("#submit").on('click', function(){
+        $("#submit").on('click', function(event){
+       		event.preventDefault();
+            event.stopPropagation();
             dt.ajax.reload();
-            alert('submit');
         });
       	
       	//初始化datatables点击显示图表
@@ -391,10 +391,7 @@
         $("#datatable_col_reorder_wrapper").addClass("table-responsive");
         
         function initEcard(d, e) {
-            if (d.doc_img)
-                $('#doc_img_preview').attr('src', d.doc_img);
-            else
-                $('#doc_img_preview').attr('src', ' ');
+            
             if (d.doc_name)
                 $('.media-heading').text(d.doc_name);
             else
@@ -435,6 +432,10 @@
                 $('#media_body dd').eq(6).text(d.ele_location);
             else
                 $('#media_body dd').eq(6).text('');
+            if (d.doc_img)
+                $('#doc_img_preview').attr('src', d.doc_img);
+            else
+                $('#doc_img_preview').attr('src', ' ');
         }
         
         function bindClick() {

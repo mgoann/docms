@@ -487,11 +487,12 @@
 		<script type="text/javascript" src="js/plugin/scrollUp/jquery.scrollUp.min.js"></script>
 		
 		<script type="text/javascript">
-		window.location.hash='';
+		//window.location.hash='';
 		//获取用户信息
 		$.ajax({
 		    url:'/user/curr',
 		    type:'GET',
+		    async:false,
 		    success : function(data) {
 		        if (data.data.user_name) {
 		            $('#username_index').text(data.data.user_name);
@@ -507,6 +508,7 @@
 		$.ajax({
 		    url:'/perm/user',
 		    type:'GET',
+		    async:false,
 		    success : function(data) {
 		        if (data.perm_string) {
 		            var permArr = data.perm_string.split('&');
@@ -514,6 +516,7 @@
 		                var hrefs = $(this).attr('href');
 		                if (hrefs != '#' && $.inArray("/"+hrefs, permArr) == -1) {
 		                    $(this).parent().addClass('hidden');
+		                    $(this).attr('href', '#');
 		                }
 		                
 		            });

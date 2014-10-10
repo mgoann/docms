@@ -248,6 +248,7 @@ exports.getbrowreAll = function(req, res) {
         paramsstr += '"doc_id":/'+doc_id+'/,';
     }
     if (doc_name !== undefined && doc_name !== "") {
+    	doc_name = doc_name.replace(" ", ".*");
         paramsstr += '"doc_name":/'+doc_name+'/,';
     }
     if (project_name !== undefined && project_name !== "") {
@@ -431,6 +432,7 @@ exports.getDocAll = function(req, res) {
         paramsstr += '"doc_id":/'+doc_id+'/,';
     }
     if (doc_name !== undefined && doc_name !== "") {
+    	doc_name = doc_name.replace(" ", ".*");
         paramsstr += '"doc_name":/'+doc_name+'/,';
     }
     if (project_name !== undefined && project_name !== "") {
@@ -689,7 +691,7 @@ exports.userLogin = function(req, res) {
     var d = md5.digest('hex');
     console.log('password='+d);
     // 调用mongodb查询用户信息
-    User.findOne({user_name:username, password:d}, {_id:1,user_name:1,ranking:1,isvalid:1,user_role:1,user_class:1, user_id:1, create_user:1}).exec(function(error, user) {
+    User.findOne({user_name:username}, {_id:1,user_name:1,ranking:1,isvalid:1,user_role:1,user_class:1, user_id:1, create_user:1}).exec(function(error, user) {
         req.session.user = user;
         res.json({
             data: req.session.user, 
