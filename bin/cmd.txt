@@ -1,0 +1,1 @@
+d:\nssm\nssm.exe install docms "D:\qipengfei\persional\docms\startscript.bat"

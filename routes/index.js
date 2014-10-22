@@ -23,25 +23,12 @@ DocSchema.pre('save', function(next) {
     Seq.findOneAndUpdate( {"seq_name":'doc_id'}, { $inc: { seq: 1 } }, function (err, settings) {
         if (err) next(err);
         console.log(settings);
-        var doc_id = "";
-        if (doc.doc_type=='控规')
-            doc_id = "KG";
-        else if (doc.doc_type=='详规')
-            doc_id = 'XG';
-        else if (doc.doc_type=='总规')
-            doc_id = 'ZG';
-        else if (doc.doc_type=='城市设计')
-            doc_id = 'SJ';
-        else if (doc.doc_type=='城乡统筹')
-            doc_id = 'TC';
-        else if (doc.doc_type=='专项规划')
-            doc_id = 'ZX';
         var now1 = new Date();
         var month = (now1.getMonth()+1);
         if (month < 10) {
             month = '0'+month;
         }
-        doc_id += '-' + now1.getFullYear()+month+now1.getDate()+'-'+(settings.seq - 1);
+        var doc_id = ""+now1.getFullYear()+month+now1.getDate()+'-'+(settings.seq - 1);
         doc.doc_id = doc_id
         console.log(doc);
         next();
@@ -713,7 +700,7 @@ exports.getDict = function(req, res) {
     var paramsstr = "{}";
     var params = eval("("+paramsstr+")");
     // 调用mongodb查询字典表信息
-    Dict.find(params, {}).limit(req.body.length).exec(function(error, dicts) {
+    Dict.find(params, {}).skip(req.body.start).limit(req.body.length).exec(function(error, dicts) {
         Dict.count(params).exec(function (err, count) {
             res.json({
   draw: req.body.draw,
